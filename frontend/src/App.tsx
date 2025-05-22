@@ -14,13 +14,13 @@ function App() {
   return (
     <>
       <div>
-        <h1> Reci Test </h1>
+        <h1 className='text-2xl font-bold'> Reci Test </h1>
         {users.length === 0 && <button onClick={handleClick}>Load users</button>}
 
         {users.length > 0 && (
         <div>
           <h2>Users:</h2>
-          <ul>
+          <ul className='list-disc'>
             {users.map((item: string, index: number) => (
               <li key={index}>{item}</li>
             ))}
