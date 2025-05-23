@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css'
+import { Button } from "@/components/ui/button"
 
 function App() {  
 
@@ -15,7 +16,7 @@ function App() {
     <>
       <div>
         <h1 className='text-2xl font-bold'> Reci Test </h1>
-        {users.length === 0 && <button onClick={handleClick}>Load users</button>}
+        {users.length === 0 && <Button onClick={handleClick}>Load users</Button>}
 
         {users.length > 0 && (
         <div>
