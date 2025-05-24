@@ -11,10 +11,10 @@ export const client = new Client({
 
 export async function initDb() {
     await client.connect();
-    await client.query<void>(
+    await client.query(
       'CREATE TABLE IF NOT EXISTS users(name text);'
     );
-    await client.query<void>(
+    await client.query(
       `INSERT INTO users values('Bill'), ('Russell');`
     );
 }
