@@ -1,0 +1,27 @@
+{
+  "name": "reci",
+  "version": "1.0.0",
+  "description": "# Steps to test:",
+  "main": "index.js",
+  "scripts": {
+    "docker": "docker compose up -d",
+    "frontend": "cd frontend && npm install && npm run dev",
+    "backend": "cd backend && npm install && npm run dev",
+    "dev": "npm run docker && concurrently \"npm run frontend\" \"npm run backend\"",
+    "setup": "cd frontend && npm install && cd ../backend && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuperZooper3/reci.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SuperZooper3/reci/issues"
+  },
+  "homepage": "https://github.com/SuperZooper3/reci#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
