@@ -8,7 +8,8 @@
     "frontend": "cd frontend && npm install && npm run dev",
     "backend": "cd backend && npm install && npm run dev",
     "dev": "npm run docker && concurrently \"npm run frontend\" \"npm run backend\"",
-    "setup": "cd frontend && npm install && cd ../backend && npm install"
+    "setup": "cd frontend && npm install && cd ../backend && npm install",
+    "lint": "cd frontend && npm run lint && cd ../backend && npm run lint"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
