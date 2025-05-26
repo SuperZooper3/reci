@@ -16,7 +16,7 @@ From the root of the repo:
 
 ## Troubleshooting
 
-### Postgress "authentication failed"
+### Postgres "authentication failed"
 
 If you run `npm run dev` and notice you get an error containing `error: password authentication failed for user "postgres"`, then there is likely an issue with the port you are using.
 
