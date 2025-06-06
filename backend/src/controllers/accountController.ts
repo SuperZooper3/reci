@@ -6,8 +6,8 @@ const router = Router();
 
 router.get('/', async (_req: Request, res: Response) => {
   const getAccountNamesSQL = await loadSQL('getAccountNames.sql');
-  const { rows } = await client.query<{ name: string }>(getAccountNamesSQL);
-  res.json(rows.map((r: { name: string; }) => r.name));
+  const { rows } = await client.query<{ display_name: string }>(getAccountNamesSQL);
+  res.json(rows.map((r: { display_name: string; }) => r.display_name));
 });
 
 export default router;

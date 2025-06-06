@@ -1,1 +1,1 @@
-SELECT name FROM Account;
+SELECT display_name FROM Account;
