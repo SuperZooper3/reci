@@ -29,4 +29,9 @@ export async function initDb() {
   console.log("Initializing the database");
   await client.query(initSQL);
   console.log("Initialized the database");
+
+  const seedSQL = await loadSQL('seed.sql');
+  console.log("Seeding the database");
+  await client.query(seedSQL);
+  console.log("Seeded the database");
 }

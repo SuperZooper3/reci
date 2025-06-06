@@ -2,10 +2,10 @@ drop table if exists SavedRecipe;
 drop table if exists Follower;
 drop table if exists Review;
 drop table if exists Recipe;
-drop table if exists Accounts;
+drop table if exists Account;
 
 
-CREATE TABLE IF NOT EXISTS Accounts(
+CREATE TABLE IF NOT EXISTS Account(
     id INT NOT NULL,
     display_name TEXT NOT NULL,
     username VARCHAR NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS Recipe(
     created_at DATE NOT NULL,
     author_id INT NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY(author_id) REFERENCES Accounts(id)
+    FOREIGN KEY(author_id) REFERENCES Account(id)
 );
 
 CREATE TABLE IF NOT EXISTS Review(
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Review(
     account_id INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(recipe_id) REFERENCES Recipe(id),
-    FOREIGN KEY(account_id) REFERENCES Accounts(id)
+    FOREIGN KEY(account_id) REFERENCES Account(id)
 );
 
 CREATE TABLE IF NOT EXISTS Follower(
@@ -45,19 +45,6 @@ CREATE TABLE IF NOT EXISTS Follower(
 CREATE TABLE IF NOT EXISTS SavedRecipe(
     account_id INT NOT NULL,
     recipe_id INT NOT NULL,
-    FOREIGN KEY(account_id) REFERENCES Accounts(id),
+    FOREIGN KEY(account_id) REFERENCES Account(id),
     FOREIGN KEY(recipe_id) REFERENCES Recipe(id)
-);
-
-INSERT INTO Accounts VALUES (
-    0,
-    'Bill',
-    'bill',
-    'bill'
-),
-(
-    1,
-    'Russell',
-    'bill',
-    'bill'
 );
