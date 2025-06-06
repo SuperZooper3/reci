@@ -26,6 +26,12 @@ export const client = new Client({
 export async function initDb() {
   await client.connect();
   const initSQL = await loadSQL('init.sql');
-
+  console.log("Initializing the database");
   await client.query(initSQL);
+  console.log("Initialized the database");
+
+  const seedSQL = await loadSQL('seed.sql');
+  console.log("Seeding the database");
+  await client.query(seedSQL);
+  console.log("Seeded the database");
 }

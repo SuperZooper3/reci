@@ -5,8 +5,8 @@ import { loadSQL } from '../utils/sqlLoader.js';
 const router = Router();
 
 router.get('/', async (_req: Request, res: Response) => {
-  const getUserNamesSQL = await loadSQL('getUserNames.sql');
-  const { rows } = await client.query<{ name: string }>(getUserNamesSQL);
+  const getAccountNamesSQL = await loadSQL('getAccountNames.sql');
+  const { rows } = await client.query<{ name: string }>(getAccountNamesSQL);
   res.json(rows.map((r: { name: string; }) => r.name));
 });
 
