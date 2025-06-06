@@ -26,6 +26,7 @@ export const client = new Client({
 export async function initDb() {
   await client.connect();
   const initSQL = await loadSQL('init.sql');
-
+  console.log("Initializing the database");
   await client.query(initSQL);
+  console.log("Initialized the database");
 }
