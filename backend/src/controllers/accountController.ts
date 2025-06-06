@@ -1,13 +1,12 @@
-import { Router, Request, Response } from 'express';
-import { client } from '../db.js';
-import { loadSQL } from '../utils/sqlLoader.js';
+import { Request, Response } from 'express';
+import * as accountModel from '../models/accountModel.js';
 
-const router = Router();
-
-router.get('/', async (_req: Request, res: Response) => {
-  const getAccountNamesSQL = await loadSQL('getAccountNames.sql');
-  const { rows } = await client.query<{ display_name: string }>(getAccountNamesSQL);
-  res.json(rows.map((r: { display_name: string; }) => r.display_name));
-});
-
-export default router;
+export const getUsers = async (req: Request, res:Response) => {
+  try{
+    const users = await accountModel.getAccountNames();
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching user names', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
