@@ -1,7 +1,7 @@
 import express from 'express';
-import userController from './controllers/userController';
+import userController from './controllers/userController.js';
 import cors from 'cors';
-import { initDb } from './db';
+import { initDb } from './db.js';
 
 initDb();
 const app = express();
