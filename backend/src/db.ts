@@ -1,13 +1,15 @@
 import { Client } from 'pg';
 import { loadSQL } from './utils/sqlLoader';
+import dotenv from 'dotenv';
 
-//Might want to see if there's a better/more reusable way to connect to the db.
+dotenv.config({ path: '../.env' });
+//TODO: Find a better way to use a db connection. Look into using a pool?
 export const client = new Client({
-  host: 'localhost',
-  port: 5433,
-  user: 'postgres',
-  password:'postgres',
-  database: 'testdb',
+  host: process.env.POSTGRES_HOST,
+  port:  Number(process.env.POSTGRES_PORT),
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
 });
 
 export async function initDb() {
