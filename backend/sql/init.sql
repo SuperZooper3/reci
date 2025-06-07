@@ -39,7 +39,9 @@ CREATE TABLE IF NOT EXISTS Follower(
     id INT NOT NULL,
     follower_id INT NOT NULL,
     followee_id INT NOT NULL,
-    PRIMARY KEY(id)
+    PRIMARY KEY(id),
+    FOREIGN KEY(followee_id) REFERENCES Account(id),
+    FOREIGN KEY(follower_id) REFERENCES Account(id)
 );
 
 CREATE TABLE IF NOT EXISTS SavedRecipe(
