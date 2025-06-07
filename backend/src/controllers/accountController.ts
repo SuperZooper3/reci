@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import * as accountModel from '../models/accountModel.js';
 
-export const getUsers = async (req: Request, res:Response) => {
+export const getAccounts = async (req: Request, res:Response) => {
   try{
-    const users = await accountModel.getAccountNames();
-    res.json(users);
+    const accountNames = await accountModel.getAccountNames();
+    res.json(accountNames);
   } catch (error) {
-    console.error('Error fetching user names', error);
+    console.error('Error fetching account names', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
