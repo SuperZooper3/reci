@@ -1,3 +1,3 @@
 SELECT *
 FROM Review
-WHERE Review.account_id = $1
+WHERE Review.account_id = $1;
