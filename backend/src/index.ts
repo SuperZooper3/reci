@@ -4,7 +4,8 @@ import cookieParser from 'cookie-parser';
  
 import accountRouter from './routes/accountRoutes.js';
 import recipeRouter from './routes/recipeRoutes.js';
-
+import reviewRouter from './routes/reviewRoutes.js';
+import cors from 'cors';
 import { initDb } from './db.js';
 
 initDb();
@@ -17,6 +18,7 @@ app.use(cookieParser());
 
 app.use('/api/accounts', accountRouter);
 app.use('/api/recipes', recipeRouter);
+app.use('/api/reviews', reviewRouter);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
