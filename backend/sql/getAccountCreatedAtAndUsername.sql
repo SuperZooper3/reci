@@ -1,3 +1,3 @@
 SELECT username, created_at
-FROM Accounts
+FROM Account
 WHERE Account.id = $1;
