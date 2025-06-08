@@ -1,3 +1,3 @@
 SELECT Count(*)
-FROM SavedRecipe
-WHERE SavedRecipe.account_id = $1;
+FROM Recipe
+WHERE Recipe.account_id = $1;
