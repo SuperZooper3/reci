@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Recipe(
     created_at DATE NOT NULL,
     author_id INT NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY(author_id) REFERENCES Account(id) ON DELETE CASCADE
+    FOREIGN KEY(author_id) REFERENCES Account(id)
 );
 
 CREATE TABLE IF NOT EXISTS Review(
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Review(
     recipe_id INT NOT NULL,
     account_id INT NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY(recipe_id) REFERENCES Recipe(id),
+    FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE,
     FOREIGN KEY(account_id) REFERENCES Account(id) ON DELETE CASCADE
 );
 
@@ -49,5 +49,5 @@ CREATE TABLE IF NOT EXISTS SavedRecipe(
     account_id INT NOT NULL,
     recipe_id INT NOT NULL,
     FOREIGN KEY(account_id) REFERENCES Account(id) ON DELETE CASCADE,
-    FOREIGN KEY(recipe_id) REFERENCES Recipe(id)
+    FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE
 );
