@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Review(
 );
 
 CREATE TABLE IF NOT EXISTS Follower(
-    id INT NOT NULL,
+    id INT,
     follower_id INT NOT NULL,
     followee_id INT NOT NULL,
     PRIMARY KEY(id),
@@ -47,8 +47,10 @@ CREATE TABLE IF NOT EXISTS Follower(
 );
 
 CREATE TABLE IF NOT EXISTS SavedRecipe(
+    id INT,
     account_id INT NOT NULL,
     recipe_id INT NOT NULL,
+    PRIMARY KEY(id),
     FOREIGN KEY(account_id) REFERENCES Account(id) ON DELETE CASCADE,
     FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE
 );
