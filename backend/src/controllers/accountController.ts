@@ -10,3 +10,14 @@ export const getAccounts = async (req: Request, res:Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const getAccount = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  try {
+    const account = await accountModel.getAccount(id);
+    res.json(account);
+  } catch (error) {
+    console.error('Error fetching account', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
