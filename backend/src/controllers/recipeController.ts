@@ -11,3 +11,14 @@ export const getRecipesByAccountId = async (req: Request, res:Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const addRecipe = async (req: Request, res: Response) => {
+  try {
+    const recipe = req.body;
+    await recipeModel.addRecipe(recipe);
+    res.status(201).json({ message: 'Recipe added successfully' });
+  } catch (error) {
+    console.error('Error adding recipe', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
