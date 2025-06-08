@@ -15,8 +15,7 @@ INSERT INTO Account VALUES (
     'Marco',
     'marco',
     'marco'
-)
-;
+);
 
 INSERT INTO Recipe VALUES (
     0,
