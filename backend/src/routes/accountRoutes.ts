@@ -5,7 +5,6 @@ const accountRouter = Router();
 
 accountRouter.get('/', getAccounts);
 accountRouter.get('/:id', getAccount);
-
 accountRouter.delete('/:id', deleteAccount);
 
 export default accountRouter;
