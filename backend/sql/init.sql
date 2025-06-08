@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS Account(
     display_name TEXT NOT NULL,
     username VARCHAR NOT NULL,
     password VARCHAR NOT NULL,
+    created_at DATE NOT NULL,
     PRIMARY KEY(id)
 );
 
