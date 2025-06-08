@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS Recipe(
     title VARCHAR NOT NULL,
     body VARCHAR NOT NULL,
     created_at DATE NOT NULL,
-    author_id INT NOT NULL,
+    author_id INT,
     PRIMARY KEY(id),
     FOREIGN KEY(author_id) REFERENCES Account(id)
 );
