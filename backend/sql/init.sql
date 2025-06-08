@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS Recipe(
     title VARCHAR NOT NULL,
     body VARCHAR NOT NULL,
     created_at DATE NOT NULL,
+    -- If the author's account is deleted, their recipes should persist
     author_id INT,
     PRIMARY KEY(id),
     FOREIGN KEY(author_id) REFERENCES Account(id)
