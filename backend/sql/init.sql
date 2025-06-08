@@ -6,19 +6,19 @@ drop table if exists Account;
 
 
 CREATE TABLE IF NOT EXISTS Account(
-    id INT,
+    id SERIAL,
     display_name TEXT NOT NULL,
     username VARCHAR NOT NULL,
     password VARCHAR NOT NULL,
-    created_at DATE NOT NULL,
+    created_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id)
 );
 
 CREATE TABLE IF NOT EXISTS Recipe(
-    id INT,
+    id SERIAL,
     title VARCHAR NOT NULL,
     body VARCHAR NOT NULL,
-    created_at DATE NOT NULL,
+    created_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     -- If the author's account is deleted, their recipes should persist
     author_id INT,
     PRIMARY KEY(id),
@@ -26,8 +26,8 @@ CREATE TABLE IF NOT EXISTS Recipe(
 );
 
 CREATE TABLE IF NOT EXISTS Review(
-    id INT,
-    created_at DATE NOT NULL,
+    id SERIAL,
+    created_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     description VARCHAR NOT NULL,
     rating float NOT NULL CHECK(rating >= 0 AND rating <= 10),
     recipe_id INT NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Review(
 );
 
 CREATE TABLE IF NOT EXISTS Follower(
-    id INT,
+    id SERIAL,
     follower_id INT NOT NULL,
     followee_id INT NOT NULL,
     PRIMARY KEY(id),
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS Follower(
 );
 
 CREATE TABLE IF NOT EXISTS SavedRecipe(
-    id INT,
+    id SERIAL,
     account_id INT NOT NULL,
     recipe_id INT NOT NULL,
     PRIMARY KEY(id),
