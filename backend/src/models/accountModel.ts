@@ -12,3 +12,8 @@ export async function getAccount(id: number): Promise<{ id: number, username: st
   const { rows } = await client.query<{ id: number, username: string, display_name: string, created_at: Date }>(getAccountSQL, [id]);
   return rows;
 }
+
+export async function deleteAccount(id: number): Promise<void> {
+  const deleteAccountSQL = await loadSQL('deleteAccount.sql');
+  await client.query(deleteAccountSQL, [id]);
+}
