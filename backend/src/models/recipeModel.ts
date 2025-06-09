@@ -2,7 +2,7 @@ import { client } from '../db.js';
 import { loadSQL } from '../utils/sqlLoader.js';
 
 export async function getRecipeById (recipe_id: number): Promise<{ id: number, title: string, body: string, created_at: Date, author_id: number }> {
-  const getRecipeByIdSQL = await loadSQL('getRecipeById.sql');
+  const getRecipeByIdSQL = await loadSQL('getRecipe.sql');
   const { rows } = await client.query(getRecipeByIdSQL, [recipe_id]);
   return rows[0];
 };
