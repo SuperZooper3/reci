@@ -7,8 +7,8 @@ INSERT INTO Account VALUES (
 (
     1,
     'Russell',
-    'bill',
-    'bill'
+    'russel',
+    'russel'
 ),
 (
     2,
