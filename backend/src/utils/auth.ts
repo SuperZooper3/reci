@@ -16,3 +16,9 @@ export function signJWT(id:number, display_name:string, username: string) {
     if (!JWT_SECRET) throw new Error("JWT_SECRET is not defined");
     return jwt.sign({ id, display_name, username }, JWT_SECRET, { expiresIn: "1h" });
 }
+
+export function verifyAndReadJWT(jwtInput: string) {
+    if (!JWT_SECRET) throw new Error("JWT_SECRET is not defined");
+    const answer = jwt.verify(jwtInput, JWT_SECRET) as {id: number, display_name: string, username: string};
+    return answer;
+}

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as accountModel from '../models/accountModel.js';
 import * as accountService from '../services/accountService.js'
+import * as auth from '../utils/auth.js'
 
 export const getAccounts = async (req: Request, res:Response) => {
   try{
@@ -19,6 +20,26 @@ export const getAccount = async (req: Request, res: Response) => {
     res.json(account);
   } catch (error) {
     console.error('Error fetching account', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const getAccountMe = async (req: Request, res: Response) => {
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(400).json({ message: 'Missing JWT cookie' });
+    return
+  }
+  const { id } = auth.verifyAndReadJWT(jwt);
+  try {
+    const account = await accountModel.getAccount(id);
+    if (!account || account.length == 0) {
+      res.status(400).json({ message: 'Me not found :/ Seems you have a valid JWT for a bad account, might have been deleted or you not seeded' });
+      return;
+    }
+    res.json(account);
+  } catch (error) {
+    console.error('Error fetching me account', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
