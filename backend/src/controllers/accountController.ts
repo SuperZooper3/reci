@@ -26,11 +26,14 @@ export const getAccount = async (req: Request, res: Response) => {
 
 export const getAccountMe = async (req: Request, res: Response) => {
   const jwt = req.cookies.authToken;
+
   if (!jwt) {
     res.status(400).json({ message: 'Missing JWT cookie' });
     return
   }
+  
   const { id } = auth.verifyAndReadJWT(jwt);
+
   try {
     const account = await accountModel.getAccount(id);
     if (!account || account.length == 0) {

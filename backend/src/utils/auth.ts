@@ -5,11 +5,11 @@ const SALT_ROUNDS = 10;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export async function hashPassword(password: string) {
-    return await bcrypt.hash(password, SALT_ROUNDS)
+    return await bcrypt.hash(password, SALT_ROUNDS);
 }
 
 export async function comparePassword(hashedPassword: string, candidate: string) {
-    return await bcrypt.compare(candidate, hashedPassword)
+    return await bcrypt.compare(candidate, hashedPassword);
 }
 
 export function signJWT(id:number, display_name:string, username: string) {
