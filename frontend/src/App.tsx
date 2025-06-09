@@ -26,7 +26,7 @@ function App() {
       return;
     }
 
-    const res = await fetch(`http://localhost:3000/api/recipes/${accountId}`);
+    const res = await fetch(`http://localhost:3000/api/recipes/account/${accountId}`);
     const recipes: Recipe[] = await res.json();
     setRecipes(recipes);
   };

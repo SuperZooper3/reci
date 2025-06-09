@@ -1,6 +1,17 @@
 import { Request, Response } from "express";
 import * as recipeModel from '../models/recipeModel.js';
 
+export const getRecipeById = async (req: Request, res: Response) => {
+  try {
+    const recipe_id = parseInt(req.params.recipeId, 10);
+    const recipe = await recipeModel.getRecipeById(recipe_id);
+    res.json(recipe);
+  } catch (error) {
+    console.error('Error fetching recipe by id', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 export const getRecipesByAccountId = async (req: Request, res:Response) => {
   try{
     const account_id = parseInt(req.params.accountId, 10);
