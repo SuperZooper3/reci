@@ -4,7 +4,7 @@ import { addRecipe, getRecipeById, getRecipesByAccountId } from '../controllers/
 const recipeRouter = Router();
 
 recipeRouter.get('/:recipeId', getRecipeById);
-recipeRouter.get('/:accountId', getRecipesByAccountId);
+recipeRouter.get('/account/:accountId', getRecipesByAccountId);
 recipeRouter.post('/', addRecipe);
 
 export default recipeRouter;
