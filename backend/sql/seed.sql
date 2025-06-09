@@ -1,24 +1,20 @@
-INSERT INTO Account VALUES (
-    0,
+INSERT INTO Account (display_name, username, password) VALUES (
     'Bill',
     'bill',
     'bill'
 ),
 (
-    1,
     'Russell',
     'russel',
     'russel'
 ),
 (
-    2,
     'Marco',
     'marco',
     'marco'
 );
 
-INSERT INTO Recipe VALUES (
-    0,
+INSERT INTO Recipe (title, body, author_id) VALUES (
     'Cannolu',
     'Cannoli (Cannolu Sicilianu) Recipe
 
@@ -59,37 +55,30 @@ INSERT INTO Recipe VALUES (
     - Drain ricotta well.  
     - Fill last minute to keep crisp.  
     - Marsala gives authentic flavor.',
-    NOW(),
     2
 );
 
-INSERT INTO Review VALUES (
-    0,
-    NOW(),
+INSERT INTO Review (description, rating, recipe_id, account_id) VALUES (
     'Amazing. Trallallero Trallallà would love these',
     '10',
-    0,
-    0
-);
-
-INSERT INTO Follower VALUES (
-    0,
-    0,
-    1
-),
-(
     1,
-    2,
     1
-),
-(
-    2,
-    2,
-    0
 );
 
-INSERT INTO SavedRecipe VALUES (
-    0,
-    0,
-    0
+INSERT INTO Follower (follower_id, followee_id) VALUES (
+    1,
+    2
+),
+(
+    3,
+    2
+),
+(
+    3,
+    1
+);
+
+INSERT INTO SavedRecipe (account_id, recipe_id) VALUES (
+    1,
+    1
 );

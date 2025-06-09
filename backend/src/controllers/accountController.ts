@@ -42,7 +42,7 @@ export const createAccount = async (req: Request, res: Response) => {
 
   try {
     const jwt = await accountService.createAccountService(display_name, username, password);
-    res.status(201).cookie('authToken', jwt);
+    res.status(201).cookie('authToken', jwt).send();
   } catch (error) {
     // TODO: do custom error validation for username clashes
     console.error('Error creating account', error);
