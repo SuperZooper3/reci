@@ -17,9 +17,6 @@ export const getAccount = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   try {
     const account = await accountModel.getAccount(id);
-    if (!account) {
-      return res.status(404).json({ message: 'Account not found' });
-    }
     res.json(account);
   } catch (error) {
     console.error('Error fetching account', error);
