@@ -36,7 +36,7 @@ export const getAccountMe = async (req: Request, res: Response) => {
 
   try {
     const account = await accountModel.getAccount(id);
-    if (!account || account.length == 0) {
+    if (!account) {
       res.status(400).json({ message: '"Me" not found :/ Seems you have a valid JWT for a bad account, might have been deleted or data was not seeded in the first place' });
       return;
     }
