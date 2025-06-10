@@ -14,7 +14,7 @@ export async function comparePassword(hashedPassword: string, candidate: string)
 
 export function signJWT(id:number, display_name:string, username: string) {
     if (!JWT_SECRET) throw new Error("JWT_SECRET is not defined");
-    return jwt.sign({ id, display_name, username }, JWT_SECRET, { expiresIn: "1h" });
+    return jwt.sign({ id, display_name, username }, JWT_SECRET, { expiresIn: "24h" });
 }
 
 export function verifyAndReadJWT(jwtInput: string) {

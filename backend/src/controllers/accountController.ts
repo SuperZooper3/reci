@@ -37,7 +37,7 @@ export const getAccountMe = async (req: Request, res: Response) => {
   try {
     const account = await accountModel.getAccount(id);
     if (!account || account.length == 0) {
-      res.status(400).json({ message: 'Me not found :/ Seems you have a valid JWT for a bad account, might have been deleted or you not seeded' });
+      res.status(400).json({ message: '"Me" not found :/ Seems you have a valid JWT for a bad account, might have been deleted or data was not seeded in the first place' });
       return;
     }
     res.json(account);
@@ -49,18 +49,12 @@ export const getAccountMe = async (req: Request, res: Response) => {
 
 
 export const createAccount = async (req: Request, res: Response) => {
-  const username = req.body.username;
-  const display_name = req.body.display_name;
+  const username = req.body?.username;
+  const display_name = req.body?.display_name;
+  const password = req.body?.password;
 
-  if (!username || !display_name) {
-    res.status(400).json({ message: 'Missing username or display_name' });
-    return;
-  }
-
-  const password = req.body.password;
-
-  if (!password) {
-    res.status(400).json({ message: 'Missing password' });
+  if (!username || !display_name || !password) {
+    res.status(400).json({ message: 'Missing username, display_name or password in the body' });
     return;
   }
 
