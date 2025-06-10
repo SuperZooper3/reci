@@ -1,10 +1,10 @@
 export type RecipeInput = {
   title: string,
   body: string,
-  created_at: Date
+  author_id: number
 }
 
 export type Recipe = RecipeInput & {
   id: number,
-  author_id: number
+  created_at: Date
 }
