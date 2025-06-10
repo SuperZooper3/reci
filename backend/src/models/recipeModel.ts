@@ -1,6 +1,6 @@
 import { client } from '../db.js';
 import { loadSQL } from '../utils/sqlLoader.js';
-import { Recipe, RecipeCustom } from '../../../shared-types/index.js';
+import { Recipe, RecipeInput } from '../../../shared-types/index.js';
 
 
 export async function getRecipeById (recipe_id: number): Promise<Recipe> {
@@ -15,7 +15,7 @@ export async function getAccountRecipes (account_id: number): Promise<Recipe[]> 
   return rows;
 };
 
-export async function addRecipe (recipe: RecipeCustom): Promise<void> {
+export async function addRecipe (recipe: RecipeInput): Promise<void> {
   const addRecipeSQL = await loadSQL('addRecipe.sql')
   await client.query(addRecipeSQL, [recipe]);
 };
