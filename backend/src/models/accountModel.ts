@@ -1,10 +1,12 @@
 import { client } from '../db.js';
 import { loadSQL } from '../utils/sqlLoader.js';
 import { AccountInfo, DisplayName } from '../../../shared-types/index.js';
+import { saveQueryResult } from "../utils/saveQueryResult.js"
 
 export async function getAccountNames(): Promise<Array<DisplayName>> {
   const getAccountNamesSQL = await loadSQL('getAccountNames.sql');
   const { rows } = await client.query<{ display_name: string }>(getAccountNamesSQL);
+  saveQueryResult("getAccountNames", rows);
   return rows;
 }
 
