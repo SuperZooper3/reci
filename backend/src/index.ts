@@ -5,7 +5,6 @@ import cookieParser from 'cookie-parser';
 import accountRouter from './routes/accountRoutes.js';
 import recipeRouter from './routes/recipeRoutes.js';
 import reviewRouter from './routes/reviewRoutes.js';
-import cors from 'cors';
 import { initDb } from './db.js';
 
 initDb();
