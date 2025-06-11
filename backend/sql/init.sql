@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS SavedRecipe(
     id SERIAL,
     account_id INT NOT NULL,
     recipe_id INT NOT NULL,
+    saved_at INT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
     FOREIGN KEY(account_id) REFERENCES Account(id) ON DELETE CASCADE,
     FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE
