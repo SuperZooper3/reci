@@ -14,6 +14,8 @@ From the root of the repo:
 - `npm install`
 - `npm run dev` will start the docker container for the database, npm install in FE and BE, and startup the dev apps!
 
+The JWT secret is generated with `openssl rand -base64 32`, but we use the same secret in dev for consistency.
+
 ## Troubleshooting
 
 ### Postgres "authentication failed"

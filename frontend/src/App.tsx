@@ -3,17 +3,18 @@ import './App.css';
 import { Button } from "@/components/ui/button";  
 import { Input } from '@/components/ui/input';
 import ReactMarkdown from 'react-markdown';
+import type { DisplayName } from '../../shared-types/index';
 
 // This is bad. Fix later
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Recipe = Record<string, any>;
 
 function App() {  
-  const [accounts, setAccounts] = useState<string[]>([]);
+  const [accounts, setAccounts] = useState<DisplayName[]>([]);
   const handleLoadAccounts = async () => {
     const res = await fetch('http://localhost:3000/api/accounts');
 
-    const accounts: string[] = await res.json();
+    const accounts: DisplayName[] = await res.json();
     setAccounts(accounts);
   };
 
@@ -42,8 +43,8 @@ function App() {
         <div>
           <h2>Accounts:</h2>
           <ul className='list-disc'>
-            {accounts.map((item: string, index: number) => (
-              <li key={index}>{item}</li>
+            {accounts.map((item, index) => (
+              <li key={index}>{item.display_name}</li>
             ))}
           </ul>
         </div>
