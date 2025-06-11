@@ -11,3 +11,14 @@ export const getReviewsByRecipeId = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+export const addReview = async (req: Request, res: Response) => {
+  try {
+    const review = req.body;
+    await reviewModel.addReview(review);
+    res.status(201).json({ message: 'Review added successfully' });
+  } catch (error) {
+    console.error('Error adding review', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
