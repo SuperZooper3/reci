@@ -13,6 +13,6 @@ export async function getReviewsByRecipeId(recipe_id: number): Promise<Review[]>
 export async function addReview(review: ReviewInput): Promise<void> {
     const addReviewSQL = await loadSQL('addReview.sql');
     const { rows } = await client.query(addReviewSQL, [review.description, review.rating, review.recipe_id, review.account_id]);
-      saveQueryResult("addReview", rows);
+    saveQueryResult("addReview", rows);
     return;
 };
