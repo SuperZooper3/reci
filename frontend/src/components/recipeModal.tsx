@@ -17,21 +17,11 @@ export default function RecipeModal() {
 
   const [open, setOpen] = useState(false)
   const [title, setTitle] = useState("")
-
-  const template = `# Ingredients
-  - 
-  # Steps
-  1. 
-  2. 
-  `
-  const [body, setBody] = useState(template)
+  const [body, setBody] = useState("")
 
   const handlePost = async () => {
     if (!title.trim() || !body.trim()) {
       alert("Please fill in all details!")
-      return
-    } else if (body === template){
-      alert("Please update the template!")
       return
     }
 
@@ -55,7 +45,7 @@ export default function RecipeModal() {
       setOpen(false)
       
       setTitle("")
-      setBody(template)
+      setBody("")
     } catch (error) {
       console.error("Error adding recipe", error)
       alert("An error occurred while adding the recipe.")
@@ -91,6 +81,7 @@ export default function RecipeModal() {
             <Label htmlFor="body">Body</Label>
             <Textarea
               id="body"
+              placeholder="List ingredients and steps to cook the recipe!"
               rows={14}
               className="w-full min-w-0 px-4 py-2 text-base leading-relaxed resize-y"
               value={body}
