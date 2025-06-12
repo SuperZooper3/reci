@@ -24,12 +24,11 @@ export default function RecipeModal() {
   1. 
   2. 
   `
-
   const [body, setBody] = useState(template)
 
   const handlePost = async () => {
     if (!title.trim() || !body.trim()) {
-      alert("Title and Body are required!")
+      alert("Please fill in all details!")
       return
     }
 
@@ -42,7 +41,7 @@ export default function RecipeModal() {
         body: JSON.stringify({
           title,
           body,
-          author_id: 2,
+          author_id: 2, // TODO: This is hardcoded until we can get author id from auth
         }),
       })
 
