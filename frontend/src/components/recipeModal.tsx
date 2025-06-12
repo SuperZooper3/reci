@@ -30,10 +30,13 @@ export default function RecipeModal() {
     if (!title.trim() || !body.trim()) {
       alert("Please fill in all details!")
       return
+    } else if (body === template){
+      alert("Please update the template!")
+      return
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/recipes', {
+      const response = await fetch('http://localhost:3000/api/recipes', { // TODO: split all the frontend http requests into a service file
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
