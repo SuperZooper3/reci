@@ -20,7 +20,7 @@ export async function getAccountRecipes (account_id: number): Promise<Recipe[]> 
 
 export async function addRecipe (recipe: RecipeInput): Promise<void> {
   const addRecipeSQL = await loadSQL('addRecipe.sql');
-  const { rows } = await client.query(addRecipeSQL, [recipe]);
+  const { rows } = await client.query(addRecipeSQL, [recipe.title, recipe.body, recipe.author_id]);
   saveQueryResult("addRecipe", rows);
   return;
 };
