@@ -26,6 +26,7 @@ export async function addRecipe (recipe: RecipeInput): Promise<void> {
 
 export async function getRecipes (searchTerm: string | null): Promise<Recipe[]> {
   const getRecipesSQL = await loadSQL('filterRecipes.sql');
+  // If the searchTerm query param is omitted, this just filters by '%', matching all recipes. Otherwise, it uses the searchTerm
   const { rows } = await client.query(getRecipesSQL, [searchTerm == null ? '%' : `%${searchTerm}%`]);
   saveQueryResult("filterRecipes", rows);
   return rows;
