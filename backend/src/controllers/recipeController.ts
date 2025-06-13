@@ -33,3 +33,14 @@ export const addRecipe = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+export const getRecipes = async (req: Request, res:Response) => {
+  try{
+    const searchTerm = req.query.searchTerm as string | null;
+    const searchedRecipes = await recipeModel.getRecipes(searchTerm);
+    res.json(searchedRecipes);
+  } catch (error) {
+    console.error('Error searching for recipes', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
