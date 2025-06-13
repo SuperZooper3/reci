@@ -14,7 +14,8 @@ INSERT INTO Account (display_name, username, password) VALUES (
     'marco'
 );
 
-INSERT INTO Recipe (title, body, author_id) VALUES (
+INSERT INTO Recipe (title, body, author_id, created_at) VALUES 
+(
     'Cannolu',
     'Cannoli (Cannolu Sicilianu) Recipe
 
@@ -55,7 +56,38 @@ INSERT INTO Recipe (title, body, author_id) VALUES (
     - Drain ricotta well.  
     - Fill last minute to keep crisp.  
     - Marsala gives authentic flavor.',
-    2
+    2,
+    '2025-01-01'
+),
+(
+    'Lasagna',
+    'I love lasagna',
+    2,
+    '2025-01-02'
+),
+(
+    'Pasta',
+    'Goes well with lasagna',
+    2,
+    '2025-01-03'
+),
+(
+    'Icecream',
+    'It isnt a pasta dish',
+    2,
+    '2025-01-04'
+),
+(
+    'Mango "Lasagna"',
+    'Doesnt mention the special word in the body',
+    2,
+    '2025-01-05'
+),
+(
+    'Lasagna Ragu',
+    'I love this lasagna even more!!!!!',
+    2,
+    '2025-01-06'
 );
 
 INSERT INTO Review (description, rating, recipe_id, account_id) VALUES (
