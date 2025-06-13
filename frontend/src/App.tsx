@@ -3,6 +3,7 @@ import './App.css';
 import { Button } from "@/components/ui/button";  
 import { Input } from '@/components/ui/input';
 import ReactMarkdown from 'react-markdown';
+import RecipeModal from './components/recipeModal';
 import type { DisplayName } from '../../shared-types/index';
 
 // This is bad. Fix later
@@ -86,6 +87,9 @@ function App() {
             <p>No recipes to display</p>
           )}
         </div>
+      </div>
+      <div>
+        <RecipeModal />
       </div>
     </>
   )
