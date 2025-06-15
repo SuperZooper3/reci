@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Account(
     display_name VARCHAR NOT NULL,
     username VARCHAR NOT NULL UNIQUE,
     password VARCHAR NOT NULL,
-    created_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id)
 );
 
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Recipe(
     id SERIAL,
     title VARCHAR NOT NULL,
     body VARCHAR NOT NULL,
-    created_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     -- If the author's account is deleted, their recipes should persist
     author_id INT,
     PRIMARY KEY(id),
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Recipe(
 
 CREATE TABLE IF NOT EXISTS Review(
     id SERIAL,
-    created_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     description VARCHAR NOT NULL,
     rating float NOT NULL CHECK(rating >= 0 AND rating <= 10),
     recipe_id INT NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS SavedRecipe(
     id SERIAL,
     account_id INT NOT NULL,
     recipe_id INT NOT NULL,
-    saved_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    saved_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
     FOREIGN KEY(account_id) REFERENCES Account(id) ON DELETE CASCADE,
     FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE
