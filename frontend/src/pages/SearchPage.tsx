@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";  
 import { Input } from '@/components/ui/input';
 import ReactMarkdown from 'react-markdown';
-import RecipeModal from '../components/RecipeModal';
+import RecipeModal from '../components/recipeModal';
 import { filterRecipes } from '@/services/recipeService';
 import type { Recipe } from '../../../shared-types';
 
