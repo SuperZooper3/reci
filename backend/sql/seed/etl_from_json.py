@@ -131,14 +131,14 @@ def unique_pairs(n):
     return list(seen)
 
 followers_pairs = unique_pairs(N_FOLLOWS)
-saves_pairs     = set()
+saves_pairs = set()
 while len(saves_pairs) < N_SAVES:
     saves_pairs.add((random.choice(uids), random.randrange(1, N_RECIPES+1)))
 
 # EMIT SQL
 def insert_sql(table, cols, rows):
     col_list = ",".join(cols)
-    tuples   = ",".join(
+    tuples = ",".join(
         "(" + ",".join(str(v) if isinstance(v, (int,float))
                         else f"'{v}'" for v in (row[c] for c in cols)) + ")"
         for row in rows
