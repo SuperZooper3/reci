@@ -9,4 +9,7 @@ export type Review = ReviewInput & {
     id: number,
     created_at: Date,
 }
-  
+
+export type AvgRating = {
+    avg: number;
+}

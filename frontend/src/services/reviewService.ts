@@ -1,6 +1,8 @@
+import type { AvgRating } from "../../../shared-types";
+
 const BASE_URL = 'http://localhost:3000/api/reviews';
 
-export async function getRecipeAverageRating(recipeId: string): Promise<string | null> {
+export async function getRecipeAverageRating(recipeId: string): Promise<AvgRating> {
   const res = await fetch(`${BASE_URL}/avgrating/${recipeId}`);
   
   if (!res.ok) {
