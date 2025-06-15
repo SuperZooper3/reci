@@ -13,7 +13,7 @@ SEED_SQL      = "../big_seed.sql"
 
 # LOAD & SAMPLE
 with open(JSON_PATH, "r", encoding="utf8") as f:
-    raw = json.load(f)                  # one big dict keyed by id
+    raw = json.load(f) # one big dict keyed by id
 records = list(raw.values())
 # Filter out empty recipes that are missing required fields
 valid_records = [r for r in records if 'title' in r and 'ingredients' in r and 'instructions' in r]
