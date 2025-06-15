@@ -33,6 +33,28 @@ function App() {
     setRecipes(recipes);
   };
 
+  const [parsedRating, setParsedRating] = useState('');
+  const [recipeID, setRecipeID] = useState('');
+    
+  const handleLoadRecipeAverageRating = async () => {
+    if (!recipeID) {
+      alert('Please enter a Recipe ID');
+      return;
+    }
+
+    const res = await fetch(`http://localhost:3000/api/reviews/rating/${recipeID}`);
+    const data = await res.json();
+          
+    let parsedRating: string;
+    
+    if (data.avg === null) {
+      parsedRating = "No Ratings";
+    } else {
+      parsedRating = data.avg.toString();
+    }
+    
+    setParsedRating(parsedRating);
+  };
 
   return (
     <>
@@ -41,16 +63,17 @@ function App() {
         {accounts.length === 0 && <Button onClick={handleLoadAccounts}>Load accounts</Button>}
 
         {accounts.length > 0 && (
-        <div>
-          <h2>Accounts:</h2>
-          <ul className='list-disc'>
-            {accounts.map((item, index) => (
-              <li key={index}>{item.display_name}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+          <div>
+            <h2>Accounts:</h2>
+            <ul className='list-disc'>
+              {accounts.map((item, index) => (
+                <li key={index}>{item.display_name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
+      
       <div>
         <h2 className='text-2xl font-bold'> Get Recipes </h2>
         <div className='flex items-center space-x-2 my-2'>
@@ -88,6 +111,27 @@ function App() {
           )}
         </div>
       </div>
+
+      <div>
+        <h2 className='text-2xl font-bold'> Get Recipe Average Rating </h2>
+        <div className='flex items-center space-x-2 my-2'>
+          <Input
+            type="number"
+            placeholder="Enter Recipe ID"
+            value={recipeID}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRecipeID(e.target.value)}
+            className="w-40"
+          />
+          <Button onClick={handleLoadRecipeAverageRating}>Load Average Rating</Button>
+        </div>
+
+        <div className="ratings-container">
+          <div className="mt-2 text-sm text-gray-700">
+            Average Rating: {parsedRating}
+          </div>
+        </div>
+      </div>
+
       <div>
         <RecipeModal />
       </div>

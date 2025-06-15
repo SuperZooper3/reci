@@ -16,3 +16,10 @@ export async function addReview(review: ReviewInput): Promise<void> {
     saveQueryResult("addReview", rows);
     return;
 };
+
+export async function getRecipeAverageScore (recipe_id: number): Promise<number | null> {
+  const getAverageRecipeScoreSQL = await loadSQL('getAverageRecipeScore.sql');
+  const { rows } = await client.query(getAverageRecipeScoreSQL, [recipe_id]);
+  saveQueryResult("getAverageRecipeScore", rows);
+  return rows[0];
+};
