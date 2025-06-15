@@ -2,4 +2,6 @@
 .vscode
 .env
 backend/sql/results/*.out
-backend/sql/seed/*
+backend/sql/seed/recipes_raw_nosource_ar.json
+backend/sql/big_seed.sql
+backend/sql/seed/venv/
