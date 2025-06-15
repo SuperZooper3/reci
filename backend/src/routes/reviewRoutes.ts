@@ -5,6 +5,6 @@ const reviewRouter = Router();
 
 reviewRouter.get('/:recipeId', getReviewsByRecipeId);
 reviewRouter.post('/', addReview);
-reviewRouter.get('/avgrating/:recipeId', getRecipeAverageScore);
+reviewRouter.get('/avgRating/:recipeId', getRecipeAverageScore);
 
 export default reviewRouter;
