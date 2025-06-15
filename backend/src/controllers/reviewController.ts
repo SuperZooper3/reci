@@ -22,3 +22,15 @@ export const addReview = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+export const getRecipeAverageScore = async (req: Request, res:Response) => {
+  try{
+    const recipe_id = parseInt(req.params.recipeId, 10);
+    const recipeAvgScore = await reviewModel.getRecipeAverageScore(recipe_id);
+    res.json(recipeAvgScore);
+  } catch (error){
+    console.error('Error fetching reviews average by recipe id', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
