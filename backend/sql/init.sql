@@ -7,7 +7,7 @@ drop table if exists Account;
 
 CREATE TABLE IF NOT EXISTS Account(
     id SERIAL,
-    display_name TEXT NOT NULL,
+    display_name VARCHAR NOT NULL,
     username VARCHAR NOT NULL UNIQUE,
     password VARCHAR NOT NULL,
     created_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
