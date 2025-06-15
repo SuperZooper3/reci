@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from '@/components/ui/input';
 import ReactMarkdown from 'react-markdown';
 import RecipeModal from '../components/RecipeModal';
-import { filterRecipes } from '@/services/RecipeService';
+import { filterRecipes } from '@/services/recipeService';
 import type { Recipe } from '../../../shared-types';
 
 function SearchPage() {  
