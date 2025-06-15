@@ -2,3 +2,4 @@
 .vscode
 .env
 backend/sql/results/*.out
+backend/sql/seed/*
