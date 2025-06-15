@@ -3,3 +3,6 @@
 .env
 backend/sql/results/*.out
 backend/sql/seed/*
+
+# 'doc' folder and its contents that is created when 'npm run dev' is run
+**/doc

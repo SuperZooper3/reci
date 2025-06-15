@@ -4,8 +4,12 @@ export type AccountInfo = DisplayName & {
   id: number,
   username: string,
   created_at: Date
-};
+}
 
 export type Account = AccountInfo & {
   password: string,
-} 
+}
+
+export type ListAccount = DisplayName & {
+  username: string
+}

@@ -79,3 +79,15 @@ export const deleteAccount = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const getAccountsFollowing = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  try {
+    await accountModel.getAccountFollowing(id);
+    res.status(204).send();
+  } catch (error) {
+    console.error('Error getting accounts following', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+
+};

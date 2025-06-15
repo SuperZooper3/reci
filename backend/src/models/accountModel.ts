@@ -1,7 +1,8 @@
 import { client } from '../db.js';
 import { loadSQL } from '../utils/sqlLoader.js';
-import { AccountInfo, DisplayName } from '../../../shared-types/index.js';
+import { AccountInfo, DisplayName, ListAccount } from '../../../shared-types/index.js';
 import { saveQueryResult } from "../utils/saveQueryResult.js"
+import { RowDescriptionMessage } from 'node_modules/pg-protocol/dist/messages.js';
 
 export async function getAccountNames(): Promise<Array<DisplayName>> {
   const getAccountNamesSQL = await loadSQL('getAccountNames.sql');
@@ -38,3 +39,10 @@ export async function getAccountPassword(id: number): Promise<{ password: string
   saveQueryResult("getAccountPassword", rows);
   return rows;
 }
+
+export async function getAccountFollowing(id: number): Promise<ListAccount[]> {
+  const getAccountsFollowingSQL = await loadSQL('getAccountsFollowing.sql');
+  const { rows } = await client.query(getAccountsFollowingSQL, [id]);
+  saveQueryResult("getAccountsFollowing", rows);
+  return rows;
+};
