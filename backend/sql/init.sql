@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS Follower(
     id SERIAL,
     follower_id INT NOT NULL,
     followee_id INT NOT NULL,
+    followed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
     FOREIGN KEY(followee_id) REFERENCES Account(id) ON DELETE CASCADE,
     FOREIGN KEY(follower_id) REFERENCES Account(id) ON DELETE CASCADE
