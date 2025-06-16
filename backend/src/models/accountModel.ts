@@ -39,7 +39,7 @@ export async function getAccountPassword(id: number): Promise<{ password: string
   return rows;
 }
 
-export async function getAccountFollowing(id: number): Promise<ListAccount[]> {
+export async function getAccountsFollowing(id: number): Promise<ListAccount[]> {
   const getAccountsFollowingSQL = await loadSQL('getAccountsFollowing.sql');
   const { rows } = await client.query<ListAccount>(getAccountsFollowingSQL, [id]);
   saveQueryResult("getAccountsFollowing", rows);

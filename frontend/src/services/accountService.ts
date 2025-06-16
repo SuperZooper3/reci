@@ -17,6 +17,6 @@ export async function getAccountsFollowing(accountId: string) : Promise<ListAcco
   if (!res.ok) {
     throw new Error('Failed to return accounts following');
   }
-    return res.json();
+  return res.json();
 
 };

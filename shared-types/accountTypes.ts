@@ -11,5 +11,7 @@ export type Account = AccountInfo & {
 }
 
 export type ListAccount = DisplayName & {
-  username: string
+  id: number,
+  username: string,
+  followed_at: Date
 }
