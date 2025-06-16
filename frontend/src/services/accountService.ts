@@ -12,7 +12,7 @@ export async function getAccounts(): Promise<DisplayName[]> {
   };
 
 export async function getAccountsFollowing(accountId: string) : Promise<ListAccount[]> {
-  const res = await fetch(`${BASE_URL}/account/${accountId}`);
+  const res = await fetch(`${BASE_URL}/${accountId}/following`);
 
   if (!res.ok) {
     throw new Error('Failed to return accounts following');
