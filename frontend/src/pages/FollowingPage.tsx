@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import type { ListAccount } from '../../../shared-types/index';
-import { getAccountsFollowing } from '@/services/accountService';
+import type { ListAccount, AccountInfo } from '../../../shared-types/index';
+import { getAccountsFollowing, getAccount } from '@/services/accountService';
+
 
 function FollowingPage() {
   const { id } = useParams<{ id: string }>();
+  const [user, setAccount] = useState<AccountInfo| null>(null);
   const [followingAccounts, setFollowingAccounts] = useState<ListAccount[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,6 +32,27 @@ function FollowingPage() {
     }
   };
 
+  const handleUserInfo  = async () => {
+    if (!id) {
+      setError('No account ID provided');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const account = await getAccount(id);
+      setAccount(account);
+      
+    } catch (err) {
+      setError('Failed to load user account');
+      console.error('Failed loading user account:', err)
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const loadFollowing = async () => {
       if (!id) {
@@ -41,6 +64,8 @@ function FollowingPage() {
       setError(null);
       
       try {
+        const account = await getAccount(id);
+        setAccount(account);
         const accounts = await getAccountsFollowing(id);
         setFollowingAccounts(accounts);
       } catch (err) {
@@ -59,12 +84,16 @@ function FollowingPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">
-        Following - Account {id}
+        Following - {user ? `${user.display_name} (@${user.username})` : `Account ${id}`}
+        - Account {id}
       </h1>
       
       <div className="mb-4">
         <Button 
-          onClick={handleLoadFollowing} 
+          onClick={() => {
+            handleLoadFollowing();
+            handleUserInfo();
+          }} 
           disabled={loading || !id}
           className="mr-2"
         >

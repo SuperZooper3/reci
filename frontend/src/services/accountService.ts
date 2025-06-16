@@ -1,4 +1,4 @@
-import type { DisplayName, ListAccount } from "../../../shared-types";
+import type { DisplayName, ListAccount, AccountInfo } from "../../../shared-types";
 
 const BASE_URL = 'http://localhost:3000/api/accounts';
 
@@ -7,6 +7,15 @@ export async function getAccounts(): Promise<DisplayName[]> {
 
   if (!res.ok) {
     throw new Error('Failed to return accounts');
+  }
+    return res.json();
+  };
+
+export async function getAccount(id: string): Promise<AccountInfo> {
+    const res = await fetch(`${BASE_URL}/${id}`);
+
+  if (!res.ok) {
+    throw new Error('Failed to return account');
   }
     return res.json();
   };
