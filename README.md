@@ -22,7 +22,7 @@ We do not have `test-production` outputs yet.
 
 Every time the app starts up, we automatically delete the existing database instance (by doing `docker compose down -v` which deletes it's volume), create a new database container (by doing `docker compose up`), automatically run `backend/sql/init.sql` to create tables, constraints, stored procedures, and triggers, and finally run `backend/sql/seed.sql` to seed the database with toy data.
 
-This process is made to ensure a consistent developer environement, making it fast to itterate on our SQL schemas.
+This process is made to ensure a consistent developer environement, making it fast to iterate on our SQL schemas.
 
 ## How to run the app
 
