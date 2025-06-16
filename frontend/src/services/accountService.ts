@@ -1,4 +1,4 @@
-import type { DisplayName, ListAccount, AccountInfo } from "../../../shared-types";
+import type { DisplayName, FollowAccountInfo, AccountInfo } from "../../../shared-types";
 
 const BASE_URL = 'http://localhost:3000/api/accounts';
 
@@ -20,7 +20,7 @@ export async function getAccount(id: string): Promise<AccountInfo> {
     return res.json();
   };
 
-export async function getAccountsFollowing(accountId: string) : Promise<ListAccount[]> {
+export async function getAccountsFollowing(accountId: string) : Promise<FollowAccountInfo[]> {
   const res = await fetch(`${BASE_URL}/${accountId}/following`);
 
   if (!res.ok) {
