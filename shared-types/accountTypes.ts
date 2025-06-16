@@ -10,7 +10,7 @@ export type Account = AccountInfo & {
   password: string,
 }
 
-export type ListAccount = DisplayName & {
+export type FollowAccountInfo = DisplayName & {
   id: number,
   username: string,
   followed_at: Date

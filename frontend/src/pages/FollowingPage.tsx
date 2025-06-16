@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import type { ListAccount, AccountInfo } from '../../../shared-types/index';
+import type { FollowAccountInfo, AccountInfo } from '../../../shared-types/index';
 import { getAccountsFollowing, getAccount } from '@/services/accountService';
 
 
 function FollowingPage() {
   const { id } = useParams<{ id: string }>();
   const [user, setAccount] = useState<AccountInfo| null>(null);
-  const [followingAccounts, setFollowingAccounts] = useState<ListAccount[]>([]);
+  const [followingAccounts, setFollowingAccounts] = useState<FollowAccountInfo[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
