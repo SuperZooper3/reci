@@ -6,7 +6,7 @@ Reci is a social recipe-sharing app where users can post recipes, review what th
 
 ## App structure
 
-This repo is strucutred as a mono-repo, with our frontend living under `frontend/`, and our backend living in `backend/`. The frontend is built using React, while the backend is built with Express. Both can be started with `npm run dev`, but see the startup instructions for an automatic script. This is where the end-to-end application code that implements all the claimed features is.
+This repo is strucutred as a mono-repo, with our frontend living under `frontend/`, and our backend living in `backend/`. The frontend is built using React, while the backend is built with Express. Both can be started with `npm run dev`, but see the startup instructions for more details. This is where the end-to-end application code that implements all the claimed features is.
 
 ### SQL queries for features
 
@@ -33,7 +33,7 @@ This is how to run our working database-driven application.
 1. Installed [docker](https://www.docker.com/get-started/)
 2. Install npm
 3. From the root of the repo, run `npm install`
-4. Copy `example.env` and rename it to `.env`
+4. Create a `.env` by copying the contents of `example.env`
 
 As a note: the JWT secret is generated with `openssl rand -base64 32`, but we use the same secret in dev for consistency.
 
