@@ -1,6 +1,6 @@
 import { client } from '../db.js';
 import { loadSQL } from '../utils/sqlLoader.js';
-import { AccountInfo, DisplayName } from '../../../shared-types/index.js';
+import { AccountInfo, DisplayName, FollowAccountInfo } from '../../../shared-types/index.js';
 import { saveQueryResult } from "../utils/saveQueryResult.js"
 
 export async function getAccountNames(): Promise<Array<DisplayName>> {
@@ -38,3 +38,10 @@ export async function getAccountPassword(id: number): Promise<{ password: string
   saveQueryResult("getAccountPassword", rows);
   return rows;
 }
+
+export async function getAccountsFollowing(id: number): Promise<FollowAccountInfo[]> {
+  const getAccountsFollowingSQL = await loadSQL('getAccountsFollowing.sql');
+  const { rows } = await client.query<FollowAccountInfo>(getAccountsFollowingSQL, [id]);
+  saveQueryResult("getAccountsFollowing", rows);
+  return rows;
+};

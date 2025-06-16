@@ -10,4 +10,5 @@ UNION ALL
   FROM Recipe
   WHERE body ILIKE $1 AND title NOT ILIKE $1
   ORDER BY created_at DESC
-);
+)
+LIMIT 10;

@@ -4,6 +4,12 @@ This directory contains scripts to generate seed data for the recipe database us
 
 ## Setup Instructions
 
+## Requirements
+
+- Python 3.9+
+- [Click Download Recipes from the Eightportions Recipes Dataset](https://eightportions.com/datasets/Recipes/#fn:1) and unzip the folder and place ONLY the 'recipes_raw_nosource_ar.json' file in the seed directory
+- Dependencies listed in `requirements.txt`
+
 ### 1. Create and Activate Virtual Environment
 
 **On Windows (PowerShell):**
@@ -78,9 +84,3 @@ You can modify the following constants in `etl_from_json.py` to adjust the gener
 - `N_REVIEWS`: Number of reviews to generate (default: 25,000)
 - `N_FOLLOWS`: Number of follow relationships (default: 30,000)
 - `N_SAVES`: Number of saved recipe relationships (default: 20,000)
-
-## Requirements
-
-- Python 3.9+
-- [Download the `recipes_raw_nosource_ar.json` file from the Eightportions Recipes Dataset](https://eightportions.com/datasets/Recipes/#fn:1) and place it in the same directory
-- Dependencies listed in `requirements.txt`
