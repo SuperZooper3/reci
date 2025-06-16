@@ -3,6 +3,7 @@ import { loadSQL } from './utils/sqlLoader.js';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import fs from 'fs/promises';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,7 +31,18 @@ export async function initDb() {
   await client.query(initSQL);
   console.log("Initialized the database");
 
-  const seedSQL = await loadSQL('seed.sql');
+  // Check if big_seed.sql exists, otherwise use seed.sql
+  let seedFileName = 'seed.sql';
+  try {
+    const sqlDir = path.join(__dirname, '..', 'sql');
+    await fs.access(path.join(sqlDir, 'big_seed.sql'));
+    seedFileName = 'big_seed.sql';
+    console.log("Using big_seed.sql for seeding");
+  } catch {
+    console.log("big_seed.sql not found, using seed.sql for seeding");
+  }
+
+  const seedSQL = await loadSQL(seedFileName);
   console.log("Seeding the database");
   await client.query(seedSQL);
   console.log("Seeded the database");

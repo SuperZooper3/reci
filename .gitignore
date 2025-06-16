@@ -2,7 +2,9 @@
 .vscode
 .env
 backend/sql/results/*.out
-backend/sql/seed/*
+backend/sql/seed/recipes_raw_nosource_ar.json
+backend/sql/big_seed.sql
+backend/sql/seed/venv/
 
 # 'doc' folder and its contents that is created when 'npm run dev' is run
 **/doc
