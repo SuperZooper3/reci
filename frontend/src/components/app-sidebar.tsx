@@ -1,4 +1,4 @@
-import { BookMarked, Calendar, ChefHat, Home, Inbox, Search, Settings } from "lucide-react"
+import { BookMarked, ChefHat, Home, Search } from "lucide-react"
 
 import {
   Sidebar,
