@@ -68,9 +68,13 @@ export const createAccount = async (req: Request, res: Response) => {
   }
 };
 
-// TODO: add an auth check to delete the account
 export const deleteAccount = async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(400).json({ message: 'Missing JWT cookie' });
+    return
+  }
+  const { id } = auth.verifyAndReadJWT(jwt);
   try {
     await accountModel.deleteAccount(id);
     res.status(204).send();
