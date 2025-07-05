@@ -153,3 +153,20 @@ export const addAccountFollowing = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const deleteAccountFollow = async (req: Request, res: Response) => {
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(400).json({ message: 'Missing JWT cookie' });
+    return
+  }
+  const { id } = auth.verifyAndReadJWT(jwt);
+  const following_account_id = parseInt(req.body.followingAccountId, 10);
+  try {
+    await accountModel.deleteAccountFollow(id, following_account_id);
+    res.status(201).send();
+  } catch(error) {
+    console.error('Error deleting account following', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
