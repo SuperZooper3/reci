@@ -1,6 +1,6 @@
 import { client } from '../db.js';
 import { loadSQL } from '../utils/sqlLoader.js';
-import { Review, ReviewInput } from '../../../shared-types/index.js';
+import { Review, ReviewInput, ReviewImage } from '../../../shared-types/index.js';
 import { saveQueryResult } from "../utils/saveQueryResult.js"
 
 export async function getReviewsByRecipeId(recipe_id: number): Promise<Review[]> {
@@ -28,5 +28,20 @@ export async function getReviewsByAccountId(account_id: number): Promise<Review[
   const getReviewsByAccountIdSQL = await loadSQL('getAccountReviews.sql');
   const { rows } = await client.query(getReviewsByAccountIdSQL, [account_id]);
   saveQueryResult("getReviewsByAccountId", rows);
+  return rows;
+}
+
+export async function addImagesToReview(review_id: number, images: ReviewImage[]): Promise<void> {
+    const addReviewImageSQL = await loadSQL('addReviewImage.sql');
+    for (const image of images) { 
+      await client.query(addReviewImageSQL, [image.url, image.alt, review_id]);
+    }
+    return;
+};
+
+export async function getReviewImagesByID(review_id: number): Promise<ReviewImage[]> {
+  const getReviewImagesSQL = await loadSQL('getReviewImages.sql');
+  const { rows } = await client.query(getReviewImagesSQL, [review_id]);
+  saveQueryResult("getReviewImagesSQLs", rows);
   return rows;
 }
