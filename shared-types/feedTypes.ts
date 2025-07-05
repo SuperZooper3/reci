@@ -1,4 +1,5 @@
 export type FeedEntry = {
+    id: string,
     description: string,
     created_at: string,
     rating: number,

@@ -1,11 +1,11 @@
 import { getFeed } from "@/services/feedService";
 import { useEffect, useState } from "react";
-import type { Recipe } from "../../../shared-types";
-import RecipeCard from "@/components/recipeCard";
+import type { FeedEntry } from "../../../shared-types";
+import ReviewCard from "@/components/reviewCard";
 
 function HomePage() {  
   
-  const [feed, setFeed] = useState<Recipe[]>([]);
+  const [feed, setFeed] = useState<FeedEntry[]>([]);
 
   const fetchFeed = async () => {
     try {
@@ -25,17 +25,16 @@ function HomePage() {
     <div>
       {feed.length > 0 ? (
         <>
-        <h2>Displaying top 10 results:</h2>
           <ul>
-            {feed.map((recipe) => (
-              <li key={recipe.id}>
-                <RecipeCard recipe={recipe}/>
+            {feed.map((review) => ( 
+              <li key={review.id}>
+                <ReviewCard feedReview={review}/>
               </li>
             ))}
           </ul>
         </>
       ) : (
-        <p>No recipes to display</p>
+        <p>Our chefs are searching for more recipes to recommend...</p>
       )}
     </div>
     </>

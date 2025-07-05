@@ -5,6 +5,7 @@ import { getRecipe } from '@/services/recipeService';
 import type { Review, Recipe } from '../../../shared-types';
 import { useParams } from 'react-router-dom';
 import { getRecipeAverageRating, getRecipeRatings } from '@/services/reviewService';
+import ReviewCard from '@/components/reviewCard';
 
 function RecipePage() {  
   const { id } = useParams();
@@ -19,6 +20,7 @@ function RecipePage() {
       const reviews = await getRecipeRatings(String(recipe.id));
       setRecipe(recipe);
       setAvgRating(avgRating.avg);
+      console.log(avgRating);
       setReviews(reviews);
     } catch(e){
       alert(e);
@@ -45,7 +47,7 @@ function RecipePage() {
           </span>
         </div>
 
-        <div className="w-10 h-10 text-xl border-2 rounded-full flex items-center justify-center">
+        <div className="w-15 h-15 text-xl border-2 rounded-full flex items-center justify-center">
           {avgRating}
         </div>
       </div>
@@ -61,18 +63,8 @@ function RecipePage() {
             <h2>Displaying top 10 reviews:</h2>
             <ul>
               {reviews.map((review) => (
-                <li key={review.id} className="p-4 mb-4 border rounded-lg shadow">
-                  <div className="flex">
-                    <div className="text-xl flex !flex-row w-full !justify-start gap-6">
-                      <span>{review.username}</span>
-                      <span>{new Date(recipe.created_at).toLocaleDateString()}</span>
-                      <span>{review.rating}</span>
-                    </div>
-                    <div>
-                      {review.description}
-                    </div>
-                  </div>
-                  
+                <li key={review.id}>
+                  <ReviewCard normalReview = {review}/>
                 </li>
               ))}
             </ul>
