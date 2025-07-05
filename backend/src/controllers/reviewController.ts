@@ -35,3 +35,14 @@ export const getRecipeAverageScore = async (req: Request, res:Response) => {
   }
 }
 
+export const getReviewsByAccountId = async (req: Request, res: Response) => {
+  try {
+    const account_id = parseInt(req.params.accountId, 10);
+    const reviews = await reviewModel.getReviewsByAccountId(account_id);
+    res.json(reviews);
+  } catch(error) {
+    console.error('Error fetching reviews by account id', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
