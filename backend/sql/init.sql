@@ -19,10 +19,10 @@ CREATE TABLE IF NOT EXISTS Recipe(
     title VARCHAR NOT NULL,
     body VARCHAR NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    -- If the author's account is deleted, their recipes should persist
     author_id INT,
     PRIMARY KEY(id),
-    FOREIGN KEY(author_id) REFERENCES Account(id)
+    -- If the author's account is deleted, their recipes should persist
+    FOREIGN KEY(author_id) REFERENCES Account(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS Review(
