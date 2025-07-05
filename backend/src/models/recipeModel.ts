@@ -31,3 +31,10 @@ export async function getRecipes (searchTerm: string | null): Promise<Recipe[]> 
   saveQueryResult("filterRecipes", rows);
   return rows;
 };
+
+export async function getAccountSavedRecipes (account_id: number): Promise<Recipe[]> {
+  const getAccountSavedRecipes = await loadSQL('getAccountSavedRecipes.sql');
+  const { rows } = await client.query(getAccountSavedRecipes, [account_id]);
+  saveQueryResult("getAccountSavedRecipes", rows);
+  return rows;
+};
