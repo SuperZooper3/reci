@@ -3,7 +3,7 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import HomePage from "./pages/HomePage"
 import SearchPage from "./pages/SearchPage"
-import FollowingPage from "./pages/FollowingPage"
+import UserPage from './pages/UserPage'
 import RecipePage from "./pages/RecipePage"
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/recipes" element={<SearchPage />} />
-            <Route path="/account/:id/following" element={<FollowingPage />} />
+            <Route path="/account/:id" element={<UserPage />} />
             <Route path="/recipe/:id" element={<RecipePage />} />
           </Routes>
         </main>
