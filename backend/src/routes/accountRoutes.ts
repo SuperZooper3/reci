@@ -9,6 +9,6 @@ accountRouter.get('/:id', getAccount);
 accountRouter.post('/create', createAccount);
 accountRouter.delete('/:id', deleteAccount);
 accountRouter.get('/:id/following', getAccountsFollowing);
-accountRouter.post('/:id/following/:followingAccountId', addAccountFollowing);
+accountRouter.post('/me/follow', addAccountFollowing);
 
 export default accountRouter;
