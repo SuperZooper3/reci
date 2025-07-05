@@ -137,7 +137,7 @@ export const deleteAccountFollow = async (req: Request, res: Response) => {
     await accountModel.deleteAccountFollow(id, following_account_id);
     res.status(201).send();
   } catch(error) {
-    console.error('Error adding account following', error);
+    console.error('Error deleting account following', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
