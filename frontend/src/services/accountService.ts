@@ -65,3 +65,39 @@ export async function getAccountsFollowers(accountId: string) : Promise<FollowAc
   return res.json();
 
 };
+
+export async function login(username: string, password: string): Promise<void> {
+  const res = await fetch(`${BASE_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({
+      username: username,
+      password: password,
+    })
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to login');
+  }
+};
+
+export async function login(username: string, password: string): Promise<void> {
+  const res = await fetch(`${BASE_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({
+      username: username,
+      password: password,
+    })
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to login');
+  }
+};

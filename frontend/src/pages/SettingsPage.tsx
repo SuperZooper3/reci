@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Button } from '@/components/ui/button';
-import { createAccount, deleteAccount } from '@/services/accountService';
+import { deleteAccount, login } from '@/services/accountService';
 import { isLoggedIn } from '@/services/authService';
 
 function RecipePage() {  
   const navigate = useNavigate();
   const [loggedInAccount, setLoggedInAccount] = useState(false);
 
-  const login = async () => {
+  const handleLogin = async () => {
     try {
       //TODO: remove this. Only here for testing purposes
-      await createAccount({username: "test", display_name: "sally", password: "test"});
+      await login("russel", "123");
       setLoggedInAccount(isLoggedIn());
     } catch(e) {
       alert(e);
@@ -27,7 +27,7 @@ function RecipePage() {
     } catch(e) {
       alert(e);
     }
-  }
+  };
 
   useEffect(() => {
     isLoggedIn();
@@ -36,7 +36,7 @@ function RecipePage() {
   //TODO: Remove the login button. Only here for testing.
   return (
     <>
-      <Button onClick={login}>Login</Button>
+      <Button onClick={handleLogin}>Login</Button>
       {loggedInAccount ? <Button variant="destructive" onClick={handleDeleteAccount}>Delete Account</Button>
       : <span>Please log in</span>}
     </>
