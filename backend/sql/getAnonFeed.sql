@@ -1,5 +1,5 @@
 SELECT 
-    description, Review.created_at, rating, recipe_id, Recipe.title, 
+    description, Review.id, Review.created_at, rating, recipe_id, Recipe.title, 
     account_id, Account.display_name, Account.username
 FROM Review 
 JOIN Recipe ON Review.recipe_id = Recipe.id
