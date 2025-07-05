@@ -37,6 +37,15 @@ CREATE TABLE IF NOT EXISTS Review(
     FOREIGN KEY(account_id) REFERENCES Account(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS ReviewImage(
+    id SERIAL,
+    url VARCHAR NOT NULL,
+    alt VARCHAR,
+    review_id INT NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(review_id) REFERENCES Review(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS Follower(
     id SERIAL,
     follower_id INT NOT NULL,
