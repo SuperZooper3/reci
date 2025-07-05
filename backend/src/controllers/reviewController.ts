@@ -15,7 +15,6 @@ export const getReviewsByRecipeId = async (req: Request, res: Response) => {
 export const addReview = async (req: Request, res: Response) => {
   try {
     const review = req.body;
-    console.log(req.body);
     await reviewModel.addReview(review);
     res.status(201).json({ message: 'Review added successfully' });
   } catch (error) {

@@ -38,7 +38,9 @@ export default function CookModal({ className, ...props }: SliderProps) {
       };
       
       addReview(reviewInput);
-
+      
+      setDescription("")
+      setRating(5)
       setOpen(false)
     } catch (error) {
       console.error("Error adding cook", error)
