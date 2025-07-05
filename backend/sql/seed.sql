@@ -124,6 +124,28 @@ INSERT INTO Review (description, rating, recipe_id, account_id, created_at) VALU
     '2025-07-05 20:30:00'
 );
 
+INSERT INTO ReviewImage (url, alt, review_id) VALUES (
+    'https://s6890.pcdn.co/wp-content/uploads/2023/01/Cannoli.jpg',
+    'My amazing Cannolu',
+    1
+), 
+(
+    'https://www.giallozafferano.com/images/227-22770/sicilian-cannoli_650x433_wm.jpg',
+    'Another angle of my Cannolu',
+    1
+), 
+(
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXxiWySQKrrm-Hxeb39oXva239SXB65pdMcg&s',
+    'What the hell is this even',
+    2
+), 
+(
+    'https://www.grocery.coop/sites/default/files/wp-content/uploads/2011/06/Olives1_0.jpg',
+    'Yipee olives',
+    4
+)
+;
+
 INSERT INTO Follower (follower_id, followee_id) VALUES (
     1,
     2

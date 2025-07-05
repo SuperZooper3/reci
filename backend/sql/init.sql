@@ -1,5 +1,6 @@
 drop table if exists SavedRecipe;
 drop table if exists Follower;
+drop table if exists ReviewImage;
 drop table if exists Review;
 drop table if exists Recipe;
 drop table if exists Account;
