@@ -106,7 +106,7 @@ export const deleteAccount = async (req: Request, res: Response) => {
   const { id } = auth.verifyAndReadJWT(jwt);
   try {
     await accountModel.deleteAccount(id);
-    res.status(204).send();
+    res.status(204).send(id);
   } catch (error) {
     console.error('Error deleting account', error);
     res.status(500).json({ message: 'Internal server error' });

@@ -1,5 +1,10 @@
 export type DisplayName = {display_name: string};
 
+export type AccountCreate = DisplayName & {
+  password: string,
+  username: string,
+}
+
 export type AccountInfo = DisplayName & {
   id: number,
   username: string,
