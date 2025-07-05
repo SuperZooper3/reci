@@ -8,7 +8,7 @@ import {
 
 const recipeRouter = Router();
 
-recipeRouter.get('/:recipeId', getRecipeById);
+recipeRouter.get('/recipe/:recipeId', getRecipeById);
 recipeRouter.get('/account/:accountId', getRecipesByAccountId);
 recipeRouter.post('/', addRecipe);
 recipeRouter.get('/', getRecipes);

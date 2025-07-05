@@ -22,7 +22,7 @@ function SearchPage() {
   useEffect(() => {
     handleFilterRecipes();
   }, []);
-
+  
   return (
     <>
       <div>
