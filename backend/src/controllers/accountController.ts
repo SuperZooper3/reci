@@ -96,14 +96,31 @@ export const getAccountsFollowing = async (req: Request, res: Response) => {
 
 };
 
-export const addAccountFollowing = async (req: Request, res: Response) => {
-  const account_id = parseInt(req.params.id, 10);
-  const following_account_id = parseInt(req.params.followingAccountId, 10);
+export const getAccountsFollowers = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
   try {
-    await accountModel.addAccountFollowing(account_id, following_account_id);
+    const accountsFollowers = await accountModel.getAccountsFollowers(id);
+    res.json(accountsFollowers);
+  } catch (error) {
+    console.error('Error getting accounts followers', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+
+};
+
+export const addAccountFollowing = async (req: Request, res: Response) => {
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(400).json({ message: 'Missing JWT cookie' });
+    return
+  }
+  const { id } = auth.verifyAndReadJWT(jwt);
+  const following_account_id = parseInt(req.body.followingAccountId, 10);
+  try {
+    await accountModel.addAccountFollowing(id, following_account_id);
     res.status(201).send();
   } catch(error) {
     console.error('Error adding account following', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-}
+};
