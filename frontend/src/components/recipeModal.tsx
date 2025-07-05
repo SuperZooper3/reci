@@ -12,6 +12,8 @@ import {
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { addRecipe } from "@/services/recipeService"
+import type { RecipeInput } from "../../../shared-types"
 
 export default function RecipeModal() {
 
@@ -26,21 +28,13 @@ export default function RecipeModal() {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/recipes', { // TODO: split all the frontend http requests into a service file
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title,
-          body,
-          author_id: 2, // TODO: This is hardcoded until we can get author id from auth
-        }),
-      })
+      const reviewInput: RecipeInput = {
+        title,
+        body,
+        author_id: 2, // TODO: This is hardcoded until we can get author id from auth
+      };
 
-      if (!response.ok) {
-        throw new Error('Failed to add recipe')
-      }
+      addRecipe(reviewInput)
 
       setOpen(false)
       
