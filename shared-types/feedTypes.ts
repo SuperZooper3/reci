@@ -6,6 +6,5 @@ export type FeedEntry = {
     title: string,
     account_id: number,
     display_name: string,
-    username: string,
-    followee_id: number | null | undefined // will be null if they're not followed by you, or undefined for anon users
+    username: string
 };
