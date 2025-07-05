@@ -68,9 +68,13 @@ export const createAccount = async (req: Request, res: Response) => {
   }
 };
 
-// TODO: add an auth check to delete the account
 export const deleteAccount = async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(400).json({ message: 'Missing JWT cookie' });
+    return
+  }
+  const { id } = auth.verifyAndReadJWT(jwt);
   try {
     await accountModel.deleteAccount(id);
     res.status(204).send();
@@ -92,6 +96,18 @@ export const getAccountsFollowing = async (req: Request, res: Response) => {
 
 };
 
+export const getAccountsFollowers = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  try {
+    const accountsFollowers = await accountModel.getAccountsFollowers(id);
+    res.json(accountsFollowers);
+  } catch (error) {
+    console.error('Error getting accounts followers', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+
+};
+
 export const addAccountFollowing = async (req: Request, res: Response) => {
   const jwt = req.cookies.authToken;
   if (!jwt) {
@@ -107,4 +123,4 @@ export const addAccountFollowing = async (req: Request, res: Response) => {
     console.error('Error adding account following', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-}
+};

@@ -150,7 +150,7 @@ with open(SEED_SQL, "w", encoding="utf8") as f:
     f.write("BEGIN;\n")
     # Accounts
     f.write(insert_sql("Account",
-                       ["id","display_name","username","password","created_at"],
+                       ["display_name","username","password","created_at"],
                        accounts))
     # Recipes (id uses SERIAL, so omit)
     f.write(insert_sql("Recipe",

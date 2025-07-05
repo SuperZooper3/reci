@@ -3,7 +3,7 @@ import { getReviewsByRecipeId, addReview, getRecipeAverageScore, getReviewsByAcc
 
 const reviewRouter = Router();
 
-reviewRouter.get('/:recipeId', getReviewsByRecipeId);
+reviewRouter.get('/recipe/:recipeId', getReviewsByRecipeId);
 reviewRouter.post('/', addReview);
 reviewRouter.get('/avgRating/:recipeId', getRecipeAverageScore);
 reviewRouter.get('/account/:accountId', getReviewsByAccountId);

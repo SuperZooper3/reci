@@ -8,6 +8,7 @@ export type ReviewInput = {
 export type Review = ReviewInput & {
     id: number,
     created_at: Date,
+    username: string,
 }
 
 export type AvgRating = {

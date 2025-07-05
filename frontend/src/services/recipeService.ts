@@ -1,4 +1,4 @@
-import type { Recipe, Review } from "../../../shared-types";
+import type { Recipe } from "../../../shared-types";
 
 const BASE_URL = 'http://localhost:3000/api/recipes';
 
@@ -22,11 +22,11 @@ export async function getRecipesFromAccount(accountId: string): Promise<Recipe[]
   return res.json();
 }
 
-export async function getRecipeRatings(recipeId: string): Promise<Review[]> {
-  const res = await fetch(`${BASE_URL}/rating/${recipeId}`);
+export async function getRecipe(recipeId: string): Promise<Recipe> {
+  const res = await fetch(`${BASE_URL}/${recipeId}`);
   
   if (!res.ok) {
-    throw new Error('Failed to return ratings for this recipe');
+    throw new Error('Failed to return information for the recipe');
   }
   return res.json();
 }

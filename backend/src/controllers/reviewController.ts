@@ -27,7 +27,6 @@ export const getRecipeAverageScore = async (req: Request, res:Response) => {
   try{
     const recipe_id = parseInt(req.params.recipeId, 10);
     const recipeAvgScore = await reviewModel.getRecipeAverageScore(recipe_id);
-    console.log(recipeAvgScore);
     res.json(recipeAvgScore);
   } catch (error){
     console.error('Error fetching reviews average by recipe id', error);
