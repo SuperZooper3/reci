@@ -46,6 +46,13 @@ export async function getAccountsFollowing(id: number): Promise<FollowAccountInf
   return rows;
 };
 
+export async function getAccountsFollowers(id: number): Promise<FollowAccountInfo[]> {
+  const getAccountsFollowersSQL = await loadSQL('getAccountsFollowers.sql');
+  const { rows } = await client.query<FollowAccountInfo>(getAccountsFollowersSQL, [id]);
+  saveQueryResult("getAccountsFollowers", rows);
+  return rows;
+};
+
 export async function addAccountFollowing(account_id: number, following_account_id: number): Promise<void> {
   const addAccountFollowing = await loadSQL('addAccountFollowing.sql');
   await client.query(addAccountFollowing, [account_id, following_account_id]);
