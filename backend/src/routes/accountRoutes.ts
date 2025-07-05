@@ -7,11 +7,10 @@ accountRouter.get('/', getAccounts);
 accountRouter.get('/me', getAccountMe);
 accountRouter.get('/:id', getAccount);
 accountRouter.post('/create', createAccount);
-accountRouter.delete('/me/delete', deleteAccount);
+accountRouter.delete('/me', deleteAccount);
 accountRouter.delete('/me/follow', deleteAccountFollow);
 accountRouter.get('/:id/following', getAccountsFollowing);
 accountRouter.get('/:id/followers', getAccountsFollowers);
-accountRouter.post('/:id/following/:followingAccountId', addAccountFollowing);
 accountRouter.post('/me/follow', addAccountFollowing);
 
 export default accountRouter;
