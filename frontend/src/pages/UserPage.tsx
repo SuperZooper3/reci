@@ -33,33 +33,21 @@ function UserPage() {
   };
 
   useEffect(() => {
-    const loadFollowing = async () => {
-      if (!id) {
-        setError('No account ID provided');
-        return;
-      }
-
-      setLoading(true);
-      setError(null);
-      
-      try {
-        const account = await getAccount(id);
-        setAccount(account);
-      } catch (err) {
-        setError('Failed to load following accounts');
-        console.error('Error loading following accounts:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (id) {
-      loadFollowing();
+      handleUserInfo();
     }
   }, [id]);
 
   return (
     <div className="p-6">
+    
+      {loading && (
+        <p className="text-gray-500 mb-4">Loading user account...</p>
+      )}
+
+      {error && (
+        <p className="text-red-500 mb-4">Error: {error}</p>
+      )}
       <h1 className="text-2xl font-bold mb-4">
         {user ? `${user.display_name} (@${user.username})` : `Account ${id}`}
       </h1>
