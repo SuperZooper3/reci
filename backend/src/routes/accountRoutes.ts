@@ -10,7 +10,6 @@ accountRouter.post('/create', createAccount);
 accountRouter.post('/login', loginAccount);
 accountRouter.delete('/me', deleteAccount);
 accountRouter.delete('/me/follow', deleteAccountFollow);
-accountRouter.delete('/me/follow', deleteAccountFollow);
 accountRouter.get('/:id/following', getAccountsFollowing);
 accountRouter.get('/:id/followers', getAccountsFollowers);
 accountRouter.post('/me/follow', addAccountFollowing);
