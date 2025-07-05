@@ -20,7 +20,6 @@ export function saveQueryResult(queryName: string, result: object[]) {
                 for (const k of keys) {
                     values.push(String(v[k]).replace(/\n/g," "));
                 }
-                console.log(values);
                 return values.join(",");
             }).join("\n"); // ordering here might be sus
             output = `${headerLine}\n${contents}\n`;

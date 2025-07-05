@@ -1,22 +1,22 @@
 INSERT INTO Account (display_name, username, password) VALUES (
     'Bill',
     'bill',
-    'bill'
+    '$2b$10$SdTudisOtiAxevwmzYt4xOuP3bEV7FDnL8NuEc0aI6pQilnNfOkWa' -- each password is 123
 ),
 (
     'Russell',
     'russel',
-    'russel'
+    '$2b$10$SdTudisOtiAxevwmzYt4xOuP3bEV7FDnL8NuEc0aI6pQilnNfOkWa'
 ),
 (
     'Marco',
     'marco',
-    'marco'
+    '$2b$10$SdTudisOtiAxevwmzYt4xOuP3bEV7FDnL8NuEc0aI6pQilnNfOkWa'
 ),
 (
     'Alex',
     'alex',
-    'alex'
+    '$2b$10$SdTudisOtiAxevwmzYt4xOuP3bEV7FDnL8NuEc0aI6pQilnNfOkWa'
 );
 
 INSERT INTO Recipe (title, body, author_id, created_at) VALUES 
@@ -95,11 +95,33 @@ INSERT INTO Recipe (title, body, author_id, created_at) VALUES
     '2025-01-06'
 );
 
-INSERT INTO Review (description, rating, recipe_id, account_id) VALUES (
+INSERT INTO Review (description, rating, recipe_id, account_id, created_at) VALUES (
     'Amazing. Trallallero Trallallà would love these',
-    '10',
+    10,
     1,
-    1
+    1,
+    '2025-07-03 19:30:00'
+), 
+(
+    'Disgusting',
+    1,
+    5,
+    3,
+    '2025-07-05 10:21:00'
+),
+(
+    'Mid as heck',
+    5,
+    2,
+    2,
+    '2025-07-01 15:30:00'
+),
+(
+    'I cooked this recipe again',
+    8,
+    2,
+    2,
+    '2025-07-05 20:30:00'
 );
 
 INSERT INTO Follower (follower_id, followee_id) VALUES (
