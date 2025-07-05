@@ -4,9 +4,9 @@ import { Review, ReviewInput } from '../../../shared-types/index.js';
 import { saveQueryResult } from "../utils/saveQueryResult.js"
 
 export async function getReviewsByRecipeId(recipe_id: number): Promise<Review[]> {
-    const getReviewsByRecipeIdSQL = await loadSQL('getReview.sql');
+    const getReviewsByRecipeIdSQL = await loadSQL('getReviewsByRecipe.sql');
     const { rows } = await client.query(getReviewsByRecipeIdSQL, [recipe_id]); 
-    saveQueryResult("getReview", rows);
+    saveQueryResult("getReviewsByRecipe", rows);
     return rows;
 };
 
@@ -23,3 +23,10 @@ export async function getRecipeAverageScore (recipe_id: number): Promise<number 
   saveQueryResult("getAverageRecipeScore", rows);
   return rows[0];
 };
+
+export async function getReviewsByAccountId(account_id: number): Promise<Review[]> {
+  const getReviewsByAccountIdSQL = await loadSQL('getAccountReviews.sql');
+  const { rows } = await client.query(getReviewsByAccountIdSQL, [account_id]);
+  saveQueryResult("getReviewsByAccountId", rows);
+  return rows;
+}

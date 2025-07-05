@@ -44,7 +44,9 @@ CREATE TABLE IF NOT EXISTS Follower(
     followed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
     FOREIGN KEY(followee_id) REFERENCES Account(id) ON DELETE CASCADE,
-    FOREIGN KEY(follower_id) REFERENCES Account(id) ON DELETE CASCADE
+    FOREIGN KEY(follower_id) REFERENCES Account(id) ON DELETE CASCADE,
+    CONSTRAINT unique_follower_followee UNIQUE (follower_id, followee_id),
+    CHECK (follower_id != followee_id)
 );
 
 CREATE TABLE IF NOT EXISTS SavedRecipe(
