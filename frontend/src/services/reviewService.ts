@@ -1,4 +1,4 @@
-import type { AvgRating, Review } from "../../../shared-types";
+import type { AvgRating, Review, ReviewInput } from "../../../shared-types";
 
 const BASE_URL = 'http://localhost:3000/api/reviews';
 
@@ -19,4 +19,18 @@ export async function getRecipeRatings(recipeId: string): Promise<Review[]> {
   }
   return res.json();
 
+}
+
+export async function addReview(reviewInput: ReviewInput): Promise<void> {
+  const res = await fetch(`${BASE_URL}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(reviewInput)
+  });
+  
+  if (!res.ok) {
+    throw new Error('Failed to add review for this recipe');
+  }
 }

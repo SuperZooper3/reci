@@ -12,6 +12,11 @@ INSERT INTO Account (display_name, username, password) VALUES (
     'Marco',
     'marco',
     'marco'
+),
+(
+    'Alex',
+    'alex',
+    'alex'
 );
 
 INSERT INTO Recipe (title, body, author_id, created_at) VALUES 
@@ -68,25 +73,25 @@ INSERT INTO Recipe (title, body, author_id, created_at) VALUES
 (
     'Pasta',
     'Goes well with lasagna',
-    2,
+    3,
     '2025-01-03'
 ),
 (
     'Icecream',
     'It isnt a pasta dish',
-    2,
+    3,
     '2025-01-04'
 ),
 (
     'Mango "Lasagna"',
     'Doesnt mention the special word in the body',
-    2,
+    3,
     '2025-01-05'
 ),
 (
     'Lasagna Ragu',
     'I love this lasagna even more!!!!!',
-    2,
+    3,
     '2025-01-06'
 );
 
