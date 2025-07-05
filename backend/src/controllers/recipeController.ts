@@ -61,3 +61,20 @@ export const getSavedRecipesByAccountId = async (req: Request, res: Response) =>
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+export const addSavedRecipe = async (req: Request, res: Response) => {
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(400).json({ message: 'Missing JWT cookie' });
+    return
+  }
+  const { id } = auth.verifyAndReadJWT(jwt);
+  const recipe_id = req.body.recipe_id;
+  try{
+    const accountSavedRecipes = await recipeModel.addSavedRecipe(id, recipe_id);
+    res.json(accountSavedRecipes);
+  } catch (error) {
+    console.error('Error adding account\'s saved recipes', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
