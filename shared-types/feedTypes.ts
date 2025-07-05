@@ -1,7 +1,11 @@
-import { Review, Recipe, Account } from './index';
-
-export type FeedEntry = Review & Recipe & Account & {
+export type FeedEntry = {
+    description: string,
+    created_at: string,
+    rating: number,
+    recipe_id: number,
+    title: string,
+    account_id: number,
+    display_name: string,
+    username: string,
     followee_id: number | null | undefined // will be null if they're not followed by you, or undefined for anon users
 };
-// the rest of the following data is technically returned by the query through it's *, but its not useful
-
