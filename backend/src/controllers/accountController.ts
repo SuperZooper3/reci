@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import * as accountModel from '../models/accountModel.js';
 import * as accountService from '../services/accountService.js'
 import * as auth from '../utils/auth.js'
+import { AccountError } from '../../../shared-types/index.js';
 
 export const getAccounts = async (req: Request, res:Response) => {
   try{
@@ -65,6 +66,30 @@ export const createAccount = async (req: Request, res: Response) => {
     // TODO: do custom error validation for username clashes
     console.error('Error creating account', error);
     res.status(500).json({ message: 'Error creating your account' });
+  }
+};
+
+export const loginAccount = async (req: Request, res: Response) => {
+  const username = req.body?.username;
+  const password = req.body?.password;
+
+  if (!username || !password) {
+    res.status(400).json({ message: 'Missing username or password to log in' });
+    return;
+  }
+
+  try {
+    const jwt = await accountService.loginAccountService(username, password);
+    res.status(200).cookie('authToken', jwt).send();
+  } catch (error) {
+    if (error instanceof AccountError) {
+      console.warn("Bad login from user", error)
+      res.status(401).json({ message: 'Incorrect username or password' });
+    } else {
+      // TODO: errors for invalid username or password
+      console.error('Error logging in account', error);
+      res.status(500).json({ message: 'Server error signing you in' });
+    }
   }
 };
 
