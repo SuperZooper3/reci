@@ -3,11 +3,13 @@ import {
   addRecipe, 
   getRecipeById, 
   getRecipesByAccountId, 
-  getRecipes, 
+  getRecipes,
+  getSavedRecipesByAccountId, 
 } from '../controllers/recipeController.js';
 
 const recipeRouter = Router();
 
+recipeRouter.get('/saved', getSavedRecipesByAccountId);
 recipeRouter.get('/:recipeId', getRecipeById);
 recipeRouter.get('/account/:accountId', getRecipesByAccountId);
 recipeRouter.post('/', addRecipe);

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as recipeModel from '../models/recipeModel.js';
+import * as auth from '../utils/auth.js'
 
 export const getRecipeById = async (req: Request, res: Response) => {
   try {
@@ -44,3 +45,19 @@ export const getRecipes = async (req: Request, res:Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const getSavedRecipesByAccountId = async (req: Request, res: Response) => {
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(400).json({ message: 'Missing JWT cookie' });
+    return
+  }
+  const { id } = auth.verifyAndReadJWT(jwt);
+  try{
+    const accountSavedRecipes = await recipeModel.getAccountSavedRecipes(id);
+    res.json(accountSavedRecipes);
+  } catch (error) {
+    console.error('Error fetching account\'s saved recipes', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
