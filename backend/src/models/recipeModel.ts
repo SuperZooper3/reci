@@ -38,3 +38,9 @@ export async function getAccountSavedRecipes (account_id: number): Promise<Recip
   saveQueryResult("getAccountSavedRecipes", rows);
   return rows;
 };
+
+export async function addSavedRecipe (id: number, recipe_id: number): Promise<void> {
+  const addSavedRecipe = await loadSQL('addSavedRecipe.sql');
+  await client.query(addSavedRecipe, [id, recipe_id]);
+  return;
+}
