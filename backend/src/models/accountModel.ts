@@ -52,3 +52,9 @@ export async function getAccountsFollowers(id: number): Promise<FollowAccountInf
   saveQueryResult("getAccountsFollowers", rows);
   return rows;
 };
+
+export async function addAccountFollowing(account_id: number, following_account_id: number): Promise<void> {
+  const addAccountFollowing = await loadSQL('addAccountFollowing.sql');
+  await client.query(addAccountFollowing, [account_id, following_account_id]);
+  return;
+};

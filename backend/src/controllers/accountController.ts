@@ -103,3 +103,15 @@ export const getAccountsFollowers = async (req: Request, res: Response) => {
   }
 
 };
+
+export const addAccountFollowing = async (req: Request, res: Response) => {
+  const account_id = parseInt(req.params.id, 10);
+  const following_account_id = parseInt(req.params.followingAccountId, 10);
+  try {
+    await accountModel.addAccountFollowing(account_id, following_account_id);
+    res.status(201).send();
+  } catch(error) {
+    console.error('Error adding account following', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
