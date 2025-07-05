@@ -58,3 +58,9 @@ export async function addAccountFollowing(account_id: number, following_account_
   await client.query(addAccountFollowing, [account_id, following_account_id]);
   return;
 };
+
+export async function deleteAccountFollow(account_id: number, following_account_id: number): Promise<void> {
+  const deleteAccountFollow = await loadSQL('deleteAccountFollowing.sql');
+  await client.query(deleteAccountFollow, [account_id, following_account_id]);
+  return;
+}
