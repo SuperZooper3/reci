@@ -5,4 +5,4 @@ JOIN Account ON Review.account_id = Account.id
 LEFT JOIN Follower ON 
     Follower.followee_id = Review.account_id AND 
     Follower.follower_id = $1
-ORDER BY followee_id DESC, created_at DESC;
+ORDER BY followee_id DESC, Review.created_at DESC;
