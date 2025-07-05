@@ -11,5 +11,6 @@ accountRouter.delete('/:id', deleteAccount);
 accountRouter.get('/:id/following', getAccountsFollowing);
 accountRouter.get('/:id/followers', getAccountsFollowers);
 accountRouter.post('/:id/following/:followingAccountId', addAccountFollowing);
+accountRouter.post('/me/follow', addAccountFollowing);
 
 export default accountRouter;
