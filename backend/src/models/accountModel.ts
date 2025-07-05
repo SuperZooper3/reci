@@ -1,6 +1,6 @@
 import { client } from '../db.js';
 import { loadSQL } from '../utils/sqlLoader.js';
-import { AccountInfo, DisplayName, FollowAccountInfo } from '../../../shared-types/index.js';
+import { Account, AccountInfo, DisplayName, FollowAccountInfo } from '../../../shared-types/index.js';
 import { saveQueryResult } from "../utils/saveQueryResult.js"
 
 export async function getAccountNames(): Promise<Array<DisplayName>> {
@@ -13,8 +13,16 @@ export async function getAccountNames(): Promise<Array<DisplayName>> {
 export async function getAccount(id: number): Promise<AccountInfo | null>
  {
   const getAccountSQL = await loadSQL('getAccount.sql');
-  const { rows } = await client.query<{ id: number, username: string, display_name: string, created_at: Date }>(getAccountSQL, [id]);
+  const { rows } = await client.query<AccountInfo>(getAccountSQL, [id]);
   saveQueryResult("getAccount", rows);
+  return rows[0] ?? null;
+}
+
+export async function getAccountByUsername(username: string): Promise<Account | null>
+ {
+  const getAccountByUsernameSQL = await loadSQL('getAccountByUsername.sql');
+  const { rows } = await client.query<Account>(getAccountByUsernameSQL, [username]);
+  saveQueryResult("getAccountByUsername", rows);
   return rows[0] ?? null;
 }
 
@@ -58,3 +66,9 @@ export async function addAccountFollowing(account_id: number, following_account_
   await client.query(addAccountFollowing, [account_id, following_account_id]);
   return;
 };
+
+export async function deleteAccountFollow(account_id: number, following_account_id: number): Promise<void> {
+  const deleteAccountFollow = await loadSQL('deleteAccountFollowing.sql');
+  await client.query(deleteAccountFollow, [account_id, following_account_id]);
+  return;
+}

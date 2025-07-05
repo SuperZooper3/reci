@@ -6,5 +6,6 @@ export type RecipeInput = {
 
 export type Recipe = RecipeInput & {
   id: number,
-  created_at: Date
+  created_at: Date,
+  username: string,
 }
