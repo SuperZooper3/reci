@@ -1,6 +1,6 @@
 import { hashPassword, signJWT, comparePassword } from "../utils/auth.js"
 import { createAccount, getAccountByUsername } from "../models/accountModel.js"
-import { AccountError, AccountErrorStrings } from '../../../shared-types/index.js';
+import { AccountError, AccountErrorStrings } from '../errors.js';
 
 export const createAccountService = async (display_name: string, username: string, password: string) => {
     const hashedPassword = await hashPassword(password);

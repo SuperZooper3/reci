@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import * as accountModel from '../models/accountModel.js';
 import * as accountService from '../services/accountService.js'
 import * as auth from '../utils/auth.js'
-import { AccountError } from '../../../shared-types/index.js';
+import { AccountError } from '../errors.js';
 
 export const getAccounts = async (req: Request, res:Response) => {
   try{
