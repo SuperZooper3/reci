@@ -8,6 +8,6 @@ accountRouter.get('/me', getAccountMe);
 accountRouter.get('/:id', getAccount);
 accountRouter.post('/create', createAccount);
 accountRouter.delete('/:id', deleteAccount);
-accountRouter.get('/:id/following', getAccountsFollowing)
+accountRouter.get('/:id/following', getAccountsFollowing);
 
 export default accountRouter;

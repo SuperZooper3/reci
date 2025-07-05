@@ -56,5 +56,14 @@ CREATE TABLE IF NOT EXISTS SavedRecipe(
     saved_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
     FOREIGN KEY(account_id) REFERENCES Account(id) ON DELETE CASCADE,
-    FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE
+    FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE,
+    CONSTRAINT unique_account_id_recipe_id UNIQUE (account_id, recipe_id)
 );
+
+CREATE TRIGGER autoSaveReviewedRecipes
+AFTER INSERT ON Review
+REFERENCING NEW ROW AS newReview
+FOR EACH ROW
+INSERT INTO SavedRecipe
+(account_id, recipe_id)
+VALUES (newReview.account_id, newReview.recipe_id);
