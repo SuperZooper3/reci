@@ -91,3 +91,15 @@ export const getAccountsFollowing = async (req: Request, res: Response) => {
   }
 
 };
+
+export const getAccountsFollowers = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  try {
+    const accountsFollowers = await accountModel.getAccountsFollowers(id);
+    res.json(accountsFollowers);
+  } catch (error) {
+    console.error('Error getting accounts followers', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+
+};

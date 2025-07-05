@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAccount, deleteAccount, getAccounts, getAccountMe, createAccount, getAccountsFollowing } from '../controllers/accountController.js';
+import { getAccount, deleteAccount, getAccounts, getAccountMe, createAccount, getAccountsFollowing, getAccountsFollowers } from '../controllers/accountController.js';
 
 const accountRouter = Router();
 
@@ -8,6 +8,7 @@ accountRouter.get('/me', getAccountMe);
 accountRouter.get('/:id', getAccount);
 accountRouter.post('/create', createAccount);
 accountRouter.delete('/:id', deleteAccount);
-accountRouter.get('/:id/following', getAccountsFollowing)
+accountRouter.get('/:id/following', getAccountsFollowing);
+accountRouter.get('/:id/followers', getAccountsFollowers);
 
 export default accountRouter;
