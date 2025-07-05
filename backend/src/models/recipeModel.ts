@@ -37,4 +37,4 @@ export async function getAccountSavedRecipes (account_id: number): Promise<Recip
   const { rows } = await client.query(getAccountSavedRecipes, [account_id]);
   saveQueryResult("getAccountSavedRecipes", rows);
   return rows;
-}
+};
