@@ -10,17 +10,6 @@ function RecipePage() {
   const navigate = useNavigate();
   const [loggedInAccount] = useState(!!Cookies.get('authToken'));
 
-  // const handleLogin = async () => {
-  //   try {
-  //     //TODO: remove this. Only here for testing purposes
-  //     await login("russel", "123");
-  //     setLoggedInAccount(isLoggedIn());
-  //     window.location.reload();
-  //   } catch(e) {
-  //     alert(e);
-  //   }
-  // };
-
   const handleDeleteAccount = async() => {
     try {
       await deleteAccount();
