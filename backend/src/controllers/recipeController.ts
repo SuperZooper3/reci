@@ -11,7 +11,7 @@ export const getRecipeById = async (req: Request, res: Response) => {
     console.error('Error fetching recipe by id', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-}
+};
 
 export const getRecipesByAccountId = async (req: Request, res:Response) => {
   try{
@@ -33,7 +33,7 @@ export const addRecipe = async (req: Request, res: Response) => {
     console.error('Error adding recipe', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-}
+};
 
 export const getRecipes = async (req: Request, res:Response) => {
   try{
@@ -60,7 +60,7 @@ export const getSavedRecipesByAccountId = async (req: Request, res: Response) =>
     console.error('Error fetching account\'s saved recipes', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-}
+};
 
 export const addSavedRecipe = async (req: Request, res: Response) => {
   const jwt = req.cookies.authToken;
@@ -94,4 +94,4 @@ export const deleteRecipe = async (req: Request, res: Response) => {
     console.error('Error deleting recipe', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-}
+};
