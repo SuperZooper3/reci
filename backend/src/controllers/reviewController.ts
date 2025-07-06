@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import * as reviewModel from '../models/reviewModel.js';
-import { fetchImagesForReviews } from "src/services/reviewImageService.js";
+import { fetchImagesForReviews } from "src/services/reviewService.js";
+import { addReviewService } from "src/services/reviewService.js";
+import * as auth from '../utils/auth.js'
 
 export const getReviewsByRecipeId = async (req: Request, res: Response) => {
   try {
@@ -15,8 +17,24 @@ export const getReviewsByRecipeId = async (req: Request, res: Response) => {
 
 export const addReview = async (req: Request, res: Response) => {
   try {
+    const jwt = req.cookies.authToken;
+  
+    if (!jwt) {
+      res.status(400).json({ message: 'Missing JWT cookie' });
+      return
+    }
+    
+    const { id } = auth.verifyAndReadJWT(jwt);
+    
     const review = req.body;
-    await reviewModel.addReview(review);
+    await addReviewService({
+      account_id: id,
+      description: review.description, 
+      rating: review.rating,
+      recipe_id: review.recipe_id,
+      images: review.images
+    });
+
     res.status(201).json({ message: 'Review added successfully' });
   } catch (error) {
     console.error('Error adding review', error);

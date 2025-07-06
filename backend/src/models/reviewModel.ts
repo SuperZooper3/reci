@@ -10,11 +10,11 @@ export async function getReviewsByRecipeId(recipe_id: number): Promise<Review[]>
     return rows;
 };
 
-export async function addReview(review: ReviewInput): Promise<void> {
+export async function addReview(review: ReviewInput): Promise<Review> {
     const addReviewSQL = await loadSQL('addReview.sql');
     const { rows } = await client.query(addReviewSQL, [review.description, review.rating, review.recipe_id, review.account_id]);
     saveQueryResult("addReview", rows);
-    return;
+    return rows[0];
 };
 
 export async function getRecipeAverageScore (recipe_id: number): Promise<number | null> {
