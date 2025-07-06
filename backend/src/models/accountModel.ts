@@ -71,10 +71,10 @@ export async function deleteAccountFollow(account_id: number, following_account_
   const deleteAccountFollow = await loadSQL('deleteAccountFollowing.sql');
   await client.query(deleteAccountFollow, [account_id, following_account_id]);
   return;
-}
+};
 
 export async function getFollowerCount(account_id: number): Promise<number> {
   const getFollowerCount = await loadSQL('getFollowerCount.sql');
   const { rows } = await client.query(getFollowerCount, [account_id]);
   return rows[0];
-}
+};
