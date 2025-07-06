@@ -27,42 +27,38 @@ export default function ReviewCard<T extends Review>({ review }: ReviewProps<T>)
   }
 
   return (
-    <div className="p-4 mb-4 border rounded-lg shadow">
-      <div className="flex w-full">
-        <div className="text-xl flex !flex-row w-full gap-6">
+    <div className="p-4 mb-4 border rounded-lg shadow flex flex-col">
+      <div className="flex w-full flex-col">
+        <div className="text-xl flex flex-row w-full gap-6">
           <span>{review.username} {mood} {"title" in review ? (review.title as string) : "this"}</span>
         </div>
-        <div className="w-full !flex-row !justify-between mb-2"> 
+        <div className="w-full flex flex-row !justify-between mb-2"> 
           <span>{new Date(review.created_at).toLocaleDateString()}</span>
-          <div className={`w-10 h-10 border-2 rounded-full ${color}`}> {review.rating}</div>
+          <div className={`flex justify-center items-center w-10 h-10 border-2 rounded-full ${color}`}> {review.rating}</div>
         </div>
-        <div>
+        <div className="text-center">
           {review.description}
         </div>
       </div>
       { 
         review.images.length > 0 &&
-        <div className="max-w-md mx-auto">
-  <Carousel>
-    <CarouselContent className="flex !flex-row !justify-normal">
-      {review.images.map((image, index) => (
-        <CarouselItem
-          key={index}
-          style={{ width: "20px", minWidth: "20px" }}
-          className="flex-shrink-0 overflow-hidden"
-        >
-          <img
-            src={image.url}
-            alt={image.alt}
-            className="w-full h-40 object-cover"
-          />
-        </CarouselItem>
-      ))}
-    </CarouselContent>
-    <CarouselPrevious />
-    <CarouselNext />
-  </Carousel>
-</div>
+        <div className="max-w-md mx-auto pt-16">
+          <Carousel className="w-64">
+            <CarouselContent>
+              {review.images.map((image, index) => (
+                <CarouselItem key={index} className="aspect-square w-64">
+                  <img
+                    src={image.url}
+                    alt={image.alt}
+                    className="object-cover w-full h-full"
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </div>
       }
     </div>
   );
