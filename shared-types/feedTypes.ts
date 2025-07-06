@@ -1,5 +1,6 @@
 import { Review } from "./reviewTypes";
 
 export type FeedEntry = Review & {
-    display_name: string;
+    display_name: string
+    title: string,
 };
