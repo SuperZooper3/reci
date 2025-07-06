@@ -95,3 +95,20 @@ export const deleteRecipe = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const deleteSavedRecipe = async (req: Request, res: Response) => {
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(400).json({ message: 'Missing JWT cookie' });
+    return
+  }
+  const { id } = auth.verifyAndReadJWT(jwt);
+  const saved_recipe_id = req.body.saved_recipe_id;
+  try{
+    await recipeModel.deleteSavedRecipe(saved_recipe_id, id);
+    res.status(204).send();
+  } catch (error) {
+    console.error('Error deleting recipe', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};

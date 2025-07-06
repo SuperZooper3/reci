@@ -1,5 +1,6 @@
 drop table if exists SavedRecipe;
 drop table if exists Follower;
+drop table if exists ReviewImage;
 drop table if exists Review;
 drop table if exists Recipe;
 drop table if exists Account;
@@ -37,6 +38,15 @@ CREATE TABLE IF NOT EXISTS Review(
     FOREIGN KEY(account_id) REFERENCES Account(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS ReviewImage(
+    id SERIAL,
+    url VARCHAR NOT NULL,
+    alt VARCHAR,
+    review_id INT NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(review_id) REFERENCES Review(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS Follower(
     id SERIAL,
     follower_id INT NOT NULL,
@@ -56,5 +66,6 @@ CREATE TABLE IF NOT EXISTS SavedRecipe(
     saved_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
     FOREIGN KEY(account_id) REFERENCES Account(id) ON DELETE CASCADE,
-    FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE
+    FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE,
+    CONSTRAINT unique_account_id_recipe_id UNIQUE (account_id, recipe_id)
 );

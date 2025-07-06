@@ -88,7 +88,7 @@ export const loginAccount = async (req: Request, res: Response) => {
     res.status(200).cookie('authToken', jwt).send();
   } catch (error) {
     if (error instanceof AccountError) {
-      console.warn("Bad login to", req.body?.username)
+      console.warn("Bad login to", req.body?.username, error)
       res.status(401).json({ message: 'Incorrect username or password' });
     } else {
       console.error('Error logging in account', error);
