@@ -34,7 +34,11 @@ export default function CookModal({ className, ...props }: SliderProps) {
         description,
         rating,
         recipe_id: 1, // TODO
-        account_id: 2 // TODO
+        account_id: 2, // TODO
+        images: [{
+          url: "https://media.discordapp.net/attachments/1369338842825621707/1372410618044354660/ChatGPT_Image_May_14_2025_07_22_47_PM.png?ex=686a91bd&is=6869403d&hm=997f47198b8812de0b0443242c8a8f013614bc97447e4f425bd8cc8e321a1691&=&format=webp&quality=lossless&width=1802&height=1802",
+          alt: "Masla monkey"
+        }]
       };
       
       addReview(reviewInput);

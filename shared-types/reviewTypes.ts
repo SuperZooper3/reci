@@ -8,7 +8,7 @@ export type ReviewInput = {
 
 export type ReviewImage = {
     url: string,
-    alt: string | null,
+    alt?: string,
 }
 
 export type Review = ReviewInput & {
