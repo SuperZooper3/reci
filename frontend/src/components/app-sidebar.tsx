@@ -37,10 +37,13 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar className="flex flex-col h-screen">
-      <div className="flex flex-col items-center pt-6 pb-2">
-        <img src="/reciLogo.png" alt="Reci logo" className="h-32 w-32 mb-2" />
-        <h1 className="text-4xl font-extrabold">Reci</h1>
-      </div>
+      <a href={"/"}>
+        <div className="flex flex-col items-center pt-6 pb-2">
+          <img src="/reciLogo.png" alt="Reci logo" className="h-32 w-32 mb-2" />
+          <h1 className="text-4xl font-extrabold">Reci</h1>
+        </div>
+      </a>
+
 
       <SidebarContent className="flex-none overflow-y-auto pt-4">
         <SidebarGroup>
