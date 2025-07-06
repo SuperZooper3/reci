@@ -1,11 +1,6 @@
-export type FeedEntry = {
-    id: string,
-    description: string,
-    created_at: string,
-    rating: number,
-    recipe_id: number,
+import { type Review } from "./reviewTypes";
+
+export type FeedEntry = Review & {
+    display_name: string
     title: string,
-    account_id: number,
-    display_name: string,
-    username: string
 };
