@@ -10,6 +10,5 @@ export async function getFeedService(userID: number | null) {
     }
 
     reviews = await fetchImagesForReviews(reviews);
-    console.log(reviews);
     return reviews;
 } 
