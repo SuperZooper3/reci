@@ -30,7 +30,6 @@ export const deleteReview = async (req: Request, res: Response) => {
   if (!jwt) {
     res.status(400).json({ message: 'Missing JWT cookie' });
   }
-  let id: number;
   try {
     const payload = auth.verifyAndReadJWT(jwt);
     const id = payload.id;
@@ -41,7 +40,6 @@ export const deleteReview = async (req: Request, res: Response) => {
     }
 
     try {
-      const account = await accountModel.getAccount(id);
       await reviewModel.deleteReview(review.id, id);
       res.status(200).json({ message: 'Review deleted successfully' });
     } catch (error) {
