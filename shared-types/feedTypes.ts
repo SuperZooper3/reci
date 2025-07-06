@@ -1,4 +1,4 @@
-import { Review } from "./reviewTypes";
+import { type Review } from "./reviewTypes";
 
 export type FeedEntry = Review & {
     display_name: string
