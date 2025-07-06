@@ -1,24 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Button } from '@/components/ui/button';
-import { deleteAccount, login } from '@/services/accountService';
+import { deleteAccount } from '@/services/accountService';
 import { isLoggedIn } from '@/services/authService';
+import LoginModal from '../components/loginModal';
 import Cookies from 'js-cookie';
 
 function RecipePage() {  
   const navigate = useNavigate();
-  const [loggedInAccount, setLoggedInAccount] = useState(!!Cookies.get('authToken'));
-
-  const handleLogin = async () => {
-    try {
-      //TODO: remove this. Only here for testing purposes
-      await login("russel", "123");
-      setLoggedInAccount(isLoggedIn());
-      window.location.reload();
-    } catch(e) {
-      alert(e);
-    }
-  };
+  const [loggedInAccount] = useState(!!Cookies.get('authToken'));
 
   const handleDeleteAccount = async() => {
     try {
@@ -58,7 +48,7 @@ function RecipePage() {
       </div>
       : <div>
           <span>Please log in</span>
-          <Button onClick={handleLogin}>Login</Button>
+          <LoginModal />
         </div>
         }
     </>
