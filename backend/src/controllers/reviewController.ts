@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import * as reviewModel from '../models/reviewModel.js';
+import * as accountModel from '../models/accountModel.js';
+import * as auth from '../utils/auth.js';
 
 export const getReviewsByRecipeId = async (req: Request, res: Response) => {
   try {
@@ -20,6 +22,37 @@ export const addReview = async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Error adding review', error);
     res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+export const deleteReview = async (req: Request, res: Response) => {
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(400).json({ message: 'Missing JWT cookie' });
+  }
+  let id: number;
+  try {
+    const payload = auth.verifyAndReadJWT(jwt);
+    id = payload.id;
+
+    const review = req.body;
+    if (!review || !review.id || !review.account_id) {
+      res.status(400).json({ message: 'Invalid review data' });
+    }
+
+    try {
+      const account = await accountModel.getAccount(id);
+      if (account?.id !== review.account_id) {
+        res.status(403).json({ message: 'You are not authorized to delete this review' });
+      }
+      await reviewModel.deleteReview(review);
+      res.status(200).json({ message: 'Review deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting review', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  } catch {
+    res.status(401).json({ message: 'Invalid JWT token' });
   }
 }
 
