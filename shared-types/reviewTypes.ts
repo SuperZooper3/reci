@@ -2,19 +2,19 @@ export type ReviewInput = {
     description: string,
     rating: number,
     account_id: number,
-    recipe_id: number
+    recipe_id: number,
+    images: ReviewImage[]
 }
 
 export type ReviewImage = {
     url: string,
-    alt: string,
+    alt: string | null,
 }
 
 export type Review = ReviewInput & {
     id: number,
     created_at: Date,
     username: string,
-    images: ReviewImage[]
 }
 
 export type AvgRating = {
