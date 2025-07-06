@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import * as reviewModel from '../models/reviewModel.js';
-import * as accountModel from '../models/accountModel.js';
 import * as auth from '../utils/auth.js';
 
 export const getReviewsByRecipeId = async (req: Request, res: Response) => {
