@@ -64,6 +64,8 @@ CREATE TRIGGER autoSaveReviewedRecipes
 AFTER INSERT ON Review
 REFERENCING NEW ROW AS newReview
 FOR EACH ROW
+BEGIN
 INSERT INTO SavedRecipe
 (account_id, recipe_id)
-VALUES (newReview.account_id, newReview.recipe_id);
+VALUES (newReview.account_id, newReview.recipe_id)
+END;
