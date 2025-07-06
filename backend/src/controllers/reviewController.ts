@@ -33,19 +33,16 @@ export const deleteReview = async (req: Request, res: Response) => {
   let id: number;
   try {
     const payload = auth.verifyAndReadJWT(jwt);
-    id = payload.id;
+    const id = payload.id;
 
     const review = req.body;
-    if (!review || !review.id || !review.account_id) {
+    if (!review.id) {
       res.status(400).json({ message: 'Invalid review data' });
     }
 
     try {
       const account = await accountModel.getAccount(id);
-      if (account?.id !== review.account_id) {
-        res.status(403).json({ message: 'You are not authorized to delete this review' });
-      }
-      await reviewModel.deleteReview(review);
+      await reviewModel.deleteReview(review.id, id);
       res.status(200).json({ message: 'Review deleted successfully' });
     } catch (error) {
       console.error('Error deleting review', error);

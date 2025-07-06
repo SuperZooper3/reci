@@ -17,9 +17,9 @@ export async function addReview(review: ReviewInput): Promise<void> {
     return;
 };
 
-export async function deleteReview(review: Review): Promise<void> {
+export async function deleteReview(reviewID: number, accountID: number): Promise<void> {
     const deleteReviewSQL = await loadSQL('deleteReview.sql');
-    const { rows } = await client.query(deleteReviewSQL, [review.id, review.account_id]);
+    const { rows } = await client.query(deleteReviewSQL, [reviewID, accountID]);
     saveQueryResult("deleteReview", rows);
     return;
 };
