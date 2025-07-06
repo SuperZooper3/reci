@@ -9,6 +9,7 @@ import { getRecipesFromAccount } from '@/services/recipeService';
 import { getRecipeAverageRating } from '@/services/reviewService';
 import { getAccounts } from '@/services/accountService';
 import type { Recipe } from '../../../shared-types/index';
+import LoginModal from '@/components/loginModal';
 
 function HomePage() {  
   const [accounts, setAccounts] = useState<DisplayName[]>([]);
@@ -131,7 +132,11 @@ function HomePage() {
       </div>
 
       <div>
-          <CookModal />
+        <CookModal />
+      </div>
+
+      <div>
+        <LoginModal />
       </div>
     </>
   )

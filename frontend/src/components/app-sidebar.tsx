@@ -2,6 +2,7 @@ import { BookMarked, ChefHat, Home, Search } from "lucide-react"
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { type JWTData } from "../../../shared-types";
+import LoginModal from "./loginModal";
 
 import {
   Sidebar,
@@ -91,9 +92,10 @@ export function AppSidebar() {
               </a>
               :
               // TODO: update this to be the login button
-              <a href="/settings"> 
-                <span className="text-3xl font-semibold">Login</span>
-              </a>
+              // <a href="/settings"> 
+              //   <span className="text-3xl font-semibold">Login</span>
+              // </a>
+              <LoginModal />
             }
             
           </SidebarMenuItem>
