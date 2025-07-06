@@ -3,7 +3,7 @@ import { loadSQL } from './utils/sqlLoader.js';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import fs from 'fs/promises';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,17 +33,25 @@ export async function initDb() {
 
   // Check if big_seed.sql exists, otherwise use seed.sql
   let seedFileName = 'seed.sql';
+  let seedSQL = await loadSQL(seedFileName);
+  console.log("Seeding the database with small");
+  await client.query(seedSQL);
+  console.log("Seeded the database with small");
+
   try {
     const sqlDir = path.join(__dirname, '..', 'sql');
-    await fs.access(path.join(sqlDir, 'big_seed.sql'));
     seedFileName = 'big_seed.sql';
     console.log("Using big_seed.sql for seeding");
+    if (fs.existsSync(path.join(sqlDir, 'big_seed.sql')))
+    try {
+      seedSQL = await loadSQL(seedFileName);
+      console.log("Seeding the database with large");
+      await client.query(seedSQL);
+      console.log("Seeded the database with large");
+    } catch (error) {
+      console.log("error seeding big", error);
+    }
   } catch {
-    console.log("big_seed.sql not found, using seed.sql for seeding");
+    console.log("big_seed.sql not found, skipping");
   }
-
-  const seedSQL = await loadSQL(seedFileName);
-  console.log("Seeding the database");
-  await client.query(seedSQL);
-  console.log("Seeded the database");
 }

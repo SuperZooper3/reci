@@ -42,6 +42,32 @@ export const addReview = async (req: Request, res: Response) => {
   }
 }
 
+export const deleteReview = async (req: Request, res: Response) => {
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(400).json({ message: 'Missing JWT cookie' });
+  }
+  try {
+    const payload = auth.verifyAndReadJWT(jwt);
+    const id = payload.id;
+
+    const review = req.body;
+    if (!review.id) {
+      res.status(400).json({ message: 'Invalid review data' });
+    }
+
+    try {
+      await reviewModel.deleteReview(review.id, id);
+      res.status(200).json({ message: 'Review deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting review', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  } catch {
+    res.status(401).json({ message: 'Invalid JWT token' });
+  }
+}
+
 export const getRecipeAverageScore = async (req: Request, res:Response) => {
   try{
     const recipe_id = parseInt(req.params.recipeId, 10);
