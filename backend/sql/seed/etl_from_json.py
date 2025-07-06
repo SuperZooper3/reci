@@ -1,5 +1,7 @@
 import json, random, textwrap, itertools, datetime, pathlib
+from datetime import datetime, timedelta
 from faker import Faker
+
 fake = Faker()
 
 # -------- CONFIG --------
@@ -33,8 +35,10 @@ def new_account():
         "id": next(uid_counter),
         "display_name": fake.first_name(),
         "username": fake.unique.user_name(),
-        "password": fake.password(length=10),
-        "created_at": fake.date_between("-5y")
+        "password": '$2b$10$SdTudisOtiAxevwmzYt4xOuP3bEV7FDnL8NuEc0aI6pQilnNfOkWa', # 123
+        "created_at": datetime.combine(fake.date_between("-5y"), datetime.min.time()) + timedelta(
+            seconds=fake.random_int(min=0, max=86399)
+        )
     }
 
 for r in recipes:
@@ -85,7 +89,9 @@ for r in recipes:
         "title":         r["title"].replace("'", "''"),   # escape single quotes
         "body":          body.replace("'", "''"),
         "author_id":     author_ids[r["title"]],
-        "created_at":    fake.date_between("-5y")
+        "created_at":    datetime.combine(fake.date_between("-5y"), datetime.min.time()) + timedelta(
+            seconds=fake.random_int(min=0, max=86399)
+        )
     })
 
 # REVIEWS
@@ -112,12 +118,15 @@ for _ in range(N_REVIEWS):
     acc = random.choice(accounts)
     rec = random.choice(recipes_rows)
     recipe_id = recipes_rows.index(rec) + 1
+    
     reviews.append({
         "description": fake.sentence(nb_words=12).replace("'", "''"),
         "rating":      generate_rating_for_recipe(recipe_id),
         "recipe_id":   recipe_id,
         "account_id":  acc["id"],
-        "created_at":  fake.date_between(start_date=acc["created_at"])
+        "created_at":  datetime.combine(fake.date_between(start_date=acc["created_at"]), datetime.min.time()) + timedelta(
+            seconds=fake.random_int(min=0, max=86399)
+        )
     })
 
 # FOLLOWERS & SAVED
@@ -150,7 +159,7 @@ with open(SEED_SQL, "w", encoding="utf8") as f:
     f.write("BEGIN;\n")
     # Accounts
     f.write(insert_sql("Account",
-                       ["id","display_name","username","password","created_at"],
+                       ["display_name","username","password","created_at"],
                        accounts))
     # Recipes (id uses SERIAL, so omit)
     f.write(insert_sql("Recipe",

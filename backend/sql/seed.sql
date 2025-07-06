@@ -1,17 +1,22 @@
 INSERT INTO Account (display_name, username, password) VALUES (
     'Bill',
     'bill',
-    'bill'
+    '$2b$10$SdTudisOtiAxevwmzYt4xOuP3bEV7FDnL8NuEc0aI6pQilnNfOkWa' -- each password is 123
 ),
 (
     'Russell',
     'russel',
-    'russel'
+    '$2b$10$SdTudisOtiAxevwmzYt4xOuP3bEV7FDnL8NuEc0aI6pQilnNfOkWa'
 ),
 (
     'Marco',
     'marco',
-    'marco'
+    '$2b$10$SdTudisOtiAxevwmzYt4xOuP3bEV7FDnL8NuEc0aI6pQilnNfOkWa'
+),
+(
+    'Alex',
+    'alex',
+    '$2b$10$SdTudisOtiAxevwmzYt4xOuP3bEV7FDnL8NuEc0aI6pQilnNfOkWa'
 );
 
 INSERT INTO Recipe (title, body, author_id, created_at) VALUES 
@@ -68,34 +73,78 @@ INSERT INTO Recipe (title, body, author_id, created_at) VALUES
 (
     'Pasta',
     'Goes well with lasagna',
-    2,
+    3,
     '2025-01-03'
 ),
 (
     'Icecream',
     'It isnt a pasta dish',
-    2,
+    3,
     '2025-01-04'
 ),
 (
     'Mango "Lasagna"',
     'Doesnt mention the special word in the body',
-    2,
+    3,
     '2025-01-05'
 ),
 (
     'Lasagna Ragu',
     'I love this lasagna even more!!!!!',
-    2,
+    3,
     '2025-01-06'
 );
 
-INSERT INTO Review (description, rating, recipe_id, account_id) VALUES (
+INSERT INTO Review (description, rating, recipe_id, account_id, created_at) VALUES (
     'Amazing. Trallallero Trallallà would love these',
-    '10',
+    10,
     1,
-    1
+    1,
+    '2025-07-03 19:30:00'
+), 
+(
+    'Disgusting',
+    1,
+    5,
+    3,
+    '2025-07-05 10:21:00'
+),
+(
+    'Mid as heck',
+    5,
+    2,
+    2,
+    '2025-07-01 15:30:00'
+),
+(
+    'I cooked this recipe again',
+    8,
+    2,
+    2,
+    '2025-07-05 20:30:00'
 );
+
+INSERT INTO ReviewImage (url, alt, review_id) VALUES (
+    'https://s6890.pcdn.co/wp-content/uploads/2023/01/Cannoli.jpg',
+    'My amazing Cannolu',
+    1
+), 
+(
+    'https://www.giallozafferano.com/images/227-22770/sicilian-cannoli_650x433_wm.jpg',
+    'Another angle of my Cannolu',
+    1
+), 
+(
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXxiWySQKrrm-Hxeb39oXva239SXB65pdMcg&s',
+    'What the hell is this even',
+    2
+), 
+(
+    'https://www.grocery.coop/sites/default/files/wp-content/uploads/2011/06/Olives1_0.jpg',
+    'Yipee olives',
+    4
+)
+;
 
 INSERT INTO Follower (follower_id, followee_id) VALUES (
     1,
