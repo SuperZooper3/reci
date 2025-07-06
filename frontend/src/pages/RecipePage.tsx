@@ -20,7 +20,6 @@ function RecipePage() {
       const reviews = await getRecipeRatings(String(recipe.id));
       setRecipe(recipe);
       setAvgRating(avgRating.avg);
-      console.log(avgRating);
       setReviews(reviews);
     } catch(e){
       alert(e);

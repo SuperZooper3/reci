@@ -6,7 +6,6 @@ type RecipeProps = {
 };
 
 export default function RecipeCard({ recipe }: RecipeProps) {
-    console.log(recipe);
   return (
     <div key={recipe.id} className="recipe-card p-4 mb-4 border rounded-lg shadow">
         <h2>{recipe.title}</h2>
