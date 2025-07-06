@@ -48,7 +48,6 @@ function RecipePage() {
       </div>
       : <div>
           <span>Please log in</span>
-          {/* <Button onClick={handleLogin}>Login</Button> */}
           <LoginModal />
         </div>
         }
