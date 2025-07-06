@@ -17,6 +17,13 @@ export async function addReview(review: ReviewInput): Promise<Review> {
     return rows[0];
 };
 
+export async function deleteReview(reviewID: number, accountID: number): Promise<void> {
+    const deleteReviewSQL = await loadSQL('deleteReview.sql');
+    const { rows } = await client.query(deleteReviewSQL, [reviewID, accountID]);
+    saveQueryResult("deleteReview", rows);
+    return;
+};
+
 export async function getRecipeAverageScore (recipe_id: number): Promise<number | null> {
   const getAverageRecipeScoreSQL = await loadSQL('getAverageRecipeScore.sql');
   const { rows } = await client.query(getAverageRecipeScoreSQL, [recipe_id]);
