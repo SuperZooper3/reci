@@ -20,3 +20,9 @@ export type FollowAccountInfo = DisplayName & {
   username: string,
   followed_at: Date
 }
+
+export type JWTData = {
+  id: number,
+  display_name: string,
+  username: string
+}
