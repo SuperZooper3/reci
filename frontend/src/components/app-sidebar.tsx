@@ -1,4 +1,7 @@
 import { BookMarked, ChefHat, Home, Search } from "lucide-react"
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
+import { type JWTData } from "../../../shared-types";
 
 import {
   Sidebar,
@@ -35,12 +38,24 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const authToken = Cookies.get('authToken');
+  let displayName = null;
+
+  if (authToken) {
+    const decoded = jwtDecode(authToken);
+    console.log(decoded); 
+    displayName = (decoded as JWTData).display_name;
+  }
+
   return (
     <Sidebar className="flex flex-col h-screen">
-      <div className="flex flex-col items-center pt-6 pb-2">
-        <img src="/reciLogo.png" alt="Reci logo" className="h-32 w-32 mb-2" />
-        <h1 className="text-4xl font-extrabold">Reci</h1>
-      </div>
+      <a href={"/"}>
+        <div className="flex flex-col items-center pt-6 pb-2">
+          <img src="/reciLogo.png" alt="Reci logo" className="h-32 w-32 mb-2" />
+          <h1 className="text-4xl font-extrabold">Reci</h1>
+        </div>
+      </a>
+
 
       <SidebarContent className="flex-none overflow-y-auto pt-4">
         <SidebarGroup>
@@ -69,7 +84,18 @@ export function AppSidebar() {
       <SidebarFooter className="border-t p-6">
         <SidebarMenu>
           <SidebarMenuItem>
-            <span className="text-3xl font-semibold">Profile</span>
+            {
+              displayName ?
+              <a href="/settings">
+                <span className="text-3xl font-semibold">{displayName}</span>
+              </a>
+              :
+              // TODO: update this to be the login button
+              <a href="/settings"> 
+                <span className="text-3xl font-semibold">Login</span>
+              </a>
+            }
+            
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
