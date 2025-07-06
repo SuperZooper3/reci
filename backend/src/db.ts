@@ -46,4 +46,15 @@ export async function initDb() {
   console.log("Seeding the database");
   await client.query(seedSQL);
   console.log("Seeded the database");
+
+  const triggerSQL = await loadSQL('triggerSaveReviewedRecipes.sql');
+  console.log("Creating triggers");
+  try {
+      await client.query(triggerSQL);
+  } 
+  catch (error) {
+    console.log("Error: ", error)
+  }
+
+  console.log("Triggers created");
 }
