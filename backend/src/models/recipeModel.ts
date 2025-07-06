@@ -43,4 +43,10 @@ export async function addSavedRecipe (id: number, recipe_id: number): Promise<vo
   const addSavedRecipe = await loadSQL('addSavedRecipe.sql');
   await client.query(addSavedRecipe, [id, recipe_id]);
   return;
-}
+};
+
+export async function deleteRecipe (id: number, account_id: number): Promise<void> {
+  const deleteRecipe = await loadSQL('deleteRecipe.sql');
+  await client.query(deleteRecipe, [id, account_id]);
+  return;
+};

@@ -5,7 +5,8 @@ import {
   getRecipesByAccountId,
   getRecipes,
   getSavedRecipesByAccountId,
-  addSavedRecipe
+  addSavedRecipe,
+  deleteRecipe
 } from '../controllers/recipeController.js';
 
 const recipeRouter = Router();
@@ -16,5 +17,6 @@ recipeRouter.get('/:recipeId', getRecipeById);
 recipeRouter.get('/account/:accountId', getRecipesByAccountId);
 recipeRouter.post('/', addRecipe);
 recipeRouter.get('/', getRecipes);
+recipeRouter.delete('/', deleteRecipe);
 
 export default recipeRouter;
