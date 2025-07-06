@@ -54,4 +54,16 @@ export async function initDb() {
   } catch {
     console.log("big_seed.sql not found, skipping");
   }
+
+  const triggerSQL = await loadSQL('triggerSaveReviewedRecipes.sql');
+  console.log("Creating triggers");
+  try {
+      await client.query(triggerSQL);
+  } 
+  catch (error) {
+    console.log("Error: ", error)
+  }
+
+  console.log("Triggers created");
+
 }
