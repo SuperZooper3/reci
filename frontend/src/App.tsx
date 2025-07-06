@@ -6,6 +6,7 @@ import SearchPage from "./pages/SearchPage"
 import UserPage from './pages/UserPage'
 import RecipePage from "./pages/RecipePage"
 import SettingsPage from "./pages/SettingsPage"
+import DebugPage from "./pages/DebugPage"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/account/:id" element={<UserPage />} />
             <Route path="/recipe/:id" element={<RecipePage />} />
+            <Route path="/debug" element={<DebugPage />} />
           </Routes>
         </main>
       </div>
