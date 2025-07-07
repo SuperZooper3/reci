@@ -6,6 +6,7 @@ import type { Review, Recipe } from '../../../shared-types';
 import { useParams } from 'react-router-dom';
 import { getRecipeRatings } from '@/services/reviewService';
 import ReviewCard from '@/components/reviewCard';
+import { getColorBasedOnRating } from '@/utils/ratingUtils';
 
 function RecipePage() {  
   const { id } = useParams();
@@ -43,7 +44,7 @@ function RecipePage() {
           </span>
         </div>
 
-        <div className="w-15 h-15 text-xl border-2 rounded-full flex items-center justify-center">
+        <div className={`w-15 h-15 text-xl border-2 rounded-full flex items-center justify-center ${getColorBasedOnRating(recipe.avg)}`}>
           {recipe.avg ?? "?"}
         </div>
       </div>
