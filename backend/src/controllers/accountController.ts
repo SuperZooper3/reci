@@ -186,3 +186,19 @@ export const getFollowerCount = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const getFolloweeCount = async (req: Request, res: Response) => {
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(400).json({ message: 'Missing JWT cookie' });
+    return
+  }
+  const { id } = auth.verifyAndReadJWT(jwt);
+  try {
+    const followee_count = await accountModel.getFolloweeCount(id);
+    res.json(followee_count);
+  } catch(error) {
+    console.error('Error getting followee count', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
