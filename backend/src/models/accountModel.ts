@@ -77,5 +77,7 @@ export async function deleteAccountFollow(account_id: number, following_account_
 
 export async function getUserMetrics(account_id: number): Promise<UserMetrics> {
   const getUserMetrics = await loadSQL('getUserMetrics.sql');
-  const { rows } = await client.query(getUserMetrics, [account_id]);
-  return rows[0];
+  const result = await query<UserMetrics>(getUserMetrics, [account_id]);
+  saveQueryResult("getUserMetrics", result);
+  return result.rows[0];
+};
