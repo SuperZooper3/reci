@@ -12,7 +12,7 @@ export function getColorBasedOnRating(rating: number | null | undefined) {
     color = "border-orange-600 bg-orange-50";
   }
   return color;
-}
+};
 
 export function getMoodBasedOnRating(rating: number | null | undefined) {
   if (!rating) {
@@ -28,4 +28,4 @@ export function getMoodBasedOnRating(rating: number | null | undefined) {
     mood = "disliked";
   }
   return mood;
-}
+};
