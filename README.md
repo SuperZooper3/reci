@@ -80,7 +80,3 @@ We've worked extensively on our backend systems with a long suite of fleshed out
 
 
 ![Recipe page](recipe_page.png)
-
-Our app's frontend is currently quite bare-bones, so the main app isn't functional yet, but backend endpoints can be found in the routes folder and tested with Postman.
-
-![Screenshot of the current frontend](milestone-1-fe.png)
