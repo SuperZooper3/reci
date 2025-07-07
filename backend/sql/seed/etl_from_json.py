@@ -23,6 +23,21 @@ print(f"Filtered {len(records) - len(valid_records)} invalid recipes out of {len
 random.seed(1)
 recipes = random.sample(valid_records, N_RECIPES)
 
+# Image generator
+FOODISH_CATS = [
+    "biryani", "burger", "dessert", "dosa",
+    "idly", "pasta", "pizza", "rice",
+]
+
+def foodish_url():
+    """
+    Deterministically builds a URL that Foodish already hosts.
+    """
+    cat = random.choice(FOODISH_CATS)
+    idx = random.randint(1, 35)
+    return f"https://foodish-api.com/images/{cat}/{cat}{idx}.jpg"
+
+
 # ACCOUNT TABLE
 #   - one author per recipe
 #   - plus a pool of extra users for reviews/follows/saves
@@ -129,6 +144,18 @@ for _ in range(N_REVIEWS):
         )
     })
 
+# REVIEW IMAGES
+review_images = []
+IMG_PER_REVIEW = (0, 3)
+
+for rid, _row in enumerate(reviews, start=1):
+    for _ in range(random.randint(*IMG_PER_REVIEW)):
+        review_images.append({
+            "url"      : foodish_url(),
+            "alt"      : fake.sentence(nb_words=5).rstrip('.').replace("'", "''"),
+            "review_id": rid
+        })
+
 # FOLLOWERS & SAVED
 uids = [u["id"] for u in accounts]
 def unique_pairs(n):
@@ -169,6 +196,10 @@ with open(SEED_SQL, "w", encoding="utf8") as f:
     f.write(insert_sql("Review",
                        ["description","rating","recipe_id","account_id","created_at"],
                        reviews))
+    # Review images
+    f.write(insert_sql("ReviewImage",
+                       ["url","alt","review_id"],
+                       review_images))
     # Followers
     f.write(insert_sql("Follower",
                        ["follower_id","followee_id"],
@@ -184,5 +215,6 @@ print(f"Wrote {SEED_SQL} with:"
       f"\n{len(accounts)} accounts"
       f"\n{len(recipes_rows)} recipes"
       f"\n{len(reviews)} reviews"
+      f"\n{len(review_images)} review images"
       f"\n{len(followers_pairs)} follower edges"
       f"\n{len(saves_pairs)} saved-recipe rows")
