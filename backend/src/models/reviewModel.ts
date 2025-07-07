@@ -26,9 +26,9 @@ export async function deleteReview(reviewID: number, accountID: number): Promise
 
 export async function getRecipeAverageScore (recipe_id: number): Promise<AvgRating | null> {
   const getAverageRecipeScoreSQL = await loadSQL('getAverageRecipeScore.sql');
-  const result = await query<{count: number | null}>(getAverageRecipeScoreSQL, [recipe_id]);
+  const result = await query<{avg: number | null}>(getAverageRecipeScoreSQL, [recipe_id]);
   saveQueryResult("getAverageRecipeScore", result);
-  return result.rows[0].count;
+  return {avg: result.rows[0].avg};
 };
 
 export async function getReviewsByAccountId(account_id: number): Promise<Review[]> {
