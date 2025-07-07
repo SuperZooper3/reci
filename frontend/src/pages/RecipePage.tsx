@@ -4,22 +4,20 @@ import RecipeModal from '../components/recipeModal';
 import { getRecipe } from '@/services/recipeService';
 import type { Review, Recipe } from '../../../shared-types';
 import { useParams } from 'react-router-dom';
-import { getRecipeAverageRating, getRecipeRatings } from '@/services/reviewService';
+import { getRecipeRatings } from '@/services/reviewService';
 import ReviewCard from '@/components/reviewCard';
+import { getColorBasedOnRating } from '@/utils/ratingUtils';
 
 function RecipePage() {  
   const { id } = useParams();
   const [recipe, setRecipe] = useState<Recipe>();
-  const [avgRating, setAvgRating] = useState<number>();
   const [reviews, setReviews] = useState<Review[]>([]);
 
   const fetchRecipeInformation = async () => {
     try {
       const recipe = await getRecipe(id!);
-      const avgRating = await getRecipeAverageRating(id!); 
       const reviews = await getRecipeRatings(String(recipe.id));
       setRecipe(recipe);
-      setAvgRating(avgRating.avg);
       setReviews(reviews);
     } catch(e){
       alert(e);
@@ -41,13 +39,13 @@ function RecipePage() {
         <div>
           <h1 className="text-3xl">{recipe!.title}</h1>
           <span>
-            By {recipe.username ? recipe.username : 'Unknown user'} on {' '}
+            By {recipe.display_name ?? "Unknown user"} on {' '}
             {new Date(recipe!.created_at).toLocaleDateString()}
           </span>
         </div>
 
-        <div className="w-15 h-15 text-xl border-2 rounded-full flex items-center justify-center">
-          {avgRating}
+        <div className={`w-15 h-15 text-xl border-2 rounded-full flex items-center justify-center ${getColorBasedOnRating(recipe.avg)}`}>
+          {recipe.avg ?? "?"}
         </div>
       </div>
       <div className="recipe-body prose max-w-none">

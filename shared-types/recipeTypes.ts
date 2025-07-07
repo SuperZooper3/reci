@@ -4,8 +4,12 @@ export type RecipeInput = {
   author_id: number
 }
 
-export type Recipe = RecipeInput & {
+export type Recipe = RecipeInput & AvgRating & {
   id: number,
   created_at: Date,
-  username: string,
+  display_name: string,
+}
+
+export type AvgRating = {
+    avg?: number | null;
 }
