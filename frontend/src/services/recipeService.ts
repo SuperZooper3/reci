@@ -8,6 +8,7 @@ export async function addRecipe(recipe: RecipeInput): Promise<void> {
     headers: {
       'Content-Type': 'application/json'
     },
+    credentials: "include",
     body: JSON.stringify(recipe)
   });
   
@@ -19,7 +20,9 @@ export async function addRecipe(recipe: RecipeInput): Promise<void> {
 export async function filterRecipes(searchTerm?: string): Promise<Recipe[]> {
   const query = searchTerm ? `?searchTerm=${encodeURIComponent(searchTerm)}` : '';
 
-  const res = await fetch(`${BASE_URL}${query}`);
+  const res = await fetch(`${BASE_URL}${query}`, {
+    credentials: "include"
+  });
 
   if (!res.ok) {
     throw new Error('Failed to return filtered recipes');
@@ -28,7 +31,9 @@ export async function filterRecipes(searchTerm?: string): Promise<Recipe[]> {
 }
 
 export async function getRecipesFromAccount(accountId: string): Promise<Recipe[]> {
-  const res = await fetch(`${BASE_URL}/account/${accountId}`);
+  const res = await fetch(`${BASE_URL}/account/${accountId}`, {
+    credentials: "include"
+  });
   
   if (!res.ok) {
     throw new Error('Failed to return recipes from an account');
@@ -37,7 +42,9 @@ export async function getRecipesFromAccount(accountId: string): Promise<Recipe[]
 }
 
 export async function getRecipe(recipeId: string): Promise<Recipe> {
-  const res = await fetch(`${BASE_URL}/${recipeId}`);
+  const res = await fetch(`${BASE_URL}/${recipeId}`, {
+    credentials: "include"
+  });
   
   if (!res.ok) {
     throw new Error('Failed to return information for the recipe');
