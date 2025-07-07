@@ -1,5 +1,5 @@
 import { loadSQL } from '../utils/sqlLoader.js';
-import { Review, ReviewInput, ReviewImage } from '../../../shared-types/index.js';
+import { Review, ReviewInput, ReviewImage, AvgRating } from '../../../shared-types/index.js';
 import { saveQueryResult } from "../utils/saveQueryResult.js"
 import { query } from "../utils/query.js"
 
@@ -24,7 +24,7 @@ export async function deleteReview(reviewID: number, accountID: number): Promise
     return;
 };
 
-export async function getRecipeAverageScore (recipe_id: number): Promise<number | null> {
+export async function getRecipeAverageScore (recipe_id: number): Promise<AvgRating | null> {
   const getAverageRecipeScoreSQL = await loadSQL('getAverageRecipeScore.sql');
   const result = await query<{count: number | null}>(getAverageRecipeScoreSQL, [recipe_id]);
   saveQueryResult("getAverageRecipeScore", result);

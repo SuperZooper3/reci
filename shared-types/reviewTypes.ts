@@ -16,7 +16,3 @@ export type Review = ReviewInput & {
     created_at: Date,
     username: string,
 }
-
-export type AvgRating = {
-    avg: number;
-}
