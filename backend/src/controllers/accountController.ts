@@ -180,14 +180,9 @@ export const deleteAccountFollow = async (req: Request, res: Response) => {
 };
 
 export const getFollowerCount = async (req: Request, res: Response) => {
-  const jwt = req.cookies.authToken;
-  if (!jwt) {
-    res.status(400).json({ message: 'Missing JWT cookie' });
-    return
-  }
-  const { id } = auth.verifyAndReadJWT(jwt);
+  const account_id = parseInt(req.params.id);
   try {
-    const follower_count = await accountModel.getFollowerCount(id);
+    const follower_count = await accountModel.getFollowerCount(account_id);
     res.json(follower_count);
   } catch(error) {
     console.error('Error getting follower count', error);

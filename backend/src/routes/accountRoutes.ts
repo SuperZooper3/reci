@@ -13,6 +13,6 @@ accountRouter.delete('/me/follow', deleteAccountFollow);
 accountRouter.get('/:id/following', getAccountsFollowing);
 accountRouter.get('/:id/followers', getAccountsFollowers);
 accountRouter.post('/me/follow', addAccountFollowing);
-accountRouter.get('/me/follow/count', getFollowerCount);
+accountRouter.get('/:id/followers/count', getFollowerCount);
 
 export default accountRouter;
