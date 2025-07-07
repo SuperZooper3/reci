@@ -84,6 +84,7 @@ export async function getFollowerCount(account_id: number): Promise<number> {
 
 export async function getFolloweeCount(account_id: number): Promise<number> {
   const getFolloweeCount = await loadSQL('getFolloweeCount.sql');
-  const { rows } = await client.query(getFolloweeCount, [account_id]);
-  return rows[0];
+  const result = await query<{count: number}>(getFolloweeCount, [account_id]);
+  saveQueryResult("getFolloweeCount", result);
+  return result.rows[0].count;
 };
