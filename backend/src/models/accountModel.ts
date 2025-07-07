@@ -1,6 +1,6 @@
 import { client } from '../db.js';
 import { loadSQL } from '../utils/sqlLoader.js';
-import { Account, AccountInfo, DisplayName, FollowAccountInfo } from '../../../shared-types/index.js';
+import { Account, AccountInfo, DisplayName, FollowAccountInfo, UserMetrics } from '../../../shared-types/index.js';
 import { saveQueryResult } from "../utils/saveQueryResult.js"
 
 export async function getAccountNames(): Promise<Array<DisplayName>> {
@@ -73,14 +73,8 @@ export async function deleteAccountFollow(account_id: number, following_account_
   return;
 };
 
-export async function getFollowerCount(account_id: number): Promise<number> {
-  const getFollowerCount = await loadSQL('getFollowerCount.sql');
-  const { rows } = await client.query(getFollowerCount, [account_id]);
-  return rows[0];
-};
-
-export async function getFolloweeCount(account_id: number): Promise<number> {
-  const getFolloweeCount = await loadSQL('getFolloweeCount.sql');
-  const { rows } = await client.query(getFolloweeCount, [account_id]);
+export async function getUserMetrics(account_id: number): Promise<UserMetrics> {
+  const getUserMetrics = await loadSQL('getUserMetrics.sql');
+  const { rows } = await client.query(getUserMetrics, [account_id]);
   return rows[0];
 };

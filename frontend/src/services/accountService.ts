@@ -1,4 +1,4 @@
-import type { DisplayName, FollowAccountInfo, AccountInfo, AccountCreate } from "../../../shared-types";
+import type { DisplayName, FollowAccountInfo, AccountInfo, AccountCreate, UserMetrics } from "../../../shared-types";
 
 const BASE_URL = 'http://localhost:3000/api/accounts';
 
@@ -29,6 +29,16 @@ export async function getAccountsFollowing(accountId: string) : Promise<FollowAc
   return res.json();
 };
 
+export async function getAccountsFollowers(accountId: string) : Promise<FollowAccountInfo[]> {
+  const res = await fetch(`${BASE_URL}/${accountId}/followers`);
+
+  if (!res.ok) {
+    throw new Error('Failed to return accounts following');
+  }
+  return res.json();
+
+};
+
 export async function createAccount(accountInfo: AccountCreate) : Promise<void> {
   const res = await fetch(`${BASE_URL}/create`, {
     method: "POST",
@@ -56,16 +66,6 @@ export async function deleteAccount() : Promise<void> {
 
 };
 
-export async function getAccountsFollowers(accountId: string) : Promise<FollowAccountInfo[]> {
-  const res = await fetch(`${BASE_URL}/${accountId}/followers`);
-
-  if (!res.ok) {
-    throw new Error('Failed to return accounts following');
-  }
-  return res.json();
-
-};
-
 export async function login(username: string, password: string): Promise<void> {
   const res = await fetch(`${BASE_URL}/login`, {
     method: "POST",
@@ -82,4 +82,13 @@ export async function login(username: string, password: string): Promise<void> {
   if (!res.ok) {
     throw new Error('Failed to login');
   }
+};
+
+export async function getUserMetrics(accountId: string): Promise<UserMetrics> {
+  const res = await fetch(`${BASE_URL}/${accountId}/metrics`);
+
+  if (!res.ok) {
+    throw new Error('Failed to return user metrics');
+  }
+  return res.json();
 };
