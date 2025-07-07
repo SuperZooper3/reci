@@ -179,24 +179,13 @@ export const deleteAccountFollow = async (req: Request, res: Response) => {
   }
 };
 
-export const getFollowerCount = async (req: Request, res: Response) => {
-  const account_id = parseInt(req.params.id);
+export const getUserMetrics = async (req: Request, res: Response) => {
+  const account_id = parseInt(req.params.id, 10);
   try {
-    const follower_count = await accountModel.getFollowerCount(account_id);
-    res.json(follower_count);
+    const user_metrics = await accountModel.getUserMetrics(account_id);
+    res.json(user_metrics);
   } catch(error) {
-    console.error('Error getting follower count', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-export const getFolloweeCount = async (req: Request, res: Response) => {
-  try {
-    const account_id = parseInt(req.params.id, 10);
-    const followee_count = await accountModel.getFolloweeCount(account_id);
-    res.json(followee_count);
-  } catch(error) {
-    console.error('Error getting followee count', error);
+    console.error('Error getting user metrics', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };

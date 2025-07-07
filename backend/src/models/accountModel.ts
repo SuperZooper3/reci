@@ -1,5 +1,5 @@
 import { loadSQL } from '../utils/sqlLoader.js';
-import { Account, AccountInfo, DisplayName, FollowAccountInfo } from '../../../shared-types/index.js';
+import { Account, AccountInfo, DisplayName, FollowAccountInfo, UserMetrics } from '../../../shared-types/index.js';
 import { saveQueryResult } from "../utils/saveQueryResult.js"
 import { query } from "../utils/query.js"
 
@@ -75,16 +75,9 @@ export async function deleteAccountFollow(account_id: number, following_account_
   return;
 };
 
-export async function getFollowerCount(account_id: number): Promise<number> {
-  const getFollowerCount = await loadSQL('getFollowerCount.sql');
-  const result = await query<{count: number}>(getFollowerCount, [account_id]);
-  saveQueryResult("getFollowerCount", result);
-  return result.rows[0].count;
-};
-
-export async function getFolloweeCount(account_id: number): Promise<number> {
-  const getFolloweeCount = await loadSQL('getFolloweeCount.sql');
-  const result = await query<{count: number}>(getFolloweeCount, [account_id]);
-  saveQueryResult("getFolloweeCount", result);
-  return result.rows[0].count;
+export async function getUserMetrics(account_id: number): Promise<UserMetrics> {
+  const getUserMetrics = await loadSQL('getUserMetrics.sql');
+  const result = await query<UserMetrics>(getUserMetrics, [account_id]);
+  saveQueryResult("getUserMetrics", result);
+  return result.rows[0];
 };
