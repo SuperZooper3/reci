@@ -188,14 +188,9 @@ export const getFollowerCount = async (req: Request, res: Response) => {
 };
 
 export const getFolloweeCount = async (req: Request, res: Response) => {
-  const jwt = req.cookies.authToken;
-  if (!jwt) {
-    res.status(400).json({ message: 'Missing JWT cookie' });
-    return
-  }
-  const { id } = auth.verifyAndReadJWT(jwt);
   try {
-    const followee_count = await accountModel.getFolloweeCount(id);
+    const account_id = parseInt(req.params.id, 10);
+    const followee_count = await accountModel.getFolloweeCount(account_id);
     res.json(followee_count);
   } catch(error) {
     console.error('Error getting followee count', error);

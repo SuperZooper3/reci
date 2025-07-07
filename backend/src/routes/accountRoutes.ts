@@ -14,6 +14,6 @@ accountRouter.get('/:id/following', getAccountsFollowing);
 accountRouter.get('/:id/followers', getAccountsFollowers);
 accountRouter.post('/me/follow', addAccountFollowing);
 accountRouter.get('/me/follow/count', getFollowerCount);
-accountRouter.get('/me/followee/count', getFolloweeCount);
+accountRouter.get('/:id/following/count', getFolloweeCount);
 
 export default accountRouter;
