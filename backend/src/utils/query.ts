@@ -2,7 +2,7 @@ import { client } from '../db.js';
 import { performance } from 'perf_hooks';
 import type { QueryResult, QueryResultRow } from 'pg';
 
-type QueryResultWithDuration<R extends QueryResultRow = QueryResultRow> =
+export type QueryResultWithDuration<R extends QueryResultRow = QueryResultRow> =
   QueryResult<R> & { duration: number };
 
 export async function query<R extends QueryResultRow = QueryResultRow>(
