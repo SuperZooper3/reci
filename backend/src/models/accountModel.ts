@@ -78,3 +78,9 @@ export async function getFollowerCount(account_id: number): Promise<number> {
   const { rows } = await client.query(getFollowerCount, [account_id]);
   return rows[0];
 };
+
+export async function getFolloweeCount(account_id: number): Promise<number> {
+  const getFolloweeCount = await loadSQL('getFolloweeCount.sql');
+  const { rows } = await client.query(getFolloweeCount, [account_id]);
+  return rows[0];
+};

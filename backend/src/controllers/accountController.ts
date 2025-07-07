@@ -189,3 +189,14 @@ export const getFollowerCount = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const getFolloweeCount = async (req: Request, res: Response) => {
+  try {
+    const account_id = parseInt(req.params.id, 10);
+    const followee_count = await accountModel.getFolloweeCount(account_id);
+    res.json(followee_count);
+  } catch(error) {
+    console.error('Error getting followee count', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
