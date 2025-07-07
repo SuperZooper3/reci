@@ -63,7 +63,7 @@ function RecipePage() {
             <ul>
               {reviews.map((review) => (
                 <li key={review.id}>
-                  <ReviewCard normalReview = {review}/>
+                  <ReviewCard review = {review}/>
                 </li>
               ))}
             </ul>
