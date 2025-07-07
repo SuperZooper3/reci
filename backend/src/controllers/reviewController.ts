@@ -90,3 +90,20 @@ export const getReviewsByAccountId = async (req: Request, res: Response) => {
   }
 }
 
+export const deleteReviewImage = async (req: Request, res: Response) => {
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(400).json({ message: 'Missing JWT cookie' });
+    return
+  }
+  const { id } = auth.verifyAndReadJWT(jwt);
+  try {
+    const image_id = parseInt(req.params.image_id, 10);
+    const review_id = parseInt(req.params.id, 10);
+    await reviewModel.deleteReviewImage(id, review_id, image_id);
+    res.status(200);
+  } catch(error) {
+    console.error('Error getting follower count', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}

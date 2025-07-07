@@ -52,3 +52,9 @@ export async function getReviewImagesByID(review_id: number): Promise<ReviewImag
   saveQueryResult("getReviewImagesSQLs", rows);
   return rows;
 }
+
+export async function deleteReviewImage(account_id: number, review_id: number, image_id: number): Promise<void> {
+  const deleteReviewImage = await loadSQL('deleteReviewImage.sql');
+  await client.query(deleteReviewImage, [image_id, review_id, account_id]);
+  return;
+}
