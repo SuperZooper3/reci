@@ -1,5 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import type { Recipe } from "../../../shared-types";
+import { getColorBasedOnRating } from "@/utils/ratingUtils";
 
 type RecipeProps = {
   recipe: Recipe
@@ -15,7 +16,7 @@ export default function RecipeCard({ recipe }: RecipeProps) {
               Created by {recipe.display_name} on {new Date(recipe.created_at).toLocaleDateString()}
           </div>
         </div>
-        <div className={`flex justify-center items-center w-10 h-10 border-2 rounded-full`}> {recipe.avg ?? "?"}</div>
+        <div className={`flex justify-center items-center w-10 h-10 border-2 rounded-full ${getColorBasedOnRating(recipe.avg)}`}> {recipe.avg ?? "?"}</div>
       </div>
       <div className="recipe-body prose max-w-none">
           <ReactMarkdown>{recipe.body}</ReactMarkdown>
