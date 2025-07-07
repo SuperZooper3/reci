@@ -4,6 +4,8 @@ Reci is a social recipe-sharing app where users can post recipes, review what th
 
 <img src="reci.png" alt="Reci Logo" width="200">
 
+![Landing page screenshot](screenshot.png)
+
 ## App structure
 
 This repo is strucutred as a mono-repo, with our frontend living under `frontend/`, and our backend living in `backend/`. The frontend is built using React, while the backend is built with Express. Both can be started with `npm run dev`, but see the startup instructions for more details. This is where the end-to-end application code that implements all the claimed features is.
@@ -11,8 +13,6 @@ This repo is strucutred as a mono-repo, with our frontend living under `frontend
 ### SQL queries for features
 
 Of special note, the backend pulls the SQL instructions it needs at runtime from the `backend/sql/` folder. This folder is where all SQL lives for our project, including our seeding code.
-
-Our production data generation script also lives in `backend/sql/seed/`, and you can read more about it in the README located there. This is the code for downloading/scraping/transforming real data that we have written.
 
 Instead of having a single `test-sample.sql`, for each of our features listed in the Milestone 1 report, you can find their query in the `backend/sql/` folder, and their corresponding expected output in `backend/sql/test-sample-out/` such as `backend/sql/test-sample-out/filterRecipes.out`.
 
@@ -23,6 +23,12 @@ We do not have `test-production` outputs yet.
 Every time the app starts up, we automatically delete the existing database instance (by doing `docker compose down -v` which deletes it's volume), create a new database container (by doing `docker compose up`), automatically run `backend/sql/init.sql` to create tables, constraints, stored procedures, and triggers, and finally run `backend/sql/seed.sql` to seed the database with toy data.
 
 This process is made to ensure a consistent developer environement, making it fast to iterate on our SQL schemas.
+
+### Generating production data
+
+Our production data generation script also lives in `backend/sql/seed/`, and you can read more about it in the README located there. This is the code for downloading/scraping/transforming real data that we have written.
+
+For instructions to generate our production data, read `backend/sql/seed/README.md`. We consider production data as a dataset with 100k - 1 million total entries.
 
 ## How to run the app
 
@@ -57,11 +63,23 @@ Then, go through the setup steps again and it should work!
 We've worked extensively on our backend systems with a long suite of fleshed out SQL queries and endpoints. Current features include:
 
 - Fully working SQL database with dynamic loading of files
-- Signing up accounts, and authentication with JWTs
+- Signing up and into accounts, and authentication with JWT cookies
 - CRUD (Create Read Update Delete) operations for recipies, accounts
 - Searching for recipies
 - Reading recipies
 - Reading followers, following, account information
+
+### NEW (as of Milestone 2)
+
+- Frontend views for the feed, recipe search, settings, profile pages, and recipe views to read the recipes.
+- Reading recipe reviews, with support for adding images
+- Settings page, login 
+- Fancy: A dynamic and personalized landing page feed with signed in and annonymous views.
+- Fancy: using triggers to automatically save recipes that you review
+- Fancy: database level following constraints (you can't follow yourself, or follow the same person multiple times)
+
+
+![Recipe page](recipe_page.png)
 
 Our app's frontend is currently quite bare-bones, so the main app isn't functional yet, but backend endpoints can be found in the routes folder and tested with Postman.
 
