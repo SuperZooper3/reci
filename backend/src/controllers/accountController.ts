@@ -149,8 +149,16 @@ export const addAccountFollowing = async (req: Request, res: Response) => {
     await accountModel.addAccountFollowing(id, following_account_id);
     res.status(201).send();
   } catch(error) {
-    console.error('Error adding account following', error);
-    res.status(500).json({ message: 'Internal server error' });
+    if (error instanceof DatabaseError && error.constraint == "unique_follower_followee") {
+      console.warn('Blocked follow since already exists between', id, req.body.followingAccountId);
+      res.status(409).json({ message: 'This following relationship already exists!' });
+    } else if (error instanceof DatabaseError && error.constraint == "follower_check") {
+      console.warn('Tried to follow themselves', id, req.body.followingAccountId);
+      res.status(409).json({ message: 'You cant follow yourself' });
+    } else {
+      console.error('Error adding account following', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
   }
 };
 
