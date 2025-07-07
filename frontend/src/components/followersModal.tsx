@@ -69,7 +69,7 @@ export default function FollowersModal() {
             )}
 
             {followerAccounts.length > 0 ? (
-              <div className="mt-4 overflow-y-auto max-h-[50vh] pr-2">
+              <div className="mt-4 overflow-y-auto max-h-[60vh]">
                 <ScrollArea>
                   {/* TODO: first account is hiddne by title */}
                     <ul className="space-y-2">
@@ -78,11 +78,9 @@ export default function FollowersModal() {
                         key={index} 
                         className="p-3 border rounded-lg shadow-sm bg-white hover:bg-gray-50"
                       >
-                        <div className="flex justify-between !items-start">
-                          <div className="flex !items-start">
-                            <h3 className="font-medium">{account.display_name}</h3>
-                            <p className="text-sm text-gray-600">@{account.username}</p>
-                          </div>
+                        <div className="flex flex-col items-start">
+                          <h3 className="font-medium">{account.display_name}</h3>
+                          <p className="text-sm text-gray-600">@{account.username}</p>
                         </div>
                       </li>
                   ))}
