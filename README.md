@@ -71,10 +71,10 @@ We've worked extensively on our backend systems with a long suite of fleshed out
 
 ### NEW (as of Milestone 2)
 
-- Frontend views for the feed, recipe search, settings, profile pages, and recipe views to read the recipes.
+- Frontend views for the feed, recipe search, settings, profile pages, and recipe views to read the recipes
 - Reading recipe reviews, with support for adding images
 - Settings page, login 
-- Fancy: A dynamic and personalized landing page feed with signed in and annonymous views.
+- Fancy: a dynamic and personalized landing page feed with signed in and annonymous views
 - Fancy: using triggers to automatically save recipes that you review
 - Fancy: database level following constraints (you can't follow yourself, or follow the same person multiple times)
 
