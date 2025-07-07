@@ -149,8 +149,16 @@ export const addAccountFollowing = async (req: Request, res: Response) => {
     await accountModel.addAccountFollowing(id, following_account_id);
     res.status(201).send();
   } catch(error) {
-    console.error('Error adding account following', error);
-    res.status(500).json({ message: 'Internal server error' });
+    if (error instanceof DatabaseError && error.constraint == "unique_follower_followee") {
+      console.warn('Blocked follow since already exists between', id, req.body.followingAccountId);
+      res.status(409).json({ message: 'This following relationship already exists!' });
+    } else if (error instanceof DatabaseError && error.constraint == "follower_check") {
+      console.warn('Tried to follow themselves', id, req.body.followingAccountId);
+      res.status(409).json({ message: 'You cant follow yourself' });
+    } else {
+      console.error('Error adding account following', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
   }
 };
 
@@ -172,14 +180,9 @@ export const deleteAccountFollow = async (req: Request, res: Response) => {
 };
 
 export const getFollowerCount = async (req: Request, res: Response) => {
-  const jwt = req.cookies.authToken;
-  if (!jwt) {
-    res.status(400).json({ message: 'Missing JWT cookie' });
-    return
-  }
-  const { id } = auth.verifyAndReadJWT(jwt);
+  const account_id = parseInt(req.params.id);
   try {
-    const follower_count = await accountModel.getFollowerCount(id);
+    const follower_count = await accountModel.getFollowerCount(account_id);
     res.json(follower_count);
   } catch(error) {
     console.error('Error getting follower count', error);

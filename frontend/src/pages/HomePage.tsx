@@ -28,7 +28,7 @@ function HomePage() {
           <ul>
             {feed.map((review) => ( 
               <li key={review.id}>
-                <ReviewCard feedReview={review}/>
+                <ReviewCard review={review}/>
               </li>
             ))}
           </ul>

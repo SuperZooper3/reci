@@ -10,7 +10,7 @@ import SettingsPage from "./pages/SettingsPage"
 function App() {
   return (
     <SidebarProvider>
-      <div className="flex">
+      <div className="flex w-full overflow-hidden">
         <AppSidebar />
         <main className="flex-1 p-4">
           <Routes>
