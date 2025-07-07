@@ -34,7 +34,7 @@ def foodish_url():
     Deterministically builds a URL that Foodish already hosts.
     """
     cat = random.choice(FOODISH_CATS)
-    idx = random.randint(1, 35)
+    idx = random.randint(1, 34)
     return f"https://foodish-api.com/images/{cat}/{cat}{idx}.jpg"
 
 
