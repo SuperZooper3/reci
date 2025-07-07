@@ -6,7 +6,8 @@ export async function addAvgRatingToRecipe(recipe: Recipe): Promise<Recipe> {
         ...recipe,
         avg: recipe.avg = (await getRecipeAverageScore(recipe.id))?.avg
     };
-}
+};
+
 export async function addAvgRatingToRecipes(recipes: Recipe[]): Promise<Recipe[]> {
     return await Promise.all(recipes.map(async recipe => (addAvgRatingToRecipe(recipe))));
-}
+};
