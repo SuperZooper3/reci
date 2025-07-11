@@ -3,6 +3,8 @@ import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { type JWTData } from "../../../shared-types";
 import LoginModal from "./loginModal";
+import { Button } from '@/components/ui/button';
+import { useNavigate } from "react-router-dom";
 
 import {
   Sidebar,
@@ -39,14 +41,27 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const navigate = useNavigate();
   const authToken = Cookies.get('authToken');
   let displayName = null;
+  let accountId = null;
 
   if (authToken) {
     const decoded = jwtDecode(authToken);
     console.log(decoded); 
     displayName = (decoded as JWTData).display_name;
+    accountId = (decoded as JWTData).id;
   }
+
+  const handleLogout = async() => {
+    try {
+      document.cookie = "authToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      navigate("/");
+      window.location.reload();
+    } catch(e) {
+      alert(e);
+    }
+  };
 
   return (
     <Sidebar className="flex flex-col h-screen">
@@ -87,9 +102,12 @@ export function AppSidebar() {
           <SidebarMenuItem>
             {
               displayName ?
-              <a href="/settings">
-                <span className="text-3xl font-semibold">{displayName}</span>
-              </a>
+              <div className="flex flex-col">
+                <a href={`/account/${accountId}`}>
+                  <span className="text-3xl font-semibold">{displayName}</span>
+                </a>
+                <Button className="pl-0 justify-start" variant="ghost" onClick={handleLogout}>Logout</Button>
+              </div>
               :
               // TODO: update this to be the login button
               // <a href="/settings"> 
