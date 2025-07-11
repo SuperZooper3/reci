@@ -7,17 +7,27 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { useNavigate } from "react-router-dom";
 
 type ReviewProps<T extends Review> = {
   review: T
 };
 
 export default function ReviewCard<T extends Review>({ review }: ReviewProps<T>) {
+  const navigate = useNavigate();
+
+  const navigateToUser = (id: number) => {
+    navigate(`/account/${id}`);
+  };
+
   return (
     <div className="p-4 mb-4 border rounded-lg shadow flex flex-col">
       <div className="flex w-full flex-col">
         <div className="text-xl flex flex-row w-full gap-6">
-          <span>{review.username} {getMoodBasedOnRating(review.rating)} {"title" in review ? (review.title as string) : "this"}</span>
+          <span>
+            <span onClick={navigateToUser(review.account_id)}>{review.username} </span>
+            {getMoodBasedOnRating(review.rating)} {"title" in review ? (review.title as string) : "this"}
+          </span>
         </div>
         <div className="w-full flex flex-row !justify-between mb-2"> 
           <span>{new Date(review.created_at).toLocaleDateString()}</span>
