@@ -14,10 +14,13 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { Slider } from "@/components/ui/slider"
 import { addReview } from "@/services/reviewService"
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
+import { type JWTData } from "../../../shared-types";
 
 type SliderProps = React.ComponentProps<typeof Slider>
 
-export default function CookModal({ className, ...props }: SliderProps) {
+export default function CookModal({ className, recipeId, ...props }: SliderProps & { recipeId: number }) {
 
   const [open, setOpen] = useState(false)
   const [description, setDescription] = useState("")
@@ -30,11 +33,21 @@ export default function CookModal({ className, ...props }: SliderProps) {
     }
 
     try {
+      const authToken = Cookies.get('authToken');
+
+      if (!authToken) {
+        alert("Please log in to add a review")
+        return
+      }
+
+      const decoded = jwtDecode(authToken);
+      const account_id = (decoded as JWTData).id;
+
       const reviewInput: ReviewInput = {
         description,
         rating,
-        recipe_id: 1, // TODO
-        account_id: 2, // TODO
+        recipe_id: recipeId,
+        account_id,
         images: [{
           url: "https://media.discordapp.net/attachments/1369338842825621707/1372410618044354660/ChatGPT_Image_May_14_2025_07_22_47_PM.png?ex=686a91bd&is=6869403d&hm=997f47198b8812de0b0443242c8a8f013614bc97447e4f425bd8cc8e321a1691&=&format=webp&quality=lossless&width=1802&height=1802",
           alt: "Masla monkey"

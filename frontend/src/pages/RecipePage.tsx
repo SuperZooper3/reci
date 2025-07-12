@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import RecipeModal from '../components/recipeModal';
+import ReviewModal from '../components/reviewModal';
 import { getRecipe } from '@/services/recipeService';
 import type { Review, Recipe } from '../../../shared-types';
 import { Link, useParams } from 'react-router-dom';
@@ -45,6 +46,10 @@ function RecipePage() {
 
         <div className={`w-15 h-15 text-xl border-2 rounded-full flex items-center justify-center ${getColorBasedOnRating(recipe.avg)}`}>
           {recipe.avg ?? "?"}
+        </div>
+
+        <div>
+          <ReviewModal recipeId={recipe.id} />
         </div>
       </div>
       <div className="recipe-body prose max-w-none">
