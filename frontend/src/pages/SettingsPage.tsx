@@ -20,7 +20,6 @@ function RecipePage() {
     } catch(e) {
       alert(e);
     }
-    
   };
 
   const handleLogout = async() => {
