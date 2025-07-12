@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Button } from '@/components/ui/button';
 import { deleteAccount } from '@/services/accountService';
-import { isLoggedIn } from '@/services/authService';
 import LoginModal from '../components/loginModal';
 import Cookies from 'js-cookie';
 
 function RecipePage() {  
   const navigate = useNavigate();
-  const [loggedInAccount] = useState(!!Cookies.get('authToken'));
+  const [loggedInAccount] = useState(Cookies.get('authToken'));
 
   const handleDeleteAccount = async() => {
     try {
@@ -20,7 +19,6 @@ function RecipePage() {
     } catch(e) {
       alert(e);
     }
-    
   };
 
   const handleLogout = async() => {
@@ -32,10 +30,6 @@ function RecipePage() {
       alert(e);
     }
   };
-
-  useEffect(() => {
-    isLoggedIn();
-  }, []);
 
   //TODO: Remove the login button. Only here for testing.
   return (

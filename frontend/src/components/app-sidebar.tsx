@@ -1,4 +1,4 @@
-import { BookMarked, ChefHat, Home, Search } from "lucide-react"
+import { BookMarked, Home, Search } from "lucide-react"
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { type JWTData } from "../../../shared-types";
@@ -27,13 +27,8 @@ const items = [
     icon: Search,
   },
   {
-    title: "My Kitchen",
-    url: "#",
-    icon: ChefHat,
-  },
-  {
-    title: "Saved",
-    url: "#",
+    title: "Cookbook",
+    url: "/cookbook",
     icon: BookMarked,
   },
 ]
