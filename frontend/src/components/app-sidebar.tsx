@@ -39,7 +39,6 @@ export function AppSidebar() {
 
   if (authToken) {
     const decoded = jwtDecode(authToken);
-    console.log(decoded); 
     displayName = (decoded as JWTData).display_name;
   }
 

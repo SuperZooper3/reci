@@ -62,3 +62,33 @@ export async function getSavedRecipes(): Promise<Recipe[]> {
   }
   return res.json();
 }
+
+export async function addSavedRecipe(recipeId: number): Promise<void> {
+  const res = await fetch(`${BASE_URL}/saved`, {
+    credentials: "include",
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({recipe_id: recipeId})
+  });
+  
+  if (!res.ok) {
+    throw new Error('Failed to save recipe');
+  }
+}
+
+export async function removeSavedRecipe(recipeId: number): Promise<void> {
+  const res = await fetch(`${BASE_URL}/saved`, {
+    credentials: "include",
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({recipe_id: recipeId})
+  });
+  
+  if (!res.ok) {
+    throw new Error('Failed to delete saved recipe');
+  }
+}
