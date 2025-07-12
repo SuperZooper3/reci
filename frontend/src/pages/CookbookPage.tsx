@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 function CookbookPage() {  
   
   const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([]);
-  const [loggedInAccount] = useState(!!Cookies.get('authToken'));
+  const [loggedInAccount] = useState(Cookies.get('authToken'));
 
   const fetchSavedRecipes = async () => {
     try {
