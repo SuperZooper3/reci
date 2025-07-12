@@ -35,16 +35,6 @@ export async function getAccountsFollowing(accountId: string) : Promise<FollowAc
   return res.json();
 };
 
-export async function getAccountsFollowers(accountId: string) : Promise<FollowAccountInfo[]> {
-  const res = await fetch(`${BASE_URL}/${accountId}/followers`);
-
-  if (!res.ok) {
-    throw new Error('Failed to return accounts following');
-  }
-  return res.json();
-
-};
-
 export async function createAccount(accountInfo: AccountCreate) : Promise<void> {
   const res = await fetch(`${BASE_URL}/create`, {
     method: "POST",
