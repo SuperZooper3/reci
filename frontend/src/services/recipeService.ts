@@ -51,3 +51,14 @@ export async function getRecipe(recipeId: string): Promise<Recipe> {
   }
   return res.json();
 }
+
+export async function getSavedRecipes(): Promise<Recipe[]> {
+  const res = await fetch(`${BASE_URL}/saved`, {
+    credentials: "include",
+  });
+  
+  if (!res.ok) {
+    throw new Error('Failed to return saved recipes');
+  }
+  return res.json();
+}

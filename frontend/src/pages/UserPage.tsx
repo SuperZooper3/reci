@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import type { AccountInfo } from '../../../shared-types/index';
-import { getAccount } from '@/services/accountService';
+import type { AccountInfo, UserMetrics } from '../../../shared-types/index';
+import { getAccount, getUserMetrics } from '@/services/accountService';
 import FollowersModal from '@/components/followersModal';
 import FollowingModal from '@/components/followingModal';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 function UserPage() {
   const { id } = useParams<{ id: string }>();
-  const [user, setAccount] = useState<AccountInfo| null>(null);
+  const [user, setAccount] = useState<AccountInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [metrics, setMetrics] = useState<UserMetrics | null>(null);
 
   const handleUserInfo  = async () => {
     if (!id) {
@@ -23,6 +25,9 @@ function UserPage() {
     try {
       const account = await getAccount(id);
       setAccount(account);
+
+      const metrics = await getUserMetrics(id);
+      setMetrics(metrics);
       
     } catch (err) {
       setError('Failed to load user account');
@@ -55,6 +60,44 @@ function UserPage() {
         <FollowersModal />
         <FollowingModal />
       </div>
+
+      <p className="text-gray-600 text-sm m-2">
+        {metrics?.member_since
+          ? `Member since ${new Date(metrics.member_since).toLocaleDateString('en-US', {
+              month: 'long',
+              year: 'numeric'
+            })}`
+          : ''}
+      </p>
+      <Tabs defaultValue="recipes" className="w-[400px]">
+        <TabsList>
+          <TabsTrigger value="recipes">
+            <div>
+              {metrics?.recipe_count === 1
+                ? '1 recipe uploaded'
+                : `${metrics?.recipe_count ?? 0} recipes uploaded`}
+            </div>
+          </TabsTrigger>
+          <TabsTrigger value="savedRecipes">
+            <div>
+              {metrics?.savedrecipe_count === 1
+                ? '1 recipe saved'
+                : `${metrics?.savedrecipe_count ?? 0} recipes saved`}
+            </div>
+          </TabsTrigger>
+          <TabsTrigger value="reviews">
+            <div>
+              {metrics?.review_count === 1
+                ? '1 review made'
+                : `${metrics?.review_count ?? 0} reviews made`}
+            </div>
+          </TabsTrigger>
+          
+        </TabsList>
+        <TabsContent value="savedRecipes">View your saved recipes.</TabsContent>
+        <TabsContent value="reviews">View all your reviews.</TabsContent>
+        <TabsContent value="recipes">View your uploaded recipes.</TabsContent>
+      </Tabs>
     </div>
   );
 }

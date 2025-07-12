@@ -14,9 +14,9 @@ This repo is strucutred as a mono-repo, with our frontend living under `frontend
 
 Of special note, the backend pulls the SQL instructions it needs at runtime from the `backend/sql/` folder. This folder is where all SQL lives for our project, including our seeding code.
 
-Instead of having a single `test-sample.sql`, for each of our features listed in the Milestone 1 report, you can find their query in the `backend/sql/` folder, and their corresponding expected output in `backend/sql/test-sample-out/` such as `backend/sql/test-sample-out/filterRecipes.out`.
+Instead of having a single `test-sample.sql`, for each of our features listed in the Milestone 1 report, you can find their query in the `backend/sql/` folder, and their corresponding expected output in `backend/sql/test-sample-out/` such as `backend/sql/test-sample-out/filterRecipes.out`, as well as query performance data in `backend/sql/test-production-out` such as `backend/sql/test-production-out/filterRecipes.log`
 
-We do not have `test-production` outputs yet.
+You can find the corresponding expected output for production data in `backend/sql/test-production-out` such as `backend/sql/test-production-out/filterRecipes.out` as well as query performance in `backend/sql/test-production-out` such as `backend/sql/test-production-out/filterRecipes.log`
 
 ## How to create and load the database
 

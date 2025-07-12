@@ -6,10 +6,10 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog"
 import { login, createAccount } from '@/services/accountService';
-import { isLoggedIn } from '@/services/authService';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import type { AccountCreate } from "../../../shared-types"
+import Cookies from 'js-cookie';
 
 
 export default function LoginModal() {
@@ -36,7 +36,7 @@ export default function LoginModal() {
       }
     }
 
-    if (isLoggedIn()){
+    if (Cookies.get('authToken')){
       alert("Already logged in");
       return;
     }
