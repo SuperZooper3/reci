@@ -2,17 +2,20 @@ import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import RecipeModal from '../components/recipeModal';
 import ReviewModal from '../components/reviewModal';
-import { getRecipe } from '@/services/recipeService';
+import { addSavedRecipe, getRecipe, getSavedRecipes, removeSavedRecipe } from '@/services/recipeService';
 import type { Review, Recipe } from '../../../shared-types';
 import { Link, useParams } from 'react-router-dom';
 import { getRecipeRatings } from '@/services/reviewService';
 import ReviewCard from '@/components/reviewCard';
 import { getColorBasedOnRating } from '@/utils/ratingUtils';
+import { Bookmark } from 'lucide-react';
+import Cookies from 'js-cookie';
 
 function RecipePage() {  
   const { id } = useParams();
   const [recipe, setRecipe] = useState<Recipe>();
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [bookmarked, setBookmarked] = useState(false);
 
   const fetchRecipeInformation = async () => {
     try {
@@ -20,13 +23,53 @@ function RecipePage() {
       const reviews = await getRecipeRatings(String(recipe.id));
       setRecipe(recipe);
       setReviews(reviews);
-    } catch(e){
+    } catch(e) {
       alert(e);
     }
   };
 
+  const handleBookmark = async () => {
+    if (!recipe) return;
+    if (!Cookies.get('authToken')) {
+      alert("You must be logged in to bookmark a recipe.");
+      return;
+    }
+
+    if (bookmarked) {
+      try {
+        await removeSavedRecipe(recipe.id);
+        setBookmarked(false);
+      } 
+      catch(e) {
+        alert(e);
+      }
+    }
+
+    else {
+      try {
+        await addSavedRecipe(recipe.id);
+        setBookmarked(true);
+      }
+      catch(e) {
+        alert(e);
+      }
+    }
+  }
+
+  const checkBookmarked = async () => {
+    if (!Cookies.get('authToken')) {
+      return;
+    }
+    const savedRecipes = await getSavedRecipes();
+    const recipeSaved = savedRecipes.some(recipe => recipe.id === Number(id))
+    if (recipeSaved) {
+      setBookmarked(true);
+    }
+  }
+
   useEffect(() => {
     fetchRecipeInformation();
+    checkBookmarked();
   }, []);
 
   if (!recipe) {
@@ -51,6 +94,7 @@ function RecipePage() {
         <div>
           <ReviewModal recipeId={recipe.id} />
         </div>
+        <button onClick={handleBookmark}><Bookmark fill={bookmarked ? "lightblue" : "none"}/></button>
       </div>
       <div className="recipe-body prose max-w-none">
         <ReactMarkdown>{recipe!.body}</ReactMarkdown>
