@@ -7,7 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 type ReviewProps<T extends Review> = {
   review: T
