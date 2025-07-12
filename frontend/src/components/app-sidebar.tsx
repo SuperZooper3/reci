@@ -106,7 +106,7 @@ export function AppSidebar() {
                 <a href={`/account/${accountId}`}>
                   <span className="text-3xl font-semibold">{displayName}</span>
                 </a>
-                <Button className="pl-0 justify-start" variant="ghost" onClick={handleLogout}>Logout</Button>
+                <Button className="pl-0 justify-start text-base" variant="ghost" onClick={handleLogout}>Logout</Button>
               </div>
               :
               // TODO: update this to be the login button

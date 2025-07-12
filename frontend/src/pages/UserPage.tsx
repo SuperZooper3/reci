@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import type { AccountInfo, UserMetrics } from '../../../shared-types/index';
-import { getAccount, getUserMetrics } from '@/services/accountService';
+import { useParams, useNavigate } from 'react-router-dom';
+import type { AccountInfo, UserMetrics, JWTData } from '../../../shared-types/index';
+import { getAccount, getUserMetrics, deleteAccount } from '@/services/accountService';
 import FollowersModal from '@/components/followersModal';
 import FollowingModal from '@/components/followingModal';
+import DeleteAccountModal from '@/components/deleteAccountModal';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu"
+import { EllipsisVertical } from 'lucide-react';
 
 function UserPage() {
   const { id } = useParams<{ id: string }>();
@@ -12,6 +17,17 @@ function UserPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [metrics, setMetrics] = useState<UserMetrics | null>(null);
+  const authToken = Cookies.get('authToken');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  let accountId = null;
+
+  if (authToken) {
+    const decoded = jwtDecode(authToken);
+    console.log(decoded); 
+    accountId = (decoded as JWTData).id;
+  }
+
+  const isOwner = accountId?.toString() === id?.toString();
 
   const handleUserInfo  = async () => {
     if (!id) {
@@ -53,9 +69,34 @@ function UserPage() {
       {error && (
         <p className="text-red-500 mb-4">Error: {error}</p>
       )}
-      <h1 className="text-2xl font-bold mb-4">
-        {user ? `${user.display_name} (@${user.username})` : `Account ${id}`}
-      </h1>
+
+      <div className='flex flex-row justify-between'>
+        <h1 className="text-2xl font-bold mb-4">
+          {user ? `${user.display_name} (@${user.username})` : `Account ${id}`}
+        </h1>
+
+        {isOwner && (
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className='p-2 rounded-md hover:bg-gray-200 cursor-pointer'><EllipsisVertical className="w-6 h-6" /></div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={() => setShowDeleteConfirm(true)}>
+                  Delete Account
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
+      </div>
+
+      
+      < DeleteAccountModal 
+        open={showDeleteConfirm} 
+        onOpenChange={setShowDeleteConfirm}
+      />
+      
       <div className="flex !flex-row items-center gap-2">
         <FollowersModal />
         <FollowingModal />
@@ -69,35 +110,38 @@ function UserPage() {
             })}`
           : ''}
       </p>
-      <Tabs defaultValue="recipes" className="w-[400px]">
-        <TabsList>
-          <TabsTrigger value="recipes">
-            <div>
-              {metrics?.recipe_count === 1
-                ? '1 recipe uploaded'
-                : `${metrics?.recipe_count ?? 0} recipes uploaded`}
-            </div>
-          </TabsTrigger>
-          <TabsTrigger value="savedRecipes">
-            <div>
-              {metrics?.savedrecipe_count === 1
-                ? '1 recipe saved'
-                : `${metrics?.savedrecipe_count ?? 0} recipes saved`}
-            </div>
-          </TabsTrigger>
-          <TabsTrigger value="reviews">
-            <div>
-              {metrics?.review_count === 1
-                ? '1 review made'
-                : `${metrics?.review_count ?? 0} reviews made`}
-            </div>
-          </TabsTrigger>
-          
-        </TabsList>
-        <TabsContent value="savedRecipes">View your saved recipes.</TabsContent>
-        <TabsContent value="reviews">View all your reviews.</TabsContent>
-        <TabsContent value="recipes">View your uploaded recipes.</TabsContent>
-      </Tabs>
+      <Tabs defaultValue="recipes" className="justify-center w-full">
+        <div className="flex justify-center">
+          <TabsList>
+            <TabsTrigger value="recipes">
+              <div>
+                {metrics?.recipe_count === 1
+                  ? '1 recipe uploaded'
+                  : `${metrics?.recipe_count ?? 0} recipes uploaded`}
+              </div>
+            </TabsTrigger>
+            <TabsTrigger value="reviews">
+              <div>
+                {metrics?.review_count === 1
+                  ? '1 review made'
+                  : `${metrics?.review_count ?? 0} reviews made`}
+              </div>
+            </TabsTrigger>
+            {isOwner && (
+              <TabsTrigger value="savedRecipes">
+                <div>
+                  {metrics?.savedrecipe_count === 1
+                    ? '1 recipe saved'
+                    : `${metrics?.savedrecipe_count ?? 0} recipes saved`}
+                </div>
+              </TabsTrigger>
+            )}
+          </TabsList>
+        </div>
+          <TabsContent value="savedRecipes">View your saved recipes.</TabsContent>
+          <TabsContent value="reviews">View all your reviews.</TabsContent>
+          <TabsContent value="recipes">View your uploaded recipes.</TabsContent>
+        </Tabs>
     </div>
   );
 }
