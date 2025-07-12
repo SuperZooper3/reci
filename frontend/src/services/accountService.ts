@@ -3,7 +3,9 @@ import type { DisplayName, FollowAccountInfo, AccountInfo, AccountCreate, UserMe
 const BASE_URL = 'http://localhost:3000/api/accounts';
 
 export async function getAccounts(): Promise<DisplayName[]> {
-  const res = await fetch(BASE_URL);
+  const res = await fetch(BASE_URL, {
+    credentials: "include"
+  });
 
   if (!res.ok) {
     throw new Error('Failed to return accounts');
@@ -12,7 +14,9 @@ export async function getAccounts(): Promise<DisplayName[]> {
   };
 
 export async function getAccount(id: string): Promise<AccountInfo> {
-  const res = await fetch(`${BASE_URL}/${id}`);
+  const res = await fetch(`${BASE_URL}/${id}`, {
+    credentials: "include"
+  });
 
   if (!res.ok) {
     throw new Error('Failed to return account');
@@ -21,7 +25,9 @@ export async function getAccount(id: string): Promise<AccountInfo> {
   };
 
 export async function getAccountsFollowing(accountId: string) : Promise<FollowAccountInfo[]> {
-  const res = await fetch(`${BASE_URL}/${accountId}/following`);
+  const res = await fetch(`${BASE_URL}/${accountId}/following`, {
+    credentials: "include"
+  });
 
   if (!res.ok) {
     throw new Error('Failed to return accounts following');
@@ -63,6 +69,18 @@ export async function deleteAccount() : Promise<void> {
   if (!res.ok) {
     throw new Error('Failed to delete account');
   }
+
+};
+
+export async function getAccountsFollowers(accountId: string) : Promise<FollowAccountInfo[]> {
+  const res = await fetch(`${BASE_URL}/${accountId}/followers`, {
+    credentials: "include"
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to return accounts following');
+  }
+  return res.json();
 
 };
 
