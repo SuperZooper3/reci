@@ -100,3 +100,32 @@ export async function getUserMetrics(accountId: string): Promise<UserMetrics> {
   }
   return res.json();
 };
+
+export async function followAccount(accountId: string): Promise<void> {
+  const res = await fetch(`${BASE_URL}/me/follow`, {
+    credentials: "include",
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ followingAccountId: accountId })
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to follow user');
+  }
+};
+
+export async function unfollowAccount(accountId: string): Promise<void> {
+  const res = await fetch(`${BASE_URL}/me/follow`, {
+    credentials: "include",
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ followingAccountId: accountId })
+  });
+  if (!res.ok) {
+    throw new Error('Failed to unfollow user');
+  }
+};

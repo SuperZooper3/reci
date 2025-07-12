@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import type { AccountInfo, UserMetrics } from '../../../shared-types/index';
-import { getAccount, getUserMetrics } from '@/services/accountService';
+import type { AccountInfo, JWTData, UserMetrics } from '../../../shared-types/index';
+import { followAccount, getAccount, getAccountsFollowers, getUserMetrics, unfollowAccount } from '@/services/accountService';
 import FollowersModal from '@/components/followersModal';
 import FollowingModal from '@/components/followingModal';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from '@/components/ui/button';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 function UserPage() {
   const { id } = useParams<{ id: string }>();
@@ -12,6 +15,8 @@ function UserPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [metrics, setMetrics] = useState<UserMetrics | null>(null);
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
+  const [isLoggedIn] = useState(Cookies.get('authToken'));
 
   const handleUserInfo  = async () => {
     if (!id) {
@@ -37,9 +42,54 @@ function UserPage() {
     }
   };
 
+  const handleFollow = async () => {
+    if (!isLoggedIn || !id) {
+      return;
+    }
+
+    if (isFollowing) {
+      try {
+        await unfollowAccount(id);
+        setIsFollowing(false);
+      }
+      catch(e) {
+        alert(e);
+      }
+    }
+
+    else {
+      try {
+        await followAccount(id);
+        setIsFollowing(true);
+      }
+      catch(e) {
+        alert(e);
+      }
+    }
+  }
+
+  const checkIsFollowing = async () => {
+    if (!isLoggedIn) {
+      return;
+    }
+
+    try {
+      const authToken = Cookies.get('authToken');
+      const decoded = jwtDecode(authToken!)
+      const loggedInID = (decoded as JWTData).id;
+      const accountFollowers = await getAccountsFollowers(id!);
+      if (accountFollowers.some(follower => follower.id === loggedInID)) {
+        setIsFollowing(true);
+      }
+    } catch (err) {
+      console.error('Failed to check following status:', err);
+    }
+  }
+
   useEffect(() => {
     if (id) {
       handleUserInfo();
+      checkIsFollowing();
     }
   }, [id]);
 
@@ -53,9 +103,12 @@ function UserPage() {
       {error && (
         <p className="text-red-500 mb-4">Error: {error}</p>
       )}
-      <h1 className="text-2xl font-bold mb-4">
-        {user ? `${user.display_name} (@${user.username})` : `Account ${id}`}
-      </h1>
+      <div className="flex items-center mb-4 gap-4">
+        <h1 className="text-2xl font-bold">
+          {user ? `${user.display_name} (@${user.username})` : `Account ${id}`}
+        </h1>
+        {isLoggedIn && <Button onClick={handleFollow}>{isFollowing ? "Unfollow" : "Follow"}</Button>}
+      </div> 
       <div className="flex !flex-row items-center gap-2">
         <FollowersModal />
         <FollowingModal />
