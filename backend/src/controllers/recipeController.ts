@@ -115,3 +115,34 @@ export const deleteSavedRecipe = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const updateRecipe = async (req: Request, res: Response) => {
+  const jwt = req.cookies.authToken;
+  if (!jwt) {
+    res.status(401).json({ message: 'Unauthorized' });
+    return;
+  }
+  
+  const { id } = auth.verifyAndReadJWT(jwt);
+  const { title } = req.body;
+  const recipe_id = parseInt(req.params.recipeId, 10);
+
+  if (!title) {
+    res.status(400).json({ message: 'Recipe title is required' });
+    return;
+  }
+
+  try {
+    const updatedRecipe = await recipeModel.updateRecipe(recipe_id, title, id);
+
+    if (!updatedRecipe) {
+      res.status(404).json({ message: 'Recipe not found or you are not authorized to update it.' });
+      return;
+    }
+    
+    res.status(200).json(updatedRecipe);
+  } catch (error) {
+    console.error('Error updating recipe', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};

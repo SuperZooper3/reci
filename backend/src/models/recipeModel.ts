@@ -59,3 +59,10 @@ export async function deleteSavedRecipe (id: number, account_id: number): Promis
   saveQueryResult("deleteSavedRecipe", result);
   return;
 };
+
+export async function updateRecipe (recipe_id: number, title: string, account_id: number): Promise<Recipe | null> {
+  const updateRecipeSQL = await loadSQL('updateRecipe.sql');
+  const result = await query<Recipe>(updateRecipeSQL, [title, recipe_id, account_id]);
+  saveQueryResult("updateRecipe", result);
+  return result.rows[0] ?? null;
+}
