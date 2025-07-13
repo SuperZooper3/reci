@@ -57,7 +57,7 @@ export const getSavedRecipesByAccountId = async (req: Request, res: Response) =>
   }
   const { id } = auth.verifyAndReadJWT(jwt);
   try{
-    const accountSavedRecipes = await recipeModel.getAccountSavedRecipes(id);
+    const accountSavedRecipes = await addAvgRatingToRecipes(await recipeModel.getAccountSavedRecipes(id));
     res.json(accountSavedRecipes);
   } catch (error) {
     console.error('Error fetching account\'s saved recipes', error);
