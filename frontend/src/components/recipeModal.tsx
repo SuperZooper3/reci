@@ -14,9 +14,11 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { addRecipe } from "@/services/recipeService"
 import type { RecipeInput } from "../../../shared-types"
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
+import { type JWTData } from "../../../shared-types";
 
 export default function RecipeModal() {
-
   const [open, setOpen] = useState(false)
   const [title, setTitle] = useState("")
   const [body, setBody] = useState("")
@@ -27,11 +29,21 @@ export default function RecipeModal() {
       return
     }
 
-    try {
+    try {  
+      const authToken = Cookies.get('authToken');
+
+      if (!authToken) {
+        alert("Please log in to add a recipe")
+        return
+      }
+
+      const decoded = jwtDecode(authToken);
+      const author_id = (decoded as JWTData).id;
+
       const reviewInput: RecipeInput = {
         title,
         body,
-        author_id: 2, // TODO: This is hardcoded until we can get author id from auth
+        author_id,
       };
 
       addRecipe(reviewInput)

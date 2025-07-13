@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
     Dialog,
     DialogTrigger,
@@ -58,7 +58,7 @@ export default function FollowersModal() {
         </DialogTrigger>
 
         <DialogContent className="w-[400px] h-[500px] p-6 flex flex-col">
-            <DialogHeader className="bg-background z-10">
+            <DialogHeader className="bg-background">
               <DialogTitle>Followers</DialogTitle>
             </DialogHeader>
 
@@ -77,11 +77,11 @@ export default function FollowersModal() {
                       <li 
                         key={index} 
                         className="p-3 border rounded-lg shadow-sm bg-white hover:bg-gray-50"
-                      >
-                        <div className="flex flex-col items-start">
+                      > 
+                        <Link onClick = {() => setOpen(false)} to={`/account/${account.id}`} className="flex flex-col items-start">
                           <h3 className="font-medium">{account.display_name}</h3>
                           <p className="text-sm text-gray-600">@{account.username}</p>
-                        </div>
+                        </Link>
                       </li>
                   ))}
                   </ul>
