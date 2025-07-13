@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import type { AccountInfo, UserMetrics, JWTData } from '../../../shared-types/index';
-import { getAccount, getUserMetrics, deleteAccount } from '@/services/accountService';
+import { getAccount, getUserMetrics, getFollowStatus, followUser, unfollowUser } from '@/services/accountService';
 import FollowersModal from '@/components/followersModal';
 import FollowingModal from '@/components/followingModal';
 import DeleteAccountModal from '@/components/deleteAccountModal';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
+import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu"
 import { EllipsisVertical } from 'lucide-react';
 
@@ -19,6 +20,7 @@ function UserPage() {
   const [metrics, setMetrics] = useState<UserMetrics | null>(null);
   const authToken = Cookies.get('authToken');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
   let accountId = null;
 
   if (authToken) {
@@ -53,11 +55,39 @@ function UserPage() {
     }
   };
 
+  const handleFollow = async () => {
+    if (!id) return;
+    try {
+      if (isFollowing) {
+        await unfollowUser(id);
+        setIsFollowing(false);
+      } else {
+        await followUser(id);
+        setIsFollowing(true);
+      }
+    } catch (err) {
+      console.error('Failed to update follow status:', err);
+    }
+  };
+
+  const checkFollowStatus = async () => {
+    if (!id) return;
+    try {
+      const status = await getFollowStatus(id);
+      setIsFollowing(status);
+    } catch (err) {
+      console.error('Failed to get follow status:', err);
+    }
+  };
+
   useEffect(() => {
     if (id) {
       handleUserInfo();
+      if (authToken) {
+        checkFollowStatus();
+      }
     }
-  }, [id]);
+  }, [id, authToken]);
 
   return (
     <div className="p-6">
@@ -75,7 +105,7 @@ function UserPage() {
           {user ? `${user.display_name} (@${user.username})` : `Account ${id}`}
         </h1>
 
-        {isOwner && (
+        {isOwner ? (
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger>
@@ -88,6 +118,10 @@ function UserPage() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
+        ) : authToken && (
+          <Button onClick={handleFollow} variant={isFollowing ? 'secondary' : 'default'}>
+            {isFollowing ? 'Unfollow' : 'Follow'}
+          </Button>
         )}
       </div>
 

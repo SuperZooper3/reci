@@ -1,18 +1,19 @@
 import { Router } from 'express';
-import { getAccount, deleteAccount, getAccounts, getAccountMe, createAccount, getAccountsFollowing, getAccountsFollowers, addAccountFollowing, deleteAccountFollow, loginAccount, getUserMetrics } from '../controllers/accountController.js';
+import * as accountController from '../controllers/accountController.js';
 
 const accountRouter = Router();
 
-accountRouter.get('/', getAccounts);
-accountRouter.get('/me', getAccountMe);
-accountRouter.get('/:id', getAccount);
-accountRouter.post('/create', createAccount);
-accountRouter.post('/login', loginAccount);
-accountRouter.delete('/me', deleteAccount);
-accountRouter.delete('/me/follow', deleteAccountFollow);
-accountRouter.get('/:id/following', getAccountsFollowing);
-accountRouter.get('/:id/followers', getAccountsFollowers);
-accountRouter.post('/me/follow', addAccountFollowing);
-accountRouter.get('/:id/metrics', getUserMetrics);
+accountRouter.get('/', accountController.getAccounts);
+accountRouter.get('/me', accountController.getAccountMe);
+accountRouter.get('/:id', accountController.getAccount);
+accountRouter.post('/create', accountController.createAccount);
+accountRouter.post('/login', accountController.loginAccount);
+accountRouter.delete('/me', accountController.deleteAccount);
+accountRouter.delete('/me/follow', accountController.deleteAccountFollow);
+accountRouter.get('/:id/following', accountController.getAccountsFollowing);
+accountRouter.get('/:id/followers', accountController.getAccountsFollowers);
+accountRouter.post('/me/follow', accountController.addAccountFollowing);
+accountRouter.get('/:id/metrics', accountController.getUserMetrics);
+accountRouter.get('/follow/status/:id', accountController.getFollowStatus);
 
 export default accountRouter;
