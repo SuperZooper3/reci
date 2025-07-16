@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { Link, useParams } from 'react-router-dom';
+import { useState } from "react";
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
     Dialog,
     DialogTrigger,
@@ -7,14 +8,16 @@ import {
     DialogHeader,
     DialogTitle,
   } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area"
 import type { FollowAccountInfo } from '../../../shared-types/index';
 import { getAccountsFollowers } from '@/services/accountService';
 
-export default function FollowersModal() {
-    const [open, setOpen] = useState(false)
+interface FollowersModalProps {
+  followerCount?: number;
+}
 
+export default function FollowersModal({ followerCount }: FollowersModalProps) {
+    const [open, setOpen] = useState(false)
     const { id } = useParams<{ id: string }>();
     const [followerAccounts, setFollowerAccounts] = useState<FollowAccountInfo[]>([]);
     const [loading, setLoading] = useState(false);
@@ -39,26 +42,22 @@ export default function FollowersModal() {
         setLoading(false);
       }
     };
-  
-    useEffect(() => {
-      if (id) handleLoadFollowers();
-    }, [id]);
 
     const handleOpenChange = (isOpen: boolean) => {
       setOpen(isOpen);
       if (isOpen) {
-        handleLoadFollowers(); // load again when modal is opened
+        handleLoadFollowers();
       }
     };
 
     return (
       <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogTrigger asChild>
-            <Button variant="ghost"> {followerAccounts.length} followers</Button>
+          <p className="text-sm font-medium cursor-pointer">{followerCount ?? 0} followers</p>
         </DialogTrigger>
 
         <DialogContent className="w-[400px] h-[500px] p-6 flex flex-col">
-            <DialogHeader className="bg-background">
+            <DialogHeader>
               <DialogTitle>Followers</DialogTitle>
             </DialogHeader>
 
@@ -80,7 +79,7 @@ export default function FollowersModal() {
                       > 
                         <Link onClick = {() => setOpen(false)} to={`/account/${account.id}`} className="flex flex-col items-start">
                           <h3 className="font-medium">{account.display_name}</h3>
-                          <p className="text-sm text-gray-600">@{account.username}</p>
+                          <Link to={`/account/${account.id}`} onClick={() => setOpen(false)} className="text-sm text-gray-600">@{account.username}</Link>
                         </Link>
                       </li>
                   ))}
