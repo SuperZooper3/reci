@@ -80,7 +80,7 @@ export default function FollowersModal({ followerCount }: FollowersModalProps) {
                         <Link onClick = {() => setOpen(false)} to={`/account/${account.id}`} className="flex flex-col items-start">
                           <h3 className="font-medium">{account.display_name}</h3>
                           <Link to={`/account/${account.id}`} onClick={() => setOpen(false)} className="text-sm text-gray-600">@{account.username}</Link>
-                        </div>
+                        </Link>
                       </li>
                   ))}
                   </ul>
