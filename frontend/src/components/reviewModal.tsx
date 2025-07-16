@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils"
-import type { ReviewInput } from "../../../shared-types";
+import type { ReviewImage, ReviewInput } from "../../../shared-types";
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,14 +17,19 @@ import { addReview } from "@/services/reviewService"
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { type JWTData } from "../../../shared-types";
+import { Input } from "./ui/input";
+import { ScrollArea } from "./ui/scroll-area";
 
 type SliderProps = React.ComponentProps<typeof Slider>
 
-export default function CookModal({ className, recipeId, ...props }: SliderProps & { recipeId: number }) {
+export default function CookModal({ className, recipeId, refreshReviews, ...props }: SliderProps & { recipeId: number, refreshReviews: () => void }) {
 
   const [open, setOpen] = useState(false)
   const [description, setDescription] = useState("")
   const [rating, setRating] = useState(5)
+  const [imageURL, setImageURL] = useState("")
+  const [alt, setAlt] = useState("")
+  const [images, setImages] = useState<ReviewImage[]>([])
 
   const handlePost = async () => {
     if (!description.trim()) {
@@ -48,22 +53,35 @@ export default function CookModal({ className, recipeId, ...props }: SliderProps
         rating,
         recipe_id: recipeId,
         account_id,
-        images: [{
-          url: "https://media.discordapp.net/attachments/1369338842825621707/1372410618044354660/ChatGPT_Image_May_14_2025_07_22_47_PM.png?ex=686a91bd&is=6869403d&hm=997f47198b8812de0b0443242c8a8f013614bc97447e4f425bd8cc8e321a1691&=&format=webp&quality=lossless&width=1802&height=1802",
-          alt: "Masla monkey"
-        }]
+        images
       };
       
-      addReview(reviewInput);
+      await addReview(reviewInput);
       
-      setDescription("")
-      setRating(5)
-      setOpen(false)
+      setDescription("");
+      setRating(5);
+      setOpen(false);
+      refreshReviews();
     } catch (error) {
-      console.error("Error adding cook", error)
-      alert("An error occurred while adding the cook.")
+      console.error("Error adding cook", error);
+      alert("An error occurred while adding the cook. Make sure you haven't cooked this recipe before.");
     }
   }
+
+   const handleAddImage = () => {
+    if (!imageURL.trim()) {
+      alert("Image URL cannot be empty");
+      return;
+    }
+
+    setImages((prevImages) => [...prevImages, {url: imageURL, alt: alt}]);
+    setImageURL("");
+    setAlt("");
+   }
+
+   const handleRemoveImage = (index: number) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -90,7 +108,29 @@ export default function CookModal({ className, recipeId, ...props }: SliderProps
             />
           </div>
         </div>
-
+        <div>
+          <div className="flex gap-2 flex-row mb-2 items-center">
+            <div className="flex-1 flex flex-col gap-1">
+              <Input value={imageURL} onChange={(e) => setImageURL(e.target.value)} placeholder="Insert image URL"/>
+              <Input value={alt} onChange={(e) => setAlt(e.target.value)} placeholder="Add alt text"/>
+            </div> 
+            <Button onClick={handleAddImage}>+</Button>
+          </div> 
+          {
+            images.length > 0 &&
+            <ScrollArea className="bg-gray-100 maxh-72 p-2 rounded">
+            {images.map((image, index) => (
+              <div key={index} className="flex items-center justify-center gap-2 mt-1 mb-1">
+                <div className="flex flex-col bg-white flex-1 rounded p-1" key={index}>
+                  <div>{image.url}</div>
+                  <div className="text-gray-500 text-xs">{image.alt}</div>
+                </div> 
+                <Button onClick={() => handleRemoveImage(index)} variant="destructive">X</Button>
+              </div> 
+            ))}
+            </ScrollArea>
+          } 
+        </div>
         <div className="w-full p-4 bg-gray-100 rounded">
           <Slider
             defaultValue={[5]}
