@@ -15,7 +15,6 @@ import { EllipsisVertical } from 'lucide-react';
 function UserPage() {
   const { id } = useParams<{ id: string }>();
   const [user, setAccount] = useState<AccountInfo | null>(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [metrics, setMetrics] = useState<UserMetrics | null>(null);
   const authToken = Cookies.get('authToken');
@@ -25,7 +24,6 @@ function UserPage() {
 
   if (authToken) {
     const decoded = jwtDecode(authToken);
-    console.log(decoded); 
     accountId = (decoded as JWTData).id;
   }
 
@@ -37,7 +35,6 @@ function UserPage() {
       return;
     }
 
-    setLoading(true);
     setError(null);
 
     try {
@@ -50,8 +47,6 @@ function UserPage() {
     } catch (err) {
       setError('Failed to load user account');
       console.error('Failed loading user account:', err)
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -65,6 +60,8 @@ function UserPage() {
         await followUser(id);
         setIsFollowing(true);
       }
+      const newMetrics = await getUserMetrics(id);
+      setMetrics(newMetrics);
     } catch (err) {
       console.error('Failed to update follow status:', err);
     }
@@ -91,21 +88,24 @@ function UserPage() {
 
   return (
     <div className="p-6">
-    
-      {loading && (
-        <p className="text-gray-500 mb-4">Loading user account...</p>
-      )}
 
       {error && (
         <p className="text-red-500 mb-4">Error: {error}</p>
       )}
 
-      <div className='flex flex-row justify-between'>
-        <h1 className="text-2xl font-bold mb-4">
-          {user ? `${user.display_name} (@${user.username})` : `Account ${id}`}
-        </h1>
-
-        {isOwner ? (
+      <div className='flex flex-row justify-between items-center mb-4'>
+        <div className="flex flex-row items-center gap-4">
+          <h1 className="text-2xl font-bold">
+            {user ? `${user.display_name} (@${user.username})` : `Account ${id}`}
+          </h1>
+          {!isOwner && authToken && (
+            <Button onClick={handleFollow} variant={isFollowing ? 'secondary' : 'default'}>
+              {isFollowing ? 'Unfollow' : 'Follow'}
+            </Button>
+          )}
+        </div>
+        
+        {isOwner && (
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger>
@@ -118,10 +118,6 @@ function UserPage() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-        ) : authToken && (
-          <Button onClick={handleFollow} variant={isFollowing ? 'secondary' : 'default'}>
-            {isFollowing ? 'Unfollow' : 'Follow'}
-          </Button>
         )}
       </div>
 
@@ -131,12 +127,12 @@ function UserPage() {
         onOpenChange={setShowDeleteConfirm}
       />
       
-      <div className="flex !flex-row items-center gap-2">
-        <FollowersModal />
-        <FollowingModal />
+      <div className="flex !flex-row items-center gap-8">
+        <FollowersModal followerCount={metrics?.follower_count} />
+        <FollowingModal followingCount={metrics?.following_count}/>
       </div>
 
-      <p className="text-gray-600 text-sm m-2">
+      <p className="text-gray-600 text-sm my-2">
         {metrics?.member_since
           ? `Member since ${new Date(metrics.member_since).toLocaleDateString('en-US', {
               month: 'long',

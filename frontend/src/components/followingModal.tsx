@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
     Dialog,
     DialogTrigger,
@@ -8,11 +9,14 @@ import {
     DialogTitle,
   } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Button } from "@/components/ui/button";
 import type { FollowAccountInfo } from '../../../shared-types/index';
 import { getAccountsFollowing } from '@/services/accountService';
 
-export default function FollowingModal() {
+interface FollowingModalProps {
+  followingCount?: number;
+}
+
+export default function FollowingModal({ followingCount }: FollowingModalProps) {
     const [open, setOpen] = useState(false)
 
     const { id } = useParams<{ id: string }>();
@@ -54,11 +58,11 @@ export default function FollowingModal() {
     return (
       <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogTrigger asChild>
-            <Button variant="ghost">{followingAccounts.length} following</Button>
+            <p className="text-sm font-medium cursor-pointer">{followingCount ?? 0} following</p>
         </DialogTrigger>
 
         <DialogContent className="w-[400px] h-[500px] p-6 flex flex-col">
-            <DialogHeader className="bg-background">
+            <DialogHeader>
                 <DialogTitle>Following</DialogTitle>
             </DialogHeader>
 
@@ -80,8 +84,8 @@ export default function FollowingModal() {
                             >
                             <Link onClick = {() => setOpen(false)} to={`/account/${account.id}`} className="flex flex-col items-start">
                                 <h3 className="font-medium">{account.display_name}</h3>
-                                <p className="text-sm text-gray-600">@{account.username}</p>
-                            </Link>
+                                <Link to={`/account/${account.id}`} onClick={() => setOpen(false)} className="text-sm text-gray-600">@{account.username}</Link>
+                            </div>
                             </li>
                         ))}
                         </ul>

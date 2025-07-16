@@ -194,7 +194,7 @@ export const getFollowStatus = async (req: Request, res: Response) => {
   const jwt = req.cookies.authToken;
   if (!jwt) {
     res.status(400).json({ message: 'Missing JWT cookie' });
-    return
+    return;
   }
   const { id } = auth.verifyAndReadJWT(jwt);
   const followee_id = parseInt(req.params.id, 10);

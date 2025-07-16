@@ -84,7 +84,7 @@ export async function getUserMetrics(account_id: number): Promise<UserMetrics> {
 
 export async function getFollowStatus(followerId: number, followingId: number): Promise<boolean> {
   const getFollowStatus = await loadSQL('getFollowStatus.sql');
-  const result = await query<{ count: string }>(getFollowStatus, [followerId, followingId]);
+  const result = await query<{ exists: boolean }>(getFollowStatus, [followerId, followingId]);
   saveQueryResult("getFollowStatus", result);
-  return result.rows.length > 0 && parseInt(result.rows[0].count, 10) > 0;
+  return result.rows[0]?.exists ?? false;
 }
