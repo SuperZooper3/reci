@@ -51,7 +51,6 @@ export function AppSidebar() {
     try {
       document.cookie = "authToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT";
       navigate("/");
-      window.location.reload();
     } catch(e) {
       alert(e);
     }
