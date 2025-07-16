@@ -20,7 +20,7 @@ function RecipePage() {
   const fetchRecipeInformation = async () => {
     try {
       const recipe = await getRecipe(id!);
-      const reviews = await getRecipeRatings(String(recipe.id));
+      const reviews = await getRecipeRatings(id!);
       setRecipe(recipe);
       setReviews(reviews);
     } catch(e) {
@@ -92,7 +92,7 @@ function RecipePage() {
         </div>
 
         <div>
-          <ReviewModal recipeId={recipe.id} />
+          <ReviewModal recipeId={recipe.id} refreshReviews={fetchRecipeInformation}/>
         </div>
         <button onClick={handleBookmark}><Bookmark fill={bookmarked ? "lightblue" : "none"}/></button>
       </div>
