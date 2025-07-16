@@ -17,19 +17,12 @@ function RecipePage() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [bookmarked, setBookmarked] = useState(false);
 
-  const fetchReviewsInformation = async () => {
-    try {
-      const reviews = await getRecipeRatings(id!);
-      setReviews(reviews);
-    } catch(e) {
-      alert(e);
-    }
-  }
-
   const fetchRecipeInformation = async () => {
     try {
       const recipe = await getRecipe(id!);
+      const reviews = await getRecipeRatings(id!);
       setRecipe(recipe);
+      setReviews(reviews);
     } catch(e) {
       alert(e);
     }
@@ -76,7 +69,6 @@ function RecipePage() {
 
   useEffect(() => {
     fetchRecipeInformation();
-    fetchReviewsInformation();
     checkBookmarked();
   }, []);
 
@@ -100,7 +92,7 @@ function RecipePage() {
         </div>
 
         <div>
-          <ReviewModal recipeId={recipe.id} refreshReviews={fetchReviewsInformation}/>
+          <ReviewModal recipeId={recipe.id} refreshReviews={fetchRecipeInformation}/>
         </div>
         <button onClick={handleBookmark}><Bookmark fill={bookmarked ? "lightblue" : "none"}/></button>
       </div>
