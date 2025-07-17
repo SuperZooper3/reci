@@ -25,7 +25,7 @@ function App() {
           </Routes>
         </main>
       </div>
-      <div className="fixed bottom-4 right-4 z-50 shadow-xl">
+      <div>
         <RecipeModal />
       </div>
     </SidebarProvider>
