@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";  
 import { Input } from '@/components/ui/input';
-import RecipeModal from '../components/recipeModal';
 import { filterRecipes } from '@/services/recipeService';
 import type { Recipe } from '../../../shared-types';
 import RecipeCard from '@/components/recipeCard';
@@ -50,9 +49,6 @@ function SearchPage() {
             <p>No recipes to display</p>
           )}
         </div>
-      </div>
-      <div>
-        <RecipeModal />
       </div>
     </>
   )

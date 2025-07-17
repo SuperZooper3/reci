@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import RecipeModal from '../components/recipeModal';
 import ReviewModal from '../components/reviewModal';
 import { addSavedRecipe, getRecipe, getSavedRecipes, removeSavedRecipe } from '@/services/recipeService';
 import type { Review, Recipe } from '../../../shared-types';
@@ -117,9 +116,6 @@ function RecipePage() {
         ) : (
           <p>No reviews to display</p>
         )}
-      </div>
-      <div>
-        <RecipeModal />
       </div>
     </>
   )
