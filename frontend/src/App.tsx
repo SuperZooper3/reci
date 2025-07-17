@@ -7,6 +7,7 @@ import UserPage from './pages/UserPage'
 import RecipePage from "./pages/RecipePage"
 import SettingsPage from "./pages/SettingsPage"
 import CookbookPage from "./pages/CookbookPage"
+import RecipeModal from "./components/recipeModal"
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
             <Route path="/cookbook" element={<CookbookPage />} />
           </Routes>
         </main>
+      </div>
+      <div className="fixed bottom-4 right-4 z-50 shadow-xl">
+        <RecipeModal />
       </div>
     </SidebarProvider>
   )

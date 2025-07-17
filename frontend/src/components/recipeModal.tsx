@@ -61,7 +61,12 @@ export default function RecipeModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">+</Button>
+        <Button 
+          variant="outline" 
+          className="fixed bottom-6 right-6 z-50 shadow-xl rounded-lg w-28 h-20 text-1xl flex items-center justify-center"
+        >
+          Add Recipe
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-2xl w-full">
         <DialogHeader>
