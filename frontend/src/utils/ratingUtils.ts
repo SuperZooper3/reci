@@ -1,5 +1,5 @@
 export function getColorBasedOnRating(rating: number | null | undefined) {
-  if (!rating) {
+  if (rating == null || rating == undefined) {
     return "";
   }
 
@@ -15,7 +15,7 @@ export function getColorBasedOnRating(rating: number | null | undefined) {
 };
 
 export function getMoodBasedOnRating(rating: number | null | undefined) {
-  if (!rating) {
+  if (rating == null || rating == undefined) {
     return "";
   }
 
