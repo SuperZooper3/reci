@@ -1,3 +1,4 @@
+drop materialized view if exists anon_feed;
 drop table if exists SavedRecipe;
 drop table if exists Follower;
 drop table if exists ReviewImage;
@@ -75,3 +76,17 @@ CREATE TABLE IF NOT EXISTS SavedRecipe(
 );
 
 CREATE INDEX saved_recipe_index ON SavedRecipe(account_id, recipe_id);
+
+CREATE MATERIALIZED VIEW anon_feed AS
+SELECT 
+    description, Review.id, Review.created_at, rating, recipe_id, Recipe.title, 
+    account_id, Account.display_name, Account.username
+FROM Review 
+JOIN Recipe ON Review.recipe_id = Recipe.id
+JOIN Account ON Review.account_id = Account.id
+ORDER BY Review.created_at DESC
+LIMIT 40;
+
+-- Required for CONCURRENTLY REFRESH to work caus it enables attomic
+-- This prevents other people's connections to the feed from being blocked while it refreshes (would defeat the point!) 
+CREATE UNIQUE INDEX idx_anon_feed_id ON anon_feed(id);
