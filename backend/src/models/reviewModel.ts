@@ -50,6 +50,7 @@ export async function addImagesToReview(review_id: number, images: ReviewImage[]
 export async function getReviewImagesByID(review_id: number): Promise<ReviewImage[]> {
   const getReviewImagesSQL = await loadSQL('getReviewImages.sql');
   const result = await query<ReviewImage>(getReviewImagesSQL, [review_id]);
-  saveQueryResult("getReviewImagesSQLs", result);
+  // Way too much spam
+  // saveQueryResult("getReviewImagesSQLs", result);
   return result.rows;
 };

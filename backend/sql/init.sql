@@ -1,3 +1,4 @@
+drop materialized view if exists anon_feed;
 drop table if exists SavedRecipe;
 drop table if exists Follower;
 drop table if exists ReviewImage;

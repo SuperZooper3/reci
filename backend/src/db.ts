@@ -66,4 +66,14 @@ export async function initDb() {
 
   console.log("Triggers created");
 
+  const postSeedSQL = await loadSQL('postSeed.sql');
+  console.log("Running post-seed commands");
+  try {
+      await client.query(postSeedSQL);
+  } 
+  catch (error) {
+    console.log("Error: ", error)
+  }
+
+  console.log("Post-seed commands run");
 }
