@@ -10,9 +10,20 @@ export async function getUserFeed(user_id: number): Promise<FeedEntry[]> {
     return result.rows;
 };
 
+
+// In practice, we'd do 1% but this helps us better illustrate the point
+const viewRefreshChance = 0.1;
+
 export async function getAnonFeed(): Promise<FeedEntry[]> {
     const getAnonFeedSQL = await loadSQL('getAnonFeed.sql');
     const result = await query<FeedEntry>(getAnonFeedSQL); 
     saveQueryResult("getAnonFeed", result);
+    // Probabilistically refresh the view. 1% chance
+    // In practice we would make this async, but we only have one DB connection so its fine
+    if (Math.random() < viewRefreshChance) {
+        const refreshAnonFeedSQL = await loadSQL('refreshAnonFeed.sql');
+        const result = await query<FeedEntry>(refreshAnonFeedSQL); 
+        saveQueryResult("refreshAnonFeed", result);
+    }
     return result.rows;
 };
