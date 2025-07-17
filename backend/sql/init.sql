@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS SavedRecipe(
     CONSTRAINT unique_account_id_recipe_id UNIQUE (account_id, recipe_id)
 );
 
-CREATE INDEX saved_recipe_index ON SavedRecipe(account_id, recipe_id);
+CREATE INDEX saved_recipe_account_id_index ON SavedRecipe(account_id);
 
 CREATE MATERIALIZED VIEW anon_feed AS
 SELECT 
