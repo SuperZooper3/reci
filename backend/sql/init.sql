@@ -41,7 +41,8 @@ CREATE TABLE IF NOT EXISTS Review(
     FOREIGN KEY(account_id) REFERENCES Account(id) ON DELETE CASCADE
 );
 
-CREATE INDEX review_index ON Review(account_id, recipe_id);
+CREATE INDEX review_account_id_index ON Review(account_id);
+CREATE INDEX review_recipe_id_index ON Review(recipe_id);
 
 CREATE TABLE IF NOT EXISTS ReviewImage(
     id SERIAL,
