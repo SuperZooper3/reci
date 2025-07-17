@@ -39,3 +39,14 @@ export async function addReview(reviewInput: ReviewInput): Promise<void> {
     throw new Error('Failed to add review for this recipe');
   }
 }
+
+export async function getReviewsByAccount(accountId: string): Promise<Review[]> {
+  const res = await fetch(`${BASE_URL}/account/${accountId}`, {
+    credentials: "include"
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to return reviews for this account');
+  }
+  return res.json();
+}

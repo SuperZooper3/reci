@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";  
 import { Input } from '@/components/ui/input';
 import { filterRecipes } from '@/services/recipeService';
@@ -18,10 +18,6 @@ function SearchPage() {
     }
   };
 
-  useEffect(() => {
-    handleFilterRecipes();
-  }, []);
-  
   return (
     <>
       <div>

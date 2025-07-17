@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS Recipe(
     FOREIGN KEY(author_id) REFERENCES Account(id) ON DELETE SET NULL
 );
 
+CREATE INDEX recipe_index ON Recipe(author_id);
+
 CREATE TABLE IF NOT EXISTS Review(
     id SERIAL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -37,6 +39,8 @@ CREATE TABLE IF NOT EXISTS Review(
     FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE,
     FOREIGN KEY(account_id) REFERENCES Account(id) ON DELETE CASCADE
 );
+
+CREATE INDEX review_index ON Review(account_id, recipe_id);
 
 CREATE TABLE IF NOT EXISTS ReviewImage(
     id SERIAL,
@@ -69,3 +73,5 @@ CREATE TABLE IF NOT EXISTS SavedRecipe(
     FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE,
     CONSTRAINT unique_account_id_recipe_id UNIQUE (account_id, recipe_id)
 );
+
+CREATE INDEX saved_recipe_index ON SavedRecipe(account_id, recipe_id);

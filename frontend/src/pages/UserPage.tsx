@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import type { AccountInfo, UserMetrics, JWTData } from '../../../shared-types/index';
+import type { AccountInfo, UserMetrics, JWTData, Recipe, Review } from '../../../shared-types/index';
 import { getAccount, getUserMetrics, getFollowStatus, followUser, unfollowUser } from '@/services/accountService';
+import { getRecipesFromAccount, getSavedRecipes } from '@/services/recipeService';
+import { getReviewsByAccount } from '@/services/reviewService';
+
 import FollowersModal from '@/components/followersModal';
 import FollowingModal from '@/components/followingModal';
 import DeleteAccountModal from '@/components/deleteAccountModal';
@@ -11,6 +14,8 @@ import { jwtDecode } from 'jwt-decode';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu"
 import { EllipsisVertical } from 'lucide-react';
+import RecipeCard from '@/components/recipeCard';
+import ReviewCard from '@/components/reviewCard';
 
 function UserPage() {
   const { id } = useParams<{ id: string }>();
@@ -20,6 +25,9 @@ function UserPage() {
   const authToken = Cookies.get('authToken');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [recipes, setRecipesFromAccount] = useState<Recipe[]>([]);
+  const [reviews, setReviewsFromAccount] = useState<Review[]>([]);
+  const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([]);
   let accountId = null;
 
   if (authToken) {
@@ -28,6 +36,46 @@ function UserPage() {
   }
 
   const isOwner = accountId?.toString() === id?.toString();
+
+  const handleGetUserRecipes = async () => {
+    if (!id) {
+      setError('No account ID provided');
+      return;
+    }
+
+    try {
+      const recipes = await getRecipesFromAccount(id);
+      setRecipesFromAccount(recipes);
+    } catch (err) {
+      setError('Failed to load user recipes');
+      console.error('Failed loading user recipes:', err)
+    }
+  };
+
+  const handleGetUserReviews = async () => {
+    if (!id) {
+      setError('No account ID provided');
+      return;
+    }
+
+    try {
+      const reviews = await getReviewsByAccount(id);
+      setReviewsFromAccount(reviews);
+    } catch (err) {
+      setError('Failed to load user reviews');
+      console.error('Failed loading user reviews:', err)
+    }
+  };
+
+  const handleGetSavedRecipes = async () => {
+    try {
+      const recipes = await getSavedRecipes();
+      setSavedRecipes(recipes);
+    } catch (err) {
+      setError('Failed to load saved recipes');
+      console.error('Failed loading saved recipes:', err)
+    }
+  };
 
   const handleUserInfo  = async () => {
     if (!id) {
@@ -80,11 +128,16 @@ function UserPage() {
   useEffect(() => {
     if (id) {
       handleUserInfo();
+      handleGetUserRecipes();
+      handleGetUserReviews();
+      if (isOwner) {
+        handleGetSavedRecipes();
+      }
       if (authToken) {
         checkFollowStatus();
       }
     }
-  }, [id, authToken]);
+  }, [id, authToken, isOwner]);
 
   return (
     <div className="p-6">
@@ -168,9 +221,21 @@ function UserPage() {
             )}
           </TabsList>
         </div>
-          <TabsContent value="savedRecipes">View your saved recipes.</TabsContent>
-          <TabsContent value="reviews">View all your reviews.</TabsContent>
-          <TabsContent value="recipes">View your uploaded recipes.</TabsContent>
+          <TabsContent value="savedRecipes">
+            {savedRecipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
+          </TabsContent>
+          <TabsContent value="reviews">
+            {reviews.map((review) => (
+              <ReviewCard key={review.id} review={review} />
+            ))}
+          </TabsContent>
+          <TabsContent value="recipes">
+            {recipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
+          </TabsContent>
         </Tabs>
     </div>
   );

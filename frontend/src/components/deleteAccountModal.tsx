@@ -25,7 +25,6 @@ export default function DeleteAccountModal({ open, onOpenChange }: DeleteAccount
             //From FE, can only delete cookie by overriding with expiry in the past
             document.cookie = "authToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT";
             navigate("/");
-            window.location.reload();
         } catch(e) {
             alert(e);
         }
