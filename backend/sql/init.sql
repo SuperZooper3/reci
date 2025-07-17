@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Recipe(
     FOREIGN KEY(author_id) REFERENCES Account(id) ON DELETE SET NULL
 );
 
-CREATE INDEX recipe_index ON Recipe(author_id);
+CREATE INDEX recipe_account_id_index ON Recipe(author_id);
 
 CREATE TABLE IF NOT EXISTS Review(
     id SERIAL,
