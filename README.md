@@ -80,7 +80,7 @@ We've worked extensively on our backend systems with a long suite of fleshed out
   
 ### NEW (as of Milestone 3)
 
-- User profile page with added statistics, followers, following, your recipies and review
+- User profile page with added statistics, followers, following, your recipies and reviews
 
 <img src="profile.png" alt="User profile page" width="400"/>
 
