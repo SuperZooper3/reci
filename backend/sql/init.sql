@@ -65,6 +65,10 @@ CREATE TABLE IF NOT EXISTS Follower(
     CHECK (follower_id != followee_id)
 );
 
+CREATE INDEX follower_index ON Follower(follower_id);
+CREATE INDEX followee_index ON Follower(followee_id);
+
+
 CREATE TABLE IF NOT EXISTS SavedRecipe(
     id SERIAL,
     account_id INT NOT NULL,
