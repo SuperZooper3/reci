@@ -1,8 +1,8 @@
 # Reci - It's time to cook!
 
-Reci is a social recipe-sharing app where users can post recipes, review what they’ve cooked, and follow friends to stay updated on what’s hot in their kitchens.
-
 <img src="reci.png" alt="Reci Logo" width="200">
+
+Reci is a social recipe-sharing app where users can post recipes, review what they’ve cooked, and follow friends to stay updated on what’s hot in their kitchens.
 
 ![Landing page screenshot](screenshot.png)
 
@@ -73,10 +73,25 @@ We've worked extensively on our backend systems with a long suite of fleshed out
 
 - Frontend views for the feed, recipe search, settings, profile pages, and recipe views to read the recipes
 - Reading recipe reviews, with support for adding images
-- Settings page, login 
+- Settings page, login
 - Fancy: a dynamic and personalized landing page feed with signed in and annonymous views
 - Fancy: using triggers to automatically save recipes that you review
 - Fancy: database level following constraints (you can't follow yourself, or follow the same person multiple times)
+  
+### NEW (as of Milestone 3)
 
+- User profile page with added statistics, followers, following, your recipies and reviews
+
+<img src="profile.png" alt="User profile page" width="400"/>
+
+- Your persronalized cookbook page (frontend) with all of your authored and saved recipes
+- Add recipe and review modals
+
+<img src="image.png" alt="Add recipe modal" width="400"/>
+<img src="image-1.png" alt="Add cook modal" width="400"/>
+
+- Improved frontend navigation through hyperlinks in more places
+- Fancy: advanced indexing to accelerate queries
+- Fancy: materialized view for anonymous feed to greatly accelerate traffic
 
 ![Recipe page](recipe_page.png)
