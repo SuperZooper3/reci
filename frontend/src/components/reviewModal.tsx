@@ -112,18 +112,18 @@ export default function CookModal({ className, recipeId, refreshReviews, ...prop
           <div className="flex gap-2 flex-row mb-2 items-center">
             <div className="flex-1 flex flex-col gap-1">
               <Input value={imageURL} onChange={(e) => setImageURL(e.target.value)} placeholder="Insert image URL"/>
-              <Input value={alt} onChange={(e) => setAlt(e.target.value)} placeholder="Add alt text"/>
+              <Input value={alt} onChange={(e) => setAlt(e.target.value)} placeholder="Add a description"/>
             </div> 
             <Button onClick={handleAddImage}>+</Button>
           </div> 
           {
             images.length > 0 &&
-            <ScrollArea className="bg-gray-100 maxh-72 p-2 rounded">
+            <ScrollArea className="bg-gray-100 h-72 p-2 rounded">
             {images.map((image, index) => (
               <div key={index} className="flex items-center justify-center gap-2 mt-1 mb-1">
                 <div className="flex flex-col bg-white flex-1 rounded p-1" key={index}>
-                  <div>{image.url}</div>
-                  <div className="text-gray-500 text-xs">{image.alt}</div>
+                  <div className="break-all">{image.url}</div>
+                  <div className="break-all text-gray-500 text-xs">{image.alt}</div>
                 </div> 
                 <Button onClick={() => handleRemoveImage(index)} variant="destructive">X</Button>
               </div> 
